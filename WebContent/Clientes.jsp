@@ -22,6 +22,7 @@ if (session.getAttribute("username") != null) {
     }
 } else {
 	// No esta logeado.
+	//test.
 	response.sendRedirect("Inicio.jsp");
 }
 %>
