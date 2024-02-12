@@ -1,0 +1,55 @@
+@charset "ISO-8859-1";
+
+
+body{
+	width:100vw;
+	height:100vh;
+	background-color:#bf6000;
+	color:black
+}
+.container {
+	margin-right:0;
+	padding-right:0;
+}
+
+.col-background{
+	margin:auto auto; 
+	background-color:#000;
+	height:100%;
+	width:100%;
+	background-size: cover;
+	background-position:center;
+	background-repeat:no-repeat;
+}
+
+.btn-primary {
+    --bs-btn-border-color: rgba(0,0,0,0);
+    
+}
+
+.btnAceptar:hover {
+    color: black;
+	font-size: 18;
+}
+
+.btnAceptar{ 
+	background-color:#c0c0c0;
+}
+
+.form-group{
+	margin-bottom:20px;
+	text-align:center
+}
+
+.login{
+	width:20rem;
+	margin-left:50px;
+}
+
+.titulo{
+	margin-bottom:50px;
+	margin-top:100px;
+	margin-left:50px;
+	width:20rem;
+	text-align:center
+}

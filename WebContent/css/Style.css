@@ -1,0 +1,53 @@
+*{
+	text-decoration:none;
+	list-style:none;
+	box-sizing:border-box;
+}
+.nav{
+	background: #bf6000;
+	height:80px;
+}
+
+.nav ul{
+	float: right;
+	margin-right:20px;
+}
+.nav ul li{
+	display: inline-block;
+	line-height:80px;
+	margin: 0 5px;
+}
+.nav ul li a{
+	color: black;
+	text-transform:uppercase;
+	font-size: 18;
+}
+.nav ul li a:hover{
+	color:#ff8040;
+	background:black;
+}
+
+.formTransf{
+	margin-bottom:20px;
+	text-align:center
+}
+
+.btnConfirmar{
+	color:black;
+	background:#00ff00;
+}
+
+.btnConfirmar:hover{
+	color:white;
+	background:#00ff00;
+}
+
+.btnCancelar{
+	color:black;
+	background:red;
+}
+
+.btnCancelar:hover{
+	color:white;
+	background:#ff2b2b;
+}
