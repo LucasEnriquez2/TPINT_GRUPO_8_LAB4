@@ -90,7 +90,7 @@ if (session.getAttribute("username") != null) {
 			</div>
 			
 			<br>
-			<input type="reset" name="btnCancelar" class="btnCancelar" value="Cancelar"  >
+			<input type="reset" name="btnCancelar" class="btnCancelar" value="Cancelar">
 			<input type="submit" name="btnConfirmar" class="btnConfirmar" value="Confirmar">
 			
 		</fieldset>
