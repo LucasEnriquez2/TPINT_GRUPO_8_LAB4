@@ -58,4 +58,6 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 		return dao.PuedeTransferir(monto, nro);
 		
 	}
+	
+	
 }

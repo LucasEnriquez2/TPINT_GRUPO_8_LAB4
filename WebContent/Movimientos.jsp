@@ -54,14 +54,9 @@ if (sesion.getAttribute("username") == null) {
 <%
 ArrayList<Movimiento> listaMovimientos = null;
 if (request.getAttribute("ListaMovimientos") != null) {
-    listaMovimientos = (ArrayList<Movimiento>) request.getAttribute("ListaMovimientos");
+    listaMovimientos = (ArrayList<Movimiento>)request.getAttribute("ListaMovimientos");
 }
 
-
-int NdeCliente = 0;
-if (sesion.getAttribute("NdeCliente") != null) {
-    NdeCliente = (int) sesion.getAttribute("NdeCliente");
-}
 %>
 
 <br> <br>
@@ -74,11 +69,14 @@ if (sesion.getAttribute("NdeCliente") != null) {
         <th>Detalle</th>
         <th>Importe</th>
     </tr>
+    
 
     <%
     if (listaMovimientos != null) {
         for (Movimiento mov : listaMovimientos) {
     %>
+    
+    
             <tr>
                 <td><%= mov.getIdMovimiento() %> </td>
                 <td><%= mov.getNdeCuenta() %> </td>
@@ -93,11 +91,6 @@ if (sesion.getAttribute("NdeCliente") != null) {
     %>
 </table>
 
-<%
-
-request.setAttribute("NdeCliente", NdeCliente);
-sesion.removeAttribute("NdeCliente");
-%>
 
 </body>
 </html>

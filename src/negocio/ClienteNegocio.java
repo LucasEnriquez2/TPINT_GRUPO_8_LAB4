@@ -12,4 +12,5 @@ public interface ClienteNegocio {
 	public List<Cliente> ListarCliente(int num);
 	public boolean borrar(int nro);
 	public int Agregar(Cliente cliente, Usuario usuario);
+	public int ObtenerNdeCliente(String usuario);
 }

@@ -13,4 +13,5 @@ public interface DaoCliente {
 	public boolean borrar(int nro);
 	public int Agregar(Cliente cliente, Usuario usuario);
 	public int obtenerUltimoNroCliente();
+	public int obtenerNdeCliente(String usuario);
 }

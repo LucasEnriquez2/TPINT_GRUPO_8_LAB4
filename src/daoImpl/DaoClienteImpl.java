@@ -248,6 +248,26 @@ public class DaoClienteImpl implements DaoCliente{
 		}
 		return clientes;
 	}
+	
+	
+	public int obtenerNdeCliente(String usuario) {
 		
+		PreparedStatement statement;
+		ResultSet resulSet;
+		int numcliente = 0;
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement("SELECT * FROM cliente=c inner join usuario=u on u.usuario =?  where u.dni = c.dni;");
+			statement.setString(1, usuario);
+			resulSet = statement.executeQuery();
+			while(resulSet.next()) {
+				 numcliente = resulSet.getInt("NdeCliente");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return numcliente;
+	
+	};	
 }
 

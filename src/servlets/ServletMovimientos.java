@@ -6,14 +6,17 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import entidad.Cliente;
 import entidad.Movimiento;
 import negocioImpl.ClienteNegocioImpl;
+import negocioImpl.CuentaNegocioImpl;
 import negocioImpl.MovimientoNegocioImpl;
 
 
@@ -27,16 +30,16 @@ public class ServletMovimientos extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
-        //int nroCliente = Integer.parseInt(request.getParameter("NdeCliente"));
     	
-    	/*
-    	LINEA DE ARRIBA COMENTADA PARA QUE NO DE ERROR Y EL 1 QUE PASA POR PARAMETRO EN LA LINEA 33 
-    	ESTA PARA PROBAR QUE FUNCIONA 
-    	SOLO HAY QUE HACERLE LLEGAR EL NRO DE CLIENTE LOGEADO Y REEMPLAZARLO CON EL 1
-    	*/
+    	
+    	HttpSession usuarioSession = request.getSession();
+    	ClienteNegocioImpl neg = new ClienteNegocioImpl();
+		int numcliente = neg.ObtenerNdeCliente((String) usuarioSession.getAttribute("username"));
+		
+    	
     	
         MovimientoNegocioImpl movimiento = new MovimientoNegocioImpl();
-        List<Movimiento> listaMovimientos = movimiento.ListarMovimientos(1);
+        List<Movimiento> listaMovimientos = movimiento.ListarMovimientos(numcliente);
 
         request.setAttribute("ListaMovimientos", listaMovimientos);
         RequestDispatcher rd = request.getRequestDispatcher("/Movimientos.jsp");
