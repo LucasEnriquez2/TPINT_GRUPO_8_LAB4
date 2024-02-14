@@ -7,7 +7,10 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="css/Style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 <meta charset="ISO-8859-1">
+<script src="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"></script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -50,7 +53,7 @@ if (session.getAttribute("username") != null) {
 				</li>
 		</ul>
 </div>
-<table style="width:100%" border="1">
+<table id="example" class="table table-striped" style="width:100%">
 <thead>
 		<tr>
 			<th>nro. de cuenta</th>
@@ -81,8 +84,7 @@ if(request.getAttribute("CuentaModificar")!=null){
 				<td><%=cuenta.getFechaCreacion()%></td>
 				<td><input type="text" name="cbu" value="<%=cuenta.getCbu()%>"></td>
 				<td><input type="text" name="saldo" value="<%=cuenta.getSaldo()%>"></td>
-				<td><input type="submit" name="Modificar" value="Confirmar Modificacion" ></td>
-				<td><input type="submit" name="Cancelar" value="Cancelar" ></td>
+				<td><input type="submit" name="Modificar" value="Confirmar Modificacion" class="btn btn-success"> <input type="submit" name="Cancelar" value="Cancelar" class="btn btn-danger"></td>
 	</form>
 			</tr>
 		</tbody>
@@ -92,7 +94,7 @@ if(request.getAttribute("CuentaEliminar")!=null){
 	session.setAttribute("NroCuenta", cuenta.getNroCuenta());
 	%>
 	<tr>
-	<form action="ServletCuentas" method="get">
+	<form action="ServletCuentas" method="post">
 	
 				<td><%= cuenta.getNroCuenta()%></td>
 				<td><%= cuenta.getNroDeCliente()%></td>
@@ -100,8 +102,7 @@ if(request.getAttribute("CuentaEliminar")!=null){
 				<td><%= cuenta.getFechaCreacion()%></td>
 				<td><%= cuenta.getCbu()%></td>
 				<td><%= cuenta.getSaldo()%></td>
-				<td><input type="submit" name="Eliminar" value="Confirmar Eliminacion" ></td>
-				<td><input type="submit" name="Cancelar" value="Cancelar" ></td>
+				<td><input type="submit" name="btnEliminar" value="Confirmar Eliminacion" class="btn btn-success"> <input type="submit" name="Cancelar" value="Cancelar" class="btn btn-danger"></td>
 	</form>
 			</tr>
 		</tbody>
@@ -112,50 +113,19 @@ if(request.getAttribute("CuentaEliminar")!=null){
 		ArrayList<Cuenta> listaCuentas =((ArrayList<Cuenta>)request.getAttribute("ListaCuentas"));
 		for(Cuenta cuenta:listaCuentas){%>
 			<tr>
-			<form action="ServletCuentas" method = "post">
+			<form action="ServletCuentas" method ="post">
 				<td><%= cuenta.getNroCuenta()%> <input type="hidden" name="NroCuenta" value="<%=cuenta.getNroCuenta() %>"></td>
 				<td><%= cuenta.getNroDeCliente()%></td>
 				<td><%= cuenta.getTipoDeCuenta()%></td>
 				<td><%= cuenta.getFechaCreacion()%></td>
 				<td><%= cuenta.getCbu()%></td>
 				<td><%= cuenta.getSaldo()%></td>
-				<td><a href="ServletCuentas?Fila=<%=cuenta.getNroCuenta()%>">Modificar</a></td>  
-				<td> <input type="submit" name="btnEliminar" value="Eliminar"> </td>  
+				<td> <input type="submit" name="btnModificar" value="Modificar" class="btn btn-warning"> <input type="submit" name="Eliminar" value="Eliminar" class="btn btn-danger"> </td>  
 			</form> 
 			</tr>
-			
+
 	<%}}}; %>
-	
+
 </table>
-
-
-
-<form action="ServletCuentas" method="get">
-
-<br> <br>
-<h1>Agregar Cuenta</h1>
-
-	Nro. de cliente: <input type="text" name="txtNroCliente"> <br><br>
-	Tipo: <input type="text" name="txtTipo"> <br><br>
-	Fecha de creacion: <input type="text" name="txtFecha"> <br><br>
-	CBU: <input type="text" name="txtCBU"> <br><br>
-	Saldo: <input type="text" name="txtSaldo"> <br><br>
-	<input type="submit" value="Aceptar" name="btnAceptar"><br>
-
-</form>
-
-<%
-	int filas=0;
-	if(request.getAttribute("cantFilas")!=null)
-		filas= (int)request.getAttribute("cantFilas");	
-%>
-
-<% if(filas==1) 
-	{
-%>
-		Cuenta agregada con éxito
-<%} %>
-
 </body>
-
 </html>

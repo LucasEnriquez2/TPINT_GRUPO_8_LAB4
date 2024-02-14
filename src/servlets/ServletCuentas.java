@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import daoImpl.DaoCuentaImpl;
-import entidad.Cliente;
+import javax.swing.JOptionPane;
 import entidad.Cuenta;
 import negocioImpl.ClienteNegocioImpl;
 import negocioImpl.CuentaNegocioImpl;
@@ -46,6 +46,7 @@ public class ServletCuentas extends HttpServlet {
 				
 				
 				if(request.getParameter("Listar")!=null) {
+					request.setAttribute("ListaCuentas", null);
 					CuentaNegocioImpl cuenta = new CuentaNegocioImpl();
 					ArrayList<Cuenta> listaCuentas = (ArrayList<Cuenta>) cuenta.ListarCuentas();
 					request.setAttribute("ListaCuentas", listaCuentas);
@@ -53,13 +54,17 @@ public class ServletCuentas extends HttpServlet {
 					rd.forward(request, response);
 				}
 				
-				if(request.getParameter("Fila")!=null) {
+				if(request.getParameter("btnModificar")!=null) {
 					CuentaNegocioImpl cuenta = new CuentaNegocioImpl();
 					ArrayList<Cuenta> listaCuentas = (ArrayList<Cuenta>) cuenta.ListarCuentas();
 					for(Cuenta c :listaCuentas) {
-						if(Integer.valueOf(request.getParameter("Fila"))==c.getNroCuenta()) {
+						if(request.getParameter("NroCuenta")!=null) {
+						if(Integer.valueOf(request.getParameter("NroCuenta"))==c.getNroCuenta()) {
 
 							request.setAttribute("CuentaModificar", c);
+							}
+						}else {
+							JOptionPane.showMessageDialog(null, "Da null pa");
 						}
 					}
 
@@ -89,12 +94,12 @@ public class ServletCuentas extends HttpServlet {
 						rd.forward(request, response);}
 				}
 				
-				if(request.getParameter("FilaE")!=null) {
-					if(request.getParameter("FilaE")!=null) {
+				if(request.getParameter("Eliminar")!=null) {
+					if(request.getParameter("Eliminar")!=null) {
 						CuentaNegocioImpl cuenta = new CuentaNegocioImpl();
 						ArrayList<Cuenta> listaCuentas = (ArrayList<Cuenta>) cuenta.ListarCuentas();
 						for(Cuenta c :listaCuentas) {
-							if(Integer.valueOf(request.getParameter("FilaE"))==c.getNroCuenta()) {
+							if(Integer.valueOf(request.getParameter("NroCuenta"))==c.getNroCuenta()) {
 
 								request.setAttribute("CuentaEliminar", c);
 							}
@@ -197,10 +202,11 @@ public class ServletCuentas extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+		HttpSession sesion = request.getSession();
 		
 		if(request.getParameter("btnEliminar")!=null)
 		{
-			int nro = Integer.parseInt(request.getParameter("NroCuenta").toString()) ;
+			int nro = Integer.parseInt(sesion.getAttribute("NroCuenta").toString()) ;
 			CuentaNegocioImpl cuenta = new CuentaNegocioImpl();
 			cuenta.borrar(nro);
 			
