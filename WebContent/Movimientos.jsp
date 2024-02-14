@@ -2,6 +2,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="entidad.Movimiento"%>
 <%@page import="entidad.Cliente"%>
+<%@page import="entidad.Cuenta"%>
 <%@page import="javax.servlet.http.HttpSession"%>
 <!DOCTYPE html>
 <html>
@@ -36,7 +37,7 @@ if (sesion.getAttribute("username") == null) {
             <a href="Transferir.jsp">Transferir</a>
         </li>
         <li>
-            <a href="ServletMovimientos?Listar=1">Movimientos</a>
+            <a href="ServletMovimientos">Movimientos</a>
             
         </li>
         <li>
@@ -57,7 +58,53 @@ if (request.getAttribute("ListaMovimientos") != null) {
     listaMovimientos = (ArrayList<Movimiento>)request.getAttribute("ListaMovimientos");
 }
 
+ArrayList<Cuenta> listaCuentas = null;
+if (request.getAttribute("ListaCuentas") != null) {
+    listaCuentas = (ArrayList<Cuenta>)request.getAttribute("ListaCuentas");
+}
+
+String radiovalue = "";
+if (request.getAttribute("RadioValue") != null) {
+    radiovalue = (String)request.getAttribute("RadioValue");
+}
+
 %>
+<br> <br>
+
+
+<fieldset>
+  <legend>Seleccione una opcion:</legend>
+
+ 
+
+<form action="ServletMovimientos" method="post">
+
+  <div>
+    <input type="radio" id="louie" name="radioCuentas" value="todas" checked/>
+    <label for="todas">Todas</label>
+  </div>
+  
+  <%
+    if (listaCuentas != null) {
+        for (Cuenta cta : listaCuentas) {
+        	if(cta.getEstado()==1){
+       
+    %>
+   
+  <div>
+    <input type="radio" id=<%= cta.getNroCuenta() %> name="radioCuentas" value=<%=cta.getNroCuenta()%> />
+    <label for="<%= cta.getNroCuenta() %>"><%= cta.getNroCuenta() %> - <%= cta.getTipoDeCuenta() %> </label>
+  </div>
+
+ <%			}
+        }
+    }
+    %>
+  
+  <br>
+  <input type="submit" value="Buscar"></input>
+ </form>
+</fieldset>
 
 <br> <br>
 <table border="1">
@@ -72,11 +119,12 @@ if (request.getAttribute("ListaMovimientos") != null) {
     
 
     <%
+ 
     if (listaMovimientos != null) {
+    	
         for (Movimiento mov : listaMovimientos) {
+   			if(String.valueOf(mov.getNdeCuenta()).equals(radiovalue) || "todas".equals(radiovalue)){
     %>
-    
-    
             <tr>
                 <td><%= mov.getIdMovimiento() %> </td>
                 <td><%= mov.getNdeCuenta() %> </td>
@@ -84,13 +132,16 @@ if (request.getAttribute("ListaMovimientos") != null) {
                 <td><%= mov.getFecha()%> </td>
                 <td><%= mov.getDetalle() %> </td>
                 <td><%= mov.getImporte() %> </td>
+                
             </tr>
-    <%
-        }
-    }
+    <%      	
+   			}
+    	}
+        
+	}
+    
     %>
 </table>
-
 
 </body>
 </html>

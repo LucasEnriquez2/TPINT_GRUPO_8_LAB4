@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import entidad.Cliente;
+import entidad.Cuenta;
 import entidad.Movimiento;
 import negocioImpl.ClienteNegocioImpl;
 import negocioImpl.CuentaNegocioImpl;
@@ -28,28 +29,60 @@ public class ServletMovimientos extends HttpServlet {
         super();
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+   
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
-    	
-    	
+		//OBTENER SESSION Y USUARIO
     	HttpSession usuarioSession = request.getSession();
     	ClienteNegocioImpl neg = new ClienteNegocioImpl();
 		int numcliente = neg.ObtenerNdeCliente((String) usuarioSession.getAttribute("username"));
+    	
+		//CUENTAS
+		CuentaNegocioImpl negC = new CuentaNegocioImpl();
+		List<Cuenta> listaCuentas = negC.ListarCuentaPorUsuario((String) usuarioSession.getAttribute("username"));
+		request.setAttribute("ListaCuentas", listaCuentas);
 		
+		
+		// MOVIMIENTOS
+		MovimientoNegocioImpl mov = new MovimientoNegocioImpl();
+	    List<Movimiento> listaMovimientos = mov.ListarMovimientos(numcliente);
+	    request.setAttribute("ListaMovimientos", listaMovimientos);
+	    
+	    //LOGICA
+	    	
+	    String radiovalue = request.getParameter("radioCuentas");
+	    
+	    if(radiovalue==null) {
+	    	radiovalue = "todas";
+	    }
+	    
+	    
+	    request.setAttribute("RadioValue", radiovalue);
+	    
+	    
+	    
+	    
     	
-    	
-        MovimientoNegocioImpl movimiento = new MovimientoNegocioImpl();
-        List<Movimiento> listaMovimientos = movimiento.ListarMovimientos(numcliente);
-
-        request.setAttribute("ListaMovimientos", listaMovimientos);
         RequestDispatcher rd = request.getRequestDispatcher("/Movimientos.jsp");
         rd.forward(request, response);
     }
         
     
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
         doGet(request, response);
+        
+        
+        
+        
+        
+		
+		
+	        
+		
+		
+		
     	
 }
 
