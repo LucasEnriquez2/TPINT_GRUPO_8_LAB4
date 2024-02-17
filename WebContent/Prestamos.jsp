@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@page import="java.util.ArrayList"%>
+
+<%@page import="entidad.Cuenta"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,7 +37,7 @@ if (session.getAttribute("username") != null) {
 					<a href="Movimientos.jsp">Movimientos</a>
 				</li>
 				<li>
-					<a href="Prestamos.jsp">Prestamo</a>
+					<a href="ServletPrestamos">Prestamos</a>
 				</li>
 				<li>
 					<a href="DatosClientes.jsp">Mis datos</a>
@@ -44,60 +47,76 @@ if (session.getAttribute("username") != null) {
 				</li>
 		</ul>
 	</div>
+	
+<% 
+
+ArrayList<Cuenta> listaCuentas = null;
+if (request.getAttribute("ListaCuentas") != null) {
+    listaCuentas = (ArrayList<Cuenta>)request.getAttribute("ListaCuentas");
+}
+
+%>	
+
+
+	
 <h1>Prestamos</h1>
 <h2> Pedido de Prestamo</h2>
 
-Ingresar cantidad de dinero: <input type="text" name="txtCantPrestamo"> <br><br>
-Seleccionar cantidad de cuotas a pagar:
-  <select name="CantCuotas" id="cuotas">
-  <option value="3">3</option>
-  <option value="6">6</option>
-  <option value="12">12</option>
+<form action="ServletPrestamos" method="get" class="formPrestamos" onsubmit="return validarFormulario()"> 
+	Ingresar cantidad de dinero: 
+	<input type="number" id="monto" name="monto">
+	
+	<br><br>
+	
+	Seleccionar cantidad de cuotas a pagar:
+ 	<select name="cuotas" id="cuotas">
+ 		<option value="3">3</option>
+  		<option value="6">6</option>
+  		<option value="12">12</option>
+	</select>
+	
+	<br><br>
+	
+	Seleccionar cuenta de deposito del prestamo:
+  	<select name="cuenta" id="cuenta">
+<%
+    if (listaCuentas != null) {
+        for (Cuenta cta : listaCuentas) {
+        	if(cta.getEstado()==1){
+    %>
+  		
+	<option value="<%= cta.getNroCuenta()%>"> <%= cta.getNroCuenta()%> - <%= cta.getTipoDeCuenta()%> - $ <%= cta.getSaldo()%> </option>
+<%
+    }
+        }
+        
+    		}
+      
+
+%>
 </select>
+	
 <br><br>
 
-Seleccionar cuenta de deposito del prestamo:
-  <select name="CuentaCliente" id="cuenta">
-  <option value="1">N° Cuenta 1</option>
-  <option value="2">N° Cuenta 2</option>
-  <option value="3">N° Cuenta 3</option>
-</select>
-<br><br>
-<input type="submit" value="Aceptar" name="btnAceptar"> <br><br>
+	<input type="submit" class="btnAceptar" name="btnAceptar" value="Aceptar"> <br><br>
+</form>
 
 
-<h2> Pago de Prestamo</h2>
 
-Seleccionar cuenta:
-  <select name="CuentaCliente" id="cuenta">
-  <option value="1">N° Cuenta 1</option>
-  <option value="2">N° Cuenta 2</option>
-  <option value="3">N° Cuenta 3</option>
-</select>
-<br><br>
 
- Seleccionar cuotas a pagar:<br><br>
-
-<table style="width:100%" border="1">
-<thead>
-		<tr>
-			<th>Nro. de Prestamo</th>
-			<th>Nro. de Cuota</th>
-			<th>Importe a Pagar</th>
-			<th>Selecc.</th>
-		</tr>
-</thead>
-<tbody>
-		<tr>
-			<td></td>
-			<td></td>
-			<td></td>
- 			<td><input type="checkbox" name="name1" />&nbsp;</td>
-		</tr>
-		
-</tbody>
-</table>
-<br>
-<input type="submit" value="Pagar" name="btnPagarr"> <br><br>
+<script>
+    function validarFormulario() {
+        
+        var monto = document.getElementById("monto").value.trim();
+        
+        if (monto === "") {
+            alert("Por favor, ingrese un monto válido.");
+            return false; // Evita que el formulario se envíe si la validación no pasa
+        }
+        
+        return true; // Envía el formulario si la validación pasa
+        
+    }
+</script>
 </body>
 </html>

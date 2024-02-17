@@ -42,7 +42,7 @@ if (session.getAttribute("username") != null) {
 					<a href="ServletMovimientos">Movimientos</a>
 				</li>
 				<li>
-					<a href="Prestamos.jsp">Prestamo</a>
+					<a href="ServletPrestamos">Prestamo</a>
 				</li>
 				<li>
 					<a href="DatosClientes.jsp">Mis datos</a>
