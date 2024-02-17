@@ -1,6 +1,7 @@
 package daoImpl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +12,7 @@ import java.util.List;
 
 import dao.DaoCliente;
 import entidad.Cliente;
+import entidad.Solicitud;
 import entidad.Usuario;
 
 public class DaoClienteImpl implements DaoCliente{
@@ -249,7 +251,7 @@ public class DaoClienteImpl implements DaoCliente{
 		return clientes;
 	}
 	
-	
+	@Override
 	public int obtenerNdeCliente(String usuario) {
 		
 		PreparedStatement statement;
@@ -268,6 +270,82 @@ public class DaoClienteImpl implements DaoCliente{
 		}
 		return numcliente;
 	
-	};	
-}
+	}
+
+	@Override
+	public void generarSolicitud(Solicitud sol) {
+			
+		Conexion conexion = Conexion.getConexion();
+	    java.sql.CallableStatement callableStatement = null;
+	    
+	    try {
+	        callableStatement = conexion.getSQLConexion().prepareCall("{ call Solicitud(?, ?, ?, ?, ?, ?, ?) }");
+
+	        callableStatement.setInt(1, sol.getNroDeCliente());
+	        callableStatement.setInt(2, sol.getNroCuenta());
+	        
+	        callableStatement.setFloat(3, sol.getImporteSolicitado());
+	        callableStatement.setFloat(4, sol.getImporteAPagar());
+	        
+	        callableStatement.setInt(5, sol.getPlazo());
+
+	        callableStatement.setFloat(6, sol.getMonto());
+	        callableStatement.setString(7, sol.getEstado());
+
+	        
+	        callableStatement.execute();
+	         
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();  
+	    } finally {
+	       
+	        if (callableStatement != null) {
+	            try {
+	                callableStatement.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace(); 
+	            }
+	        }
+
+	       
+	        if (conexion != null) {
+	            conexion.cerrarConexion();
+	        }
+	    }
+	    
+	    }
+	
+	@Override
+	public List<Solicitud> ListarSolicitudes(int ncliente) {
+		PreparedStatement statement;
+		ResultSet rs;
+		ArrayList<Solicitud> solicitudes = new ArrayList<Solicitud>();
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement("SELECT * FROM solicitud where NdeCliente=?");
+			statement.setInt(1, ncliente);
+			rs = statement.executeQuery();
+			while(rs.next()) {
+				Solicitud sol=new Solicitud();
+				sol.setNdeSolicitud(rs.getInt("NdeSolicitud"));
+				sol.setNroDeCliente(rs.getInt("NdeCliente"));
+				sol.setNroCuenta(rs.getInt("NdeCuenta"));
+				sol.setFecha(rs.getDate("Fecha"));
+				sol.setImporteSolicitado(rs.getFloat("importeSolicitado"));
+				sol.setImporteAPagar(rs.getFloat("ImporteAPagar"));
+				sol.setPlazo(rs.getInt("Plazo"));
+				sol.setMonto(rs.getFloat("Monto"));
+				sol.setEstado(rs.getString("Estado"));
+				solicitudes.add(sol);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return solicitudes;
+	}
+			 
+		};
+
+
 

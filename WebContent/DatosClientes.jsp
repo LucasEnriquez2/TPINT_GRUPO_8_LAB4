@@ -109,7 +109,7 @@ if (session.getAttribute("username") != null) {
 <thead>
 		<tr>
 			<th>Nro. de Cuenta</th>
-			<th>Nro. de Cliente</th>
+			
 			<th>Tipo de Cuenta </th>
 			<th>Fecha de Creacion</th>
 			<th>CBU</th>
@@ -127,7 +127,7 @@ if (session.getAttribute("username") != null) {
 			<tr>
 			<form action="ServletCuentas" method = "post">
 				<td><%= cuenta.getNroCuenta()%> <input type="hidden" name="NroCuenta" value="<%=cuenta.getNroCuenta() %>"></td>
-				<td><%= cuenta.getNroDeCliente()%></td>
+				
 				<td><%= cuenta.getTipoDeCuenta()%></td>
 				<td><%= cuenta.getFechaCreacion()%></td>
 				<td><%= cuenta.getCbu()%></td>
@@ -138,35 +138,6 @@ if (session.getAttribute("username") != null) {
 	<%}}}; %>
 </tbody>
 
-</table>
 
-<h2> Prestamos</h2>
-<table style="width:100%" border="1">
-<thead>
-		<tr>
-			<th>Nro. de Prestamo</th>
-			<th>Nro. de Cliente</th>
-			<th>Nro. de Cuenta</th>
-			<th>Fecha</th>
-			<th>Importe Solicitado</th>
-			<th>Importe a Pagar</th>
-			<th>Plazo</th>
-			<th>Estado</th>
-		</tr>
-</thead>
-<tbody>
-		<tr>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-		</tr>
-</tbody>
-
-</table>
 </body>
 </html>

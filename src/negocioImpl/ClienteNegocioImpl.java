@@ -7,6 +7,7 @@ import daoImpl.DaoClienteImpl;
 import daoImpl.DaoCuentaImpl;
 import entidad.Cliente;
 import entidad.Cuenta;
+import entidad.Solicitud;
 import entidad.Usuario;
 import negocio.ClienteNegocio;
 
@@ -47,6 +48,19 @@ public class ClienteNegocioImpl implements ClienteNegocio{
 	public int ObtenerNdeCliente(String usuario) {
 		DaoClienteImpl dao=new DaoClienteImpl();
 		return dao.obtenerNdeCliente(usuario);
+	}
+
+	@Override
+	public void generarSolicitud(Solicitud sol) {
+		DaoClienteImpl dao= new DaoClienteImpl();
+		dao.generarSolicitud(sol);
+		
+	}
+	
+	@Override
+	public List<Solicitud> ListarSolicitudes(int ncliente){
+		DaoClienteImpl dao= new DaoClienteImpl();
+		return dao.ListarSolicitudes(ncliente);
 	}
 }
 

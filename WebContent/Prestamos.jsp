@@ -3,6 +3,7 @@
     <%@page import="java.util.ArrayList"%>
 
 <%@page import="entidad.Cuenta"%>
+<%@page import="entidad.Solicitud"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,6 +56,13 @@ if (request.getAttribute("ListaCuentas") != null) {
     listaCuentas = (ArrayList<Cuenta>)request.getAttribute("ListaCuentas");
 }
 
+ArrayList<Solicitud> listaSolicitudes = null;
+if (request.getAttribute("ListaSolicitudes") != null) {
+    listaSolicitudes = (ArrayList<Solicitud>)request.getAttribute("ListaSolicitudes");
+}
+
+
+
 %>	
 
 
@@ -100,6 +108,53 @@ if (request.getAttribute("ListaCuentas") != null) {
 
 	<input type="submit" class="btnAceptar" name="btnAceptar" value="Aceptar"> <br><br>
 </form>
+
+
+<br>
+
+
+<h2> Mis solicitudes </h2>
+
+<table border="1">
+    <tr>
+        <th>Numero de Solicitud</th>
+        <th>Numero de Cuenta</th>
+        <th>Fecha</th>
+        <th>Importe Solicitado</th>
+        <th>Importe a pagar</th>
+        <th>Plazo</th>
+        <th>Monto</th>
+        <th>Estado</th>
+    </tr>
+    
+
+    <%
+ 
+    if (listaSolicitudes != null) {
+    	
+        for (Solicitud sol : listaSolicitudes) {
+   			
+    %>
+            <tr>
+                <td><%= sol.getNdeSolicitud() %> </td>
+                <td><%= sol.getNroCuenta() %> </td>
+                <td><%= sol.getFecha()%> </td>
+                <td><%= sol.getImporteSolicitado() %> </td>
+                <td><%= sol.getImporteAPagar() %> </td>
+                <td><%= sol.getPlazo() %> </td>
+                <td><%= sol.getMonto() %> </td>
+                <td><%= sol.getEstado() %> </td>
+                
+            </tr>
+    <%      	
+   			}
+    	
+        
+	}
+    
+    %>
+</table>
+
 
 
 

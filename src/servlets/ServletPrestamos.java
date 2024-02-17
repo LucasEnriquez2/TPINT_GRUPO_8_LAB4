@@ -1,7 +1,9 @@
 package servlets;
 
 import java.io.IOException;
+
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import javax.swing.JOptionPane;
 
 import entidad.Cuenta;
+import entidad.Solicitud;
 import negocioImpl.ClienteNegocioImpl;
 import negocioImpl.CuentaNegocioImpl;
 
@@ -37,8 +40,10 @@ public class ServletPrestamos extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//OBTENER SESSION Y USUARIO
+		//OBTENER SESSION Y NCLIENTE
     	HttpSession usuarioSession = request.getSession();
+    	ClienteNegocioImpl neg = new ClienteNegocioImpl();
+		int numcliente = neg.ObtenerNdeCliente((String) usuarioSession.getAttribute("username"));
     	
 		
     	
@@ -47,29 +52,42 @@ public class ServletPrestamos extends HttpServlet {
 		List<Cuenta> listaCuentas = negC.ListarCuentaPorUsuario((String) usuarioSession.getAttribute("username"));
 		request.setAttribute("ListaCuentas", listaCuentas);
 		
+		//SOLICITUDES
+		
+		List<Solicitud> listaSolicitudes = neg.ListarSolicitudes(numcliente);
+		request.setAttribute("ListaSolicitudes", listaSolicitudes);
+				
+		
 		if(request.getParameter("btnAceptar")!=null) {
 			
-			String Monto = request.getParameter("monto");
-			String Cuotas = request.getParameter("cuotas");
-			String Cuenta = request.getParameter("cuenta");
+			float Monto = Float.parseFloat(request.getParameter("monto"));
+			int Cuotas = Integer.parseInt(request.getParameter("cuotas"));
+			int Cuenta = Integer.parseInt(request.getParameter("cuenta"));
 			
 			response.setContentType("text/html");
 			response.setCharacterEncoding("UTF-8");
 			PrintWriter out = response.getWriter();
+			PrintWriter out2 = response.getWriter();
 	
-	    		if(Float.parseFloat(Monto) <= 0){
+	    	if(Monto <= 0){
 	    			
 	    			out.print("<p style='color: red;'> El monto ingresado debe ser mayor a 0.</p>"
 	    	                + "<a href='ServletPrestamos'> Regresar </a>");
 	    	        out.flush();
-	    	        
-	    	        
-	   
 	    			
-	    		} 
+	    	} else {
+	    		
+	    		Solicitud sol = new Solicitud(numcliente, Cuenta, Monto, Cuotas, "Pendiente");
+	    		neg.generarSolicitud(sol);
+	    		
+	    		out2.print("<p style='color: green;'> Solicitud de prestamo creada correctamente.</p>"
+    	                + "<a href='ServletPrestamos'> Regresar </a>");
+    	        out2.flush();
+	    		
+	    	} 
 			
 
-			response.sendRedirect("Prestamos.jsp");
+			
 		}
 		
 		

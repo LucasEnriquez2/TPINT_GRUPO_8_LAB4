@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import entidad.Cliente;
+import entidad.Solicitud;
 import entidad.Usuario;
 
 
@@ -14,4 +15,7 @@ public interface DaoCliente {
 	public int Agregar(Cliente cliente, Usuario usuario);
 	public int obtenerUltimoNroCliente();
 	public int obtenerNdeCliente(String usuario);
+	public void generarSolicitud(Solicitud sol);
+	public List<Solicitud> ListarSolicitudes(int ncliente);
+	
 }
