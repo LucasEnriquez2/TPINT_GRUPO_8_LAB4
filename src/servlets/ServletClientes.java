@@ -106,6 +106,12 @@ public class ServletClientes extends HttpServlet {
 			Cliente cliente  =  new Cliente();
 			Usuario usuario  =  new Usuario();
 			
+			if (request.getParameter("txtContrasenia") != request.getParameter("txtContrasenia2")) {
+				request.setAttribute("txtContrasenia", "");
+				request.setAttribute("txtContrasenia2", "");
+				return;
+			}
+			
 			/*int nroDeCliente = Integer.parseInt(request.getParameter("txtNroCliente"));	    
 			cliente.setNdeCliente(nroDeCliente);*/
 		    
