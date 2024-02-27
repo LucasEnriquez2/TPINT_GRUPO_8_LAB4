@@ -96,8 +96,8 @@ if (session.getAttribute("username") != null) {
 	<tr>
 	<form action="ServletClientes" method="get">
 	
-				<td><input name="NdeCliente" value="<%=cliente.getNdeCliente()%>" readonly="readonly"></td>
-				<td><input name="DNI" value="<%=cliente.getDNI()%>" readonly="readonly"></td>
+				<td><%=cliente.getNdeCliente()%>"</td>
+				<td><%=cliente.getDNI()%></td>
 				<td><input type="text" name="CUIL" value="<%=cliente.getCUIL()%>"></td>
 				<td><input type="text" name="Nombre" value="<%=cliente.getNombre()%>"></td>
 				<td><input type="text" name="Apellido" value="<%=cliente.getApellido()%>"></td>
@@ -109,8 +109,8 @@ if (session.getAttribute("username") != null) {
 				<td><input type="text" name="Provincia" value="<%=cliente.getProvincia()%>"></td>
 				<td><input type="text" name="Mail" value="<%=cliente.getMail()%>"></td>
 				<td><input type="text" name="Telefono" value="<%=cliente.getTelefono()%>"></td>
-				<td><input name="Usuario" value="<%=cliente.getUsuario()%>"></td>
-				<td><input type="text" name="Contrasenia" value="<%=cliente.getContrasenia()%>" readonly="readonly"></td>
+				<td><%=cliente.getUsuario()%></td>
+				<td><input type="text" name="Contrasenia" value="<%=cliente.getContrasenia()%>"></td>
 				<td><input type="submit" name="Modificar" value="Confirmar Modificacion" ></td>
 				<td><input type="submit" name="Cancelar" value="Cancelar" ></td>
 	</form>
@@ -124,7 +124,7 @@ if (session.getAttribute("username") != null) {
 		{
 	%>
 		<tr>
-			<form action="ServletClientes" method = "post">
+			<form action="ServletClientes" method = "get">
 			<td><%= cliente.getNdeCliente()%> <input type="hidden" name="NroCliente" value="<%=cliente.getNdeCliente() %>"></td>
 			<td><%= cliente.getDNI()%></td>
 			<td><%= cliente.getCUIL()%></td>
@@ -148,7 +148,7 @@ if (session.getAttribute("username") != null) {
 	
 </table>
 
-<form action="ServletClientes" method="get">
+<form action="ServletClientes" method="post">
 
 <br> <br>
 <h1>Agregar Cliente</h1>
@@ -172,7 +172,7 @@ if (session.getAttribute("username") != null) {
 	Telefono:  <input type="text" name="txtTelefono"> <br><br>
 	Usuario:  <input type="text" name="txtUsuario"> <br><br>
 	Contraseña:  <input type="password" name="txtContrasenia"> <br><br>
-	Contraseña:  <input type="password" name="txtContrasenia2"> <br><br>
+	Repetir Contraseña:  <input type="password" name="txtContrasenia2"> <br><br>
 	<input type="submit" value="Aceptar" name="btnAceptar"><br><br>
 
 </form>

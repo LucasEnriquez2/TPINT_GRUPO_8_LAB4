@@ -108,9 +108,11 @@ public class ServletClientes extends HttpServlet {
 			Usuario usuario  =  new Usuario();
 			
 			if (request.getParameter("txtContrasenia") != request.getParameter("txtContrasenia2")) {
-				request.setAttribute("txtContrasenia", "");
-				request.setAttribute("txtContrasenia2", "");
-				return;
+				//request.setAttribute("txtContrasenia", "");
+				//request.setAttribute("txtContrasenia2", "");
+				RequestDispatcher rd = request.getRequestDispatcher("/ServletClientes?Listar=1");
+	    		rd.forward(request, response);
+				
 			}
 			
 			/*int nroDeCliente = Integer.parseInt(request.getParameter("txtNroCliente"));	    
