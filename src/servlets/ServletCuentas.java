@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -115,32 +116,37 @@ public class ServletCuentas extends HttpServlet {
 					rd.forward(request, response);
 				}
 				
-				if(request.getParameter("Buscar")!=null) {
-					ArrayList<Cuenta> listaCuentas;
-					if(request.getAttribute("ListaCuentas")!=null) {
-						listaCuentas = (ArrayList<Cuenta>)request.getAttribute("ListaCuentas");
-						for(Cuenta c:listaCuentas) {
-							int i=Integer.parseInt(request.getParameter("nroDeCliente"));
-							if(c.getNroDeCliente()!=i) {}
-							listaCuentas.remove(c);
-						}
-					}else {
-						CuentaNegocioImpl cuenta = new CuentaNegocioImpl();
-						listaCuentas = (ArrayList<Cuenta>) cuenta.ListarCuentas();
-						for(Cuenta c:listaCuentas) {
-							int i=Integer.parseInt(request.getParameter("nroDeCliente"));
-							if(c.getNroDeCliente()!=i) {}
-							listaCuentas.remove(c);
-						}
-					}
+				if(request.getParameter("Buscar") != null) {
+				    ArrayList<Cuenta> listaCuentas;
+				    if(request.getAttribute("ListaCuentas") != null) {
+				        listaCuentas = (ArrayList<Cuenta>) request.getAttribute("ListaCuentas");
+				    } else {
+				        CuentaNegocioImpl cuenta = new CuentaNegocioImpl();
+				        listaCuentas = (ArrayList<Cuenta>) cuenta.ListarCuentas();
+				    }
+				    
+				    Iterator<Cuenta> iterator = listaCuentas.iterator();
+				    int i = Integer.parseInt(request.getParameter("nroDeCliente"));
+				    while (iterator.hasNext()) {
+				        Cuenta c = iterator.next();
+				        if (c.getNroDeCliente() != i) {
+				            iterator.remove();
+				        }
+				    }
+				    
+				    request.setAttribute("ListaCuentas", listaCuentas);
+				    RequestDispatcher rd = request.getRequestDispatcher("/Cuentas.jsp");
+				    rd.forward(request, response);
+				}
+		
+				if(request.getParameter("Limpiar")!=null) {
+					request.setAttribute("ListaCuentas", null);
+					CuentaNegocioImpl cuenta = new CuentaNegocioImpl();
+					ArrayList<Cuenta> listaCuentas = (ArrayList<Cuenta>) cuenta.ListarCuentas();
 					request.setAttribute("ListaCuentas", listaCuentas);
 					RequestDispatcher rd = request.getRequestDispatcher("/Cuentas.jsp");
 					rd.forward(request, response);
 				}
-		
-		
-		
-		
 		
 	  }else{
 		  RequestDispatcher rd = request.getRequestDispatcher("/Inicio.jsp");

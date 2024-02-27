@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -160,6 +161,38 @@ public class ServletClientes extends HttpServlet {
 			
 	        rd.forward(request, response);  
 	        
+		}
+		
+		if(request.getParameter("Buscar") != null) {
+		    ArrayList<Cliente> listaClientes;
+		    if(request.getAttribute("ListaClientes") != null) {
+		        listaClientes = (ArrayList<Cliente>) request.getAttribute("ListaClientes");
+		    } else {
+		        ClienteNegocioImpl cliente = new ClienteNegocioImpl();
+		        listaClientes = (ArrayList<Cliente>) cliente.ListarClientes();
+		    }
+		    
+		    Iterator<Cliente> iterator = listaClientes.iterator();
+		    int i = Integer.parseInt(request.getParameter("NdeCliente"));
+		    while (iterator.hasNext()) {
+		        Cliente c = iterator.next();
+		        if (c.getNdeCliente() != i) {
+		            iterator.remove();
+		        }
+		    }
+		    
+		    request.setAttribute("ListaClientes", listaClientes);
+		    RequestDispatcher rd = request.getRequestDispatcher("/Clientes.jsp");
+		    rd.forward(request, response);
+		}
+
+		if(request.getParameter("Limpiar")!=null) {
+			request.setAttribute("ListaClientes", null);
+			ClienteNegocioImpl cliente = new ClienteNegocioImpl();
+			ArrayList<Cliente> listaClientes = (ArrayList<Cliente>) cliente.ListarClientes();
+			request.setAttribute("ListaClientes", listaClientes);
+			RequestDispatcher rd = request.getRequestDispatcher("/Clientes.jsp");
+			rd.forward(request, response);
 		}
 	}
 	

@@ -66,10 +66,16 @@ if (session.getAttribute("username") != null) {
 </thead>
 <tbody>
 <%if(request.getAttribute("CuentaModificar")==null&&request.getAttribute("CuentaEliminar")==null) {%>
+
 <form action="ServletCuentas" method="get">
-<input type="text" name="nroDeCliente" placeholder="Numero de Cliente">
+<input type="number" name="nroDeCliente" placeholder="Numero de Cliente" onkeypress="return /[0-9]/i.test(event.key)" required>
 <input type="submit" name="Buscar" value="Buscar" >
 </form>
+
+<form action="ServletCuentas" method="get">
+<input type="submit" name="Limpiar" value="Limpiar Filtros" >
+</form>
+
 <%}
 if(request.getAttribute("CuentaModificar")!=null){
 	Cuenta cuenta=(Cuenta)request.getAttribute("CuentaModificar");

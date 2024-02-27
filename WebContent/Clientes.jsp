@@ -79,6 +79,16 @@ if (session.getAttribute("username") != null) {
 </thead>
 <tbody>
 
+<form id="formulario" action="ServletClientes" method="get">
+    <input type="number" name="NdeCliente" placeholder="Numero de Cliente" onkeypress="return /[0-9]/i.test(event.key)" required>
+    <input type="submit" name="Buscar" value="Buscar">
+    
+</form>
+
+<form id="formulario" action="ServletClientes" method="get">
+    <input type="submit" name="Limpiar" value="Limpiar Filtros">
+</form>
+
 <%if(request.getAttribute("ClienteModificar")!=null){
 	Cliente cliente=(Cliente)request.getAttribute("ClienteModificar");
 	session.setAttribute("NdeCliente", cliente.getNdeCliente());
