@@ -30,29 +30,7 @@ if (session.getAttribute("username") != null) {
 
 
 
-<div class="nav">
-- Bienvenido,&nbsp;<% 
-	if(sesion.getAttribute("username")!=null){
-		%><%=sesion.getAttribute("username")%><% 
-	} %>
-		<ul>
-				<li>
-					<a href="ServletCuentas?Listar=1">Cuentas</a>
-				</li>
-				<li>
-					<a href="ServletClientes?Listar=1">Clientes</a>
-				</li>
-				<li>
-					<a href="PrestamosPendientes.jsp">Prestamos</a>
-				</li>
-				<li>
-					<a href="Reportes.jsp">Reportes</a>
-				</li>
-				<li>
-					<a href="ServletLogout">Cerrar sesion</a>
-				</li>
-		</ul>
-</div>
+<jsp:include page="NavBarAdmin.jsp"/>
 <table id="example" class="table table-striped" style="width:100%">
 <thead>
 		<tr>
@@ -116,22 +94,49 @@ if(request.getAttribute("CuentaEliminar")!=null){
 		
 }else{
 	if(request.getAttribute("ListaCuentas")!=null){
-		ArrayList<Cuenta> listaCuentas =((ArrayList<Cuenta>)request.getAttribute("ListaCuentas"));
-		for(Cuenta cuenta:listaCuentas){%>
-			<tr>
-			<form action="ServletCuentas" method ="post">
-				<td><%= cuenta.getNroCuenta()%> <input type="hidden" name="NroCuenta" value="<%=cuenta.getNroCuenta() %>"></td>
-				<td><%= cuenta.getNroDeCliente()%></td>
-				<td><%= cuenta.getTipoDeCuenta()%></td>
-				<td><%= cuenta.getFechaCreacion()%></td>
-				<td><%= cuenta.getCbu()%></td>
-				<td><%= cuenta.getSaldo()%></td>
-				<td> <input type="submit" name="btnModificar" value="Modificar" class="btn btn-warning"> <input type="submit" name="Eliminar" value="Eliminar" class="btn btn-danger"> </td>  
-			</form> 
-			</tr>
+        ArrayList<Cuenta> listaCuentas = ((ArrayList<Cuenta>) request.getAttribute("ListaCuentas"));
+        int itemsPerPage = 10;
+        int currentPage = 1;
 
-	<%}}}; %>
+        
+        String pageParam = request.getParameter("page");
+        if (pageParam != null && !pageParam.isEmpty()) {
+            currentPage = Integer.parseInt(pageParam);
+        }
 
+        int startIndex = (currentPage - 1) * itemsPerPage;
+        int endIndex = Math.min(startIndex + itemsPerPage, listaCuentas.size());
+
+        for (int i = startIndex; i < endIndex; i++) {
+            Cuenta cuenta = listaCuentas.get(i);
+%>
+            <tr>
+                <form action="ServletCuentas" method="post">
+                    <td><%= cuenta.getNroCuenta() %><input type="hidden" name="NroCuenta" value="<%= cuenta.getNroCuenta() %>"></td>
+                    <td><%= cuenta.getNroDeCliente() %></td>
+                    <td><%= cuenta.getTipoDeCuenta() %></td>
+                    <td><%= cuenta.getFechaCreacion() %></td>
+                    <td><%= cuenta.getCbu() %></td>
+                    <td><%= cuenta.getSaldo() %></td>
+                    <td>
+                        <input type="submit" name="btnModificar" value="Modificar" class="btn btn-warning">
+                        <input type="submit" name="Eliminar" value="Eliminar" class="btn btn-danger">
+                    </td>
+                </form>
+            </tr>
+<%
+        }
+%><br><ul class="pagination"><% 
+        // links de paginacion
+        int totalPages = (int) Math.ceil((double) listaCuentas.size() / itemsPerPage);
+        for (int pageLink = 1; pageLink <= totalPages; pageLink++) {
+        	%>
+        	           <li class="page-item"><a class="page-link" href="ServletCuentas?page=<%= pageLink %>"><%= pageLink %></a></li>
+<%
+        }
+    }};
+%>
+</ul>
 </table>
 </body>
 </html>

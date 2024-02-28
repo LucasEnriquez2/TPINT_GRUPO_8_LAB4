@@ -45,6 +45,16 @@ public class ServletCuentas extends HttpServlet {
 		if(sesion.getAttribute("esAdmin")!=null) {
 			if((int)sesion.getAttribute("esAdmin")==1) {
 				
+				if(request.getParameter("page")!=null) {
+					String page=request.getParameter("page");
+					request.setAttribute("ListaCuentas", null);
+					CuentaNegocioImpl cuenta = new CuentaNegocioImpl();
+					ArrayList<Cuenta> listaCuentas = (ArrayList<Cuenta>) cuenta.ListarCuentas();
+					request.setAttribute("ListaCuentas", listaCuentas);
+					request.setAttribute("page",page);
+					RequestDispatcher rd = request.getRequestDispatcher("/Cuentas.jsp");
+					rd.forward(request, response);
+				}
 				
 				if(request.getParameter("Listar")!=null) {
 					request.setAttribute("ListaCuentas", null);
