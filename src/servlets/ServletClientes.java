@@ -110,6 +110,8 @@ public class ServletClientes extends HttpServlet {
 		}
 		
 		if(request.getParameter("Modificar")!=null) {
+			int modif = 0;
+			
 			ClienteNegocioImpl cliente = new ClienteNegocioImpl();
 			Cliente c= new Cliente();
 			c.setNdeCliente(Integer.valueOf(request.getParameter("NroCliente")));
@@ -127,6 +129,30 @@ public class ServletClientes extends HttpServlet {
 			c.setTelefono(request.getParameter("Telefono"));
 			c.setUsuario(request.getParameter("Usuario"));
 			c.setContrasenia(request.getParameter("Contrasenia"));
+			
+			if (request.getParameter("CUIL").equals("")) modif = 1;
+			if (request.getParameter("Nombre").equals("")) modif = 1;
+			if (request.getParameter("Apellido").equals("")) modif = 1;
+			if (request.getParameter("Nacionalidad").equals("")) modif = 1;
+			if (request.getParameter("Direccion").equals("")) modif = 1;
+			if (request.getParameter("Localidad").equals("")) modif = 1;
+			if (request.getParameter("Provincia").equals("")) modif = 1;
+			if (request.getParameter("Mail").equals("")) modif = 1;
+			if (request.getParameter("Telefono").equals("")) modif = 1;
+			if (request.getParameter("Contrasenia").equals("")) modif = 1;
+			
+			
+			if (modif == 1) {
+				ClienteNegocioImpl lista = new ClienteNegocioImpl();
+	    		ArrayList<Cliente> listaClientes2 = (ArrayList<Cliente>) lista.ListarClientes();
+	    		request.setAttribute("ListaClientes", listaClientes2);
+				request.setAttribute("modif", modif);
+				RequestDispatcher rd = request.getRequestDispatcher("/Clientes.jsp");   
+				
+		        rd.forward(request, response);
+		        
+		        return;
+			}
 			
 			int x=cliente.ModificarCliente(c);
 			if(x==1) {
@@ -298,7 +324,7 @@ public class ServletClientes extends HttpServlet {
     				
     			}
     			if (cliente.getUsuario().equals(z.getUsuario())) {
-    				filas = 2;
+    				filas = 3;
     			}
     		}
 			
