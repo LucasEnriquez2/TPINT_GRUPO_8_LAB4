@@ -18,8 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import daoImpl.DaoClienteImpl;
 import entidad.Cliente;
+import entidad.Cuenta;
 import entidad.Usuario;
 import negocioImpl.ClienteNegocioImpl;
+import negocioImpl.CuentaNegocioImpl;
 
 
 @WebServlet("/ServletClientes")
@@ -34,6 +36,17 @@ public class ServletClientes extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		if(request.getParameter("pagina")!=null) {
+			String pagina = request.getParameter("pagina");
+			request.setAttribute("ListaClientes", null);
+			ClienteNegocioImpl cliente = new ClienteNegocioImpl();
+			ArrayList<Cliente> listaClientes = (ArrayList<Cliente>) cliente.ListarClientes();
+			request.setAttribute("ListaClientes", listaClientes);
+			request.setAttribute("pagina",pagina);
+			RequestDispatcher rd = request.getRequestDispatcher("/Clientes.jsp");
+			rd.forward(request, response);
+		}
 		
 		if (request.getParameter("Pagina") != null) {
     		DaoClienteImpl cliDao = new DaoClienteImpl();
@@ -275,20 +288,30 @@ public class ServletClientes extends HttpServlet {
 			usuario.setUsuario(request.getParameter("txtUsuario"));
 			usuario.setContrasenia(request.getParameter("txtContrasenia"));
 
-			/*if (request.getParameter("txtContrasenia") != request.getParameter("txtContrasenia2")) {
-				//request.setAttribute("txtContrasenia", "asda");
-				//request.setAttribute("txtContrasenia2", "asda111");
-				ArrayList<Cliente> listaClientes = (ArrayList<Cliente>) c.ListarClientes();
-	    		request.setAttribute("ListaClientes", listaClientes);
-	    		filas = 2;
+			
+			ClienteNegocioImpl lista = new ClienteNegocioImpl();
+    		ArrayList<Cliente> listaClientes2 = (ArrayList<Cliente>) lista.ListarClientes();
+    		
+    		for (Cliente z: listaClientes2) {
+    			if (cliente.getDNI().equals(z.getDNI())) {
+    				filas = 2;
+    				
+    			}
+    			if (cliente.getUsuario().equals(z.getUsuario())) {
+    				filas = 2;
+    			}
+    		}
+			
+			
+			if (filas == 2) {
+	    		request.setAttribute("ListaClientes", listaClientes2);
 				request.setAttribute("cantFilas", filas);
 				RequestDispatcher rd = request.getRequestDispatcher("/Clientes.jsp");   
 				
 		        rd.forward(request, response);
 		        
 		        return;
-				
-			}*/
+			}
 			
 			int e=1;
 			String estado = Integer.toString(e);

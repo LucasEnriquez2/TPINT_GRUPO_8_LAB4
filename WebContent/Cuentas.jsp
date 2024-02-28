@@ -95,19 +95,19 @@ if(request.getAttribute("CuentaEliminar")!=null){
 }else{
 	if(request.getAttribute("ListaCuentas")!=null){
         ArrayList<Cuenta> listaCuentas = ((ArrayList<Cuenta>) request.getAttribute("ListaCuentas"));
-        int itemsPerPage = 10;
-        int currentPage = 1;
+        int itemsPorPagina = 10;
+        int paginaActual = 1;
 
         
         String pageParam = request.getParameter("page");
         if (pageParam != null && !pageParam.isEmpty()) {
-            currentPage = Integer.parseInt(pageParam);
+        	paginaActual = Integer.parseInt(pageParam);
         }
 
-        int startIndex = (currentPage - 1) * itemsPerPage;
-        int endIndex = Math.min(startIndex + itemsPerPage, listaCuentas.size());
+        int empieza = (paginaActual - 1) * itemsPorPagina;
+        int termina = Math.min(empieza + itemsPorPagina, listaCuentas.size());
 
-        for (int i = startIndex; i < endIndex; i++) {
+        for (int i = empieza; i < termina; i++) {
             Cuenta cuenta = listaCuentas.get(i);
 %>
             <tr>
@@ -128,7 +128,7 @@ if(request.getAttribute("CuentaEliminar")!=null){
         }
 %><br><ul class="pagination"><% 
         // links de paginacion
-        int totalPages = (int) Math.ceil((double) listaCuentas.size() / itemsPerPage);
+        int totalPages = (int) Math.ceil((double) listaCuentas.size() / itemsPorPagina);
         for (int pageLink = 1; pageLink <= totalPages; pageLink++) {
         	%>
         	           <li class="page-item"><a class="page-link" href="ServletCuentas?page=<%= pageLink %>"><%= pageLink %></a></li>

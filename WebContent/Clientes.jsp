@@ -8,6 +8,8 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="css/Style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
@@ -57,7 +59,7 @@ if (session.getAttribute("username") != null) {
 				
 		</ul>
 </div>
-<table style="width:100%" border="1">
+<table style="width:100%" class="table table-striped" border="1">
 <thead>
 		<tr>
 			<th>nro. de cliente</th>
@@ -148,8 +150,20 @@ if (session.getAttribute("username") != null) {
 <%}else{
 	if(request.getAttribute("ListaClientes")!=null){
 		ArrayList<Cliente> listaClientes =((ArrayList<Cliente>)request.getAttribute("ListaClientes"));
-		for(Cliente cliente:listaClientes)
+		int itemsPorPagina = 10;
+        int paginaActual = 1;
+		
+        String numeroPagina = request.getParameter("pagina");
+        if (numeroPagina != null && !numeroPagina.isEmpty()) {
+            paginaActual = Integer.parseInt(numeroPagina);
+        }
+
+        int empieza = (paginaActual - 1) * itemsPorPagina;
+        int termina = Math.min(empieza + itemsPorPagina, listaClientes.size());
+        
+		for(int i = empieza; i < termina; i++)
 		{
+			Cliente cliente = listaClientes.get(i);
 	%>
 		<tr>
 			<form action="ServletClientes" method = "get">
@@ -172,7 +186,15 @@ if (session.getAttribute("username") != null) {
 			<td><a href="ServletClientes?FilaE=<%=cliente.getNdeCliente()%>">Eliminar</a></td>  
 			</form>  
 		</tr>
-		<%}} }%>
+		<%}
+		%><br><ul class="pagination"><% 
+		        // links de paginacion
+		        int totalPaginas = (int) Math.ceil((double) listaClientes.size() / itemsPorPagina);
+		        for (int pageLink = 1; pageLink <= totalPaginas; pageLink++) {
+		        	%>
+		        	           <li class="page-item"><a class="page-link" href="ServletClientes?pagina=<%= pageLink %>"><%= pageLink %></a></li>
+		<%
+		        }} };%>
 	
 </table>
 
@@ -214,14 +236,18 @@ if (session.getAttribute("username") != null) {
 <% if(filas==1) 
 	{
 %>
-		Cliente agregado con éxito
+	<script>
+    	alert("Cliente agregado!");
+	</script>
 <%} %>
 
 <% if(filas==2) 
 	{
 	
 %>
-		Las contrasenias no coinciden
+	<script>
+    	alert("Ya existe un cliente con ese DNI o Usuario");
+	</script>
 <%} %>
 <script>
     function validarFormulario() {
