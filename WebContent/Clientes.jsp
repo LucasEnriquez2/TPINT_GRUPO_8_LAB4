@@ -96,8 +96,8 @@ if (session.getAttribute("username") != null) {
 	<tr>
 	<form action="ServletClientes" method="get">
 	
-				<td><%=cliente.getNdeCliente()%>"</td>
-				<td><%=cliente.getDNI()%></td>
+				<td><%=cliente.getNdeCliente()%><input type="hidden" name="NroCliente" value="<%=cliente.getNdeCliente() %>"></td>
+				<td><%=cliente.getDNI()%><input type="hidden" name="DNI" value="<%=cliente.getDNI() %>"></td>
 				<td><input type="text" name="CUIL" value="<%=cliente.getCUIL()%>"></td>
 				<td><input type="text" name="Nombre" value="<%=cliente.getNombre()%>"></td>
 				<td><input type="text" name="Apellido" value="<%=cliente.getApellido()%>"></td>
@@ -112,6 +112,34 @@ if (session.getAttribute("username") != null) {
 				<td><%=cliente.getUsuario()%></td>
 				<td><input type="text" name="Contrasenia" value="<%=cliente.getContrasenia()%>"></td>
 				<td><input type="submit" name="Modificar" value="Confirmar Modificacion" ></td>
+				<td><input type="submit" name="Cancelar" value="Cancelar" ></td>
+	</form>
+			</tr>
+		</tbody>
+		
+		<% }else if(request.getAttribute("ClienteEliminar")!=null){
+	Cliente cliente=(Cliente)request.getAttribute("ClienteEliminar");
+	session.setAttribute("NdeCliente", cliente.getNdeCliente());
+	%>
+	<tr>
+	<form action="ServletClientes" method="get">
+	
+				<td><%=cliente.getNdeCliente()%><input type="hidden" name="NroCliente" value="<%=cliente.getNdeCliente() %>"></td>
+				<td><%=cliente.getDNI()%></td>
+				<td><%=cliente.getCUIL()%></td>
+				<td><%=cliente.getNombre()%></td>
+				<td><%=cliente.getApellido()%></td>
+				<td><%=cliente.getSexo()%></td>
+				<td><%=cliente.getNacionalidad()%></td>
+				<td><%=cliente.getFechaDeNacimiento()%></td>
+				<td><%=cliente.getDireccion()%></td>
+				<td><%=cliente.getLocalidad()%></td>
+				<td><%=cliente.getProvincia()%></td>
+				<td><%=cliente.getMail()%>"></td>
+				<td><%=cliente.getTelefono()%></td>
+				<td><%=cliente.getUsuario()%></td>
+				<td><%=cliente.getContrasenia()%></td>
+				<td><input type="submit" name="Eliminar" value="Eliminar" ></td>
 				<td><input type="submit" name="Cancelar" value="Cancelar" ></td>
 	</form>
 			</tr>
@@ -141,7 +169,7 @@ if (session.getAttribute("username") != null) {
 			<td><%= cliente.getUsuario()%></td>
 			<td><%= cliente.getContrasenia()%></td>
 			<td><a href="ServletClientes?Fila=<%=cliente.getNdeCliente()%>">Modificar</a></td>  
-			<td> <input type="submit" name="btnEliminar" value="Eliminar"> </td>  
+			<td><a href="ServletClientes?FilaE=<%=cliente.getNdeCliente()%>">Eliminar</a></td>  
 			</form>  
 		</tr>
 		<%}} }%>
@@ -153,26 +181,26 @@ if (session.getAttribute("username") != null) {
 <br> <br>
 <h1>Agregar Cliente</h1>
 
-	DNI: <input type="text" name="txtDNI"> <br><br>
-	CUIL: <input type="text" name="txtCUIL"> <br><br>
-	Nombre: <input type="text" name="txtNombre"> <br><br>
-	Apellido: <input type="text" name="txtApellido"> <br><br>
+	DNI: <input type="text" name="txtDNI" onkeypress="return /[0-9]/i.test(event.key)" required> <br><br>
+	CUIL: <input type="text" name="txtCUIL" onkeypress="return /[0-9]/i.test(event.key)" required> <br><br>
+	Nombre: <input type="text" name="txtNombre" onkeypress="return //i.test(event.key)" required> <br><br>
+	Apellido: <input type="text" name="txtApellido" onkeypress="return //i.test(event.key)" required> <br><br>
 	Sexo: <select name="Sexo" id="sexo">
 			<option value="Masculino"> Masculino</option>
 			<option value="Femenino"> Femenino </option>
 			<option value="Otro"> Otro</option>
 			</select> 
 	 <br><br>
-	Nacionalidad: <input type="text" name="txtNacionalidad"> <br><br>
-	Fecha de Nacimiento:  <input type="date" name="txtFecha"> <br><br>
-	Direccion:  <input type="text" name="txtDireccion"> <br><br>
-	Localidad:  <input type="text" name="txtLocalidad"> <br><br>
-	Provincia:  <input type="text" name="txtProvincia"> <br><br>
-	Email:  <input type="text" name="txtEmail"> <br><br>
-	Telefono:  <input type="text" name="txtTelefono"> <br><br>
-	Usuario:  <input type="text" name="txtUsuario"> <br><br>
-	Contraseña:  <input type="password" name="txtContrasenia"> <br><br>
-	Repetir Contraseña:  <input type="password" name="txtContrasenia2"> <br><br>
+	Nacionalidad: <input type="text" name="txtNacionalidad" onkeypress="return //i.test(event.key)" required> <br><br>
+	Fecha de Nacimiento:  <input type="date" name="txtFecha" onkeypress="return //i.test(event.key)" required> <br><br>
+	Direccion:  <input type="text" name="txtDireccion" onkeypress="return //i.test(event.key)" required> <br><br>
+	Localidad:  <input type="text" name="txtLocalidad" onkeypress="return //i.test(event.key)" required> <br><br>
+	Provincia:  <input type="text" name="txtProvincia" onkeypress="return //i.test(event.key)" required> <br><br>
+	Email:  <input type="text" name="txtEmail" onkeypress="return //i.test(event.key)" required> <br><br>
+	Telefono:  <input type="text" name="txtTelefono" onkeypress="return //i.test(event.key)" required> <br><br>
+	Usuario:  <input type="text" name="txtUsuario" onkeypress="return //i.test(event.key)" required> <br><br>
+	Contraseña:  <input type="password" name="txtContrasenia" onkeypress="return //i.test(event.key)" required> <br><br>
+	Repetir Contraseña:  <input type="password" name="txtContrasenia2" onkeypress="return //i.test(event.key)" required> <br><br>
 	<input type="submit" value="Aceptar" name="btnAceptar"><br><br>
 
 </form>
@@ -188,5 +216,6 @@ if (session.getAttribute("username") != null) {
 %>
 		Cliente agregado con éxito
 <%} %>
+
 </body>
 </html>

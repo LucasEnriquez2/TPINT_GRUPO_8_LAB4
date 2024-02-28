@@ -22,7 +22,7 @@ public class ClienteNegocioImpl implements ClienteNegocio{
 	}
 	
 	@Override
-	public boolean borrar(int id) {
+	public int borrar(int id) {
 		
 		return cli.borrar(id);
 	}

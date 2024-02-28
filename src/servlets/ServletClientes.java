@@ -69,10 +69,37 @@ public class ServletClientes extends HttpServlet {
 			rd.forward(request, response);
 		}
 		
+		if(request.getParameter("FilaE")!=null) {
+			ClienteNegocioImpl cliente = new ClienteNegocioImpl();
+			ArrayList<Cliente> listaClientes = (ArrayList<Cliente>) cliente.ListarClientes();
+			for(Cliente c :listaClientes) {
+				if(Integer.valueOf(request.getParameter("FilaE"))==c.getNdeCliente()) {
+
+					request.setAttribute("ClienteEliminar", c);
+				}
+			}
+
+			RequestDispatcher rd = request.getRequestDispatcher("/Clientes.jsp");
+			rd.forward(request, response);
+		}
+		
+		if(request.getParameter("Eliminar")!=null)
+		{
+			ClienteNegocioImpl cliente = new ClienteNegocioImpl();
+			Cliente c= new Cliente();
+			
+			int x=cliente.borrar(Integer.valueOf(request.getParameter("NroCliente")));
+			if(x==1) {
+				RequestDispatcher rd = request.getRequestDispatcher("/ServletClientes?Listar=1");
+				rd.forward(request, response);
+			}
+			
+		}
+		
 		if(request.getParameter("Modificar")!=null) {
 			ClienteNegocioImpl cliente = new ClienteNegocioImpl();
 			Cliente c= new Cliente();
-			c.setNdeCliente(Integer.parseInt(request.getParameter("NdeCliente")));
+			c.setNdeCliente(Integer.valueOf(request.getParameter("NroCliente")));
 			c.setDNI(request.getParameter("DNI"));
 			c.setCUIL(request.getParameter("CUIL"));
 			c.setNombre(request.getParameter("Nombre"));
@@ -205,7 +232,7 @@ public class ServletClientes extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		
-		if(request.getParameter("btnEliminar")!=null)
+		/*if(request.getParameter("btnEliminar")!=null)
 		{
 			int nro = Integer.parseInt(request.getParameter("NroCliente").toString()) ;
 			ClienteNegocioImpl cliente = new ClienteNegocioImpl();
@@ -217,34 +244,8 @@ public class ServletClientes extends HttpServlet {
     		RequestDispatcher rd = request.getRequestDispatcher("/Clientes.jsp");
     		rd.forward(request, response);
 			
-		}
-		if(request.getParameter("btnModificar")!=null)
-		{
-			ClienteNegocioImpl cliente = new ClienteNegocioImpl();
-			Cliente c= new Cliente();
-			c.setNdeCliente(Integer.parseInt(request.getParameter("NdeCliente")));
-			c.setDNI(request.getParameter("DNI"));
-			c.setCUIL(request.getParameter("CUIL"));
-			c.setNombre(request.getParameter("Nombre"));
-			c.setApellido(request.getParameter("Apellido"));
-			c.setSexo(request.getParameter("Sexo"));
-			c.setNacionalidad(request.getParameter("Nacionalidad"));
-			c.setFechaDeNacimiento(Date.valueOf(request.getParameter("FechaDeNacimiento")));
-			c.setDireccion(request.getParameter("Direccion"));
-			c.setLocalidad(request.getParameter("Localidad"));
-			c.setProvincia(request.getParameter("Provincia"));
-			c.setMail(request.getParameter("Mail"));
-			c.setTelefono(request.getParameter("Telefono"));
-			c.setUsuario(request.getParameter("Usuario"));
-			c.setContrasenia(request.getParameter("Contrasenia"));
-			if(cliente.ModificarCliente(c)==1) {
-			RequestDispatcher rd = request.getRequestDispatcher("/ServletClientes?Listar=1");
-			rd.forward(request, response);
-			}else if(cliente.ModificarCliente(c)==0) {
-			RequestDispatcher rd = request.getRequestDispatcher("/Clientes.jsp");
-			rd.forward(request, response);}
-			
-		}
+		}*/
+		
 		
 	}
 

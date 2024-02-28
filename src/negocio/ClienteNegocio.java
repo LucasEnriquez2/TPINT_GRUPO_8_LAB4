@@ -11,7 +11,7 @@ import entidad.Usuario;
 public interface ClienteNegocio {
 	public List<Cliente> ListarClientes();
 	public List<Cliente> ListarCliente(String usuario);
-	public boolean borrar(int nro);
+	public int borrar(int nro);
 	public int Agregar(Cliente cliente, Usuario usuario);
 	public int ObtenerNdeCliente(String usuario);
 	public void generarSolicitud(Solicitud sol);

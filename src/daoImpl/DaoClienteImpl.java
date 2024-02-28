@@ -62,7 +62,7 @@ public class DaoClienteImpl implements DaoCliente{
 	}
 	
 	@Override
-	public boolean borrar(int nro) {
+	public int borrar(int nro) {
 		
 		PreparedStatement statement;
 		Connection con = Conexion.getConexion().getSQLConexion();
@@ -74,7 +74,7 @@ public class DaoClienteImpl implements DaoCliente{
 			
 			if(statement.executeUpdate() > 0) {
 				con.commit();
-				return true;
+				return 1;
 			}
 			
 		} catch (Exception e) {
@@ -86,7 +86,7 @@ public class DaoClienteImpl implements DaoCliente{
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 
 	public int ModificarCliente(Cliente c) {
