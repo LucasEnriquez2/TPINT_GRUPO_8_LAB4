@@ -15,7 +15,7 @@ HttpSession sesion = request.getSession();
 					<a href="ServletClientes?Listar=1">Clientes</a>
 				</li>
 				<li>
-					<a href="PrestamosPendientes.jsp">Prestamos</a>
+					<a href="ServletSolicitudes">Prestamos</a>
 				</li>
 				<li>
 					<a href="Reportes.jsp">Reportes</a>

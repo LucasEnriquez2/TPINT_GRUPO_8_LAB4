@@ -29,29 +29,7 @@ if (session.getAttribute("username") != null) {
 %>
 
 
-<div class="nav">
-- Bienvenido,&nbsp;<%
-	if(sesion.getAttribute("username")!=null){
-		%><%=sesion.getAttribute("username")%><% 
-	}; %>
-		<ul>
-				<li>
-					<a href="Transferir.jsp">Transferir</a>
-				</li>
-				<li>
-					<a href="ServletMovimientos">Movimientos</a>
-				</li>
-				<li>
-					<a href="ServletPrestamos">Prestamos</a>
-				</li>
-				<li>
-					<a href="ServletDatos?Listar=1">Mis datos</a>
-				</li>
-				<li>
-					<a href="ServletLogout">Cerrar sesión</a>
-				</li>
-		</ul>
-	</div>
+<jsp:include page="NavBarCliente.jsp"/>
 	
 	
 		<form action="ServletTransferir" method="get" class="formTransf" onsubmit="return validarFormulario()">
@@ -95,6 +73,40 @@ if (session.getAttribute("username") != null) {
 			
 		</fieldset>
 		</form>
+<%
+int error=0;
+if(request.getAttribute("error")!=null)
+	error = (int)request.getAttribute("error");
+
+%>
+
+
+<% if(error==1) 
+    {
+%>
+    <script>
+        alert("El CBU no existe. Por favor, verifique el CBU ingresado.");
+    </script>
+<%} %>
+
+<% if(error==2) 
+    {
+
+%>
+    <script>
+        alert("No posee este monto actualmente para realizar una transferencia y/o el monto ingresado debe ser mayor a 0");
+    </script>
+<%} %>
+
+<% if(error==3) 
+    {
+
+%>
+    <script>
+        alert("Transferencia exitosa");
+    </script>
+<%} %>
+
 
 <script>
     function validarFormulario() {
@@ -117,10 +129,15 @@ if (session.getAttribute("username") != null) {
             return false; // Evita que el formulario se envíe si la validación no pasa
         }
 		
+        if(confirm("Seguro que desea realizar esta transferencia?")){
+        	return true; // Envía el formulario si la validación pasa
+        } else {
+        	return false;
+        }
         
-        return true; // Envía el formulario si la validación pasa
         
     }
+    
 </script>
 </body>
 </html>

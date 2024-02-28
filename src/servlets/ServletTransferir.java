@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,7 +34,8 @@ public class ServletTransferir extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
+		int error = 0;
 		String NroDeCuenta = request.getParameter("ncuenta");
 		String Monto = request.getParameter("monto");
 		String Detalle = request.getParameter("detalle");
@@ -44,51 +46,49 @@ public class ServletTransferir extends HttpServlet {
 		CuentaNegocioImpl negM = new CuentaNegocioImpl();
 		MovimientoNegocioImpl negMov = new MovimientoNegocioImpl();
 
-		response.setContentType("text/html");
-		response.setCharacterEncoding("UTF-8");
-		PrintWriter out = response.getWriter();
-		
-		response.setContentType("text/html");
-		response.setCharacterEncoding("UTF-8");
-		PrintWriter out2 = response.getWriter();
-		
-		// Crear un mensaje de confirmación
-        int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea enviar esta transferencia?", "Confirmación", JOptionPane.YES_NO_OPTION);
-
+		// CBU = 1  El CBU no existe. Por favor, verifique el CBU ingresado.
+		// MONTO = 2   No posee este monto actualmente para realizar una transferencia y/o el monto ingresado debe ser mayor a 0
+		// TRANSFERENCIA EXITOSA = 3
+	
         // Verificar la respuesta del usuario
-        if (respuesta == JOptionPane.YES_OPTION) {
+        
         	if (!neg.ExisteCbu(Cbu)) {
-    			out.print("<p style='color: red;'>El CBU no existe. Por favor, verifique el CBU ingresado.</p>"
-    					+ "<a href='Transferir.jsp'> Regresar </a>");
-    			out.flush();
+    			
+    			error = 1;
+    			request.setAttribute("error", error);
+    			RequestDispatcher rd = request.getRequestDispatcher("/Transferir.jsp");
+                rd.forward(request, response);
     			return;
     			
     		}
     		
     		
     		if(!negM.PuedeTransferir(Float.parseFloat(Monto), NroDeCuenta)){
-    			out2.print("<p style='color: red;'> No posee este monto actualmente para realizar una transferencia y/o el monto ingresado debe ser mayor a 0.</p>"
-    					+ "<a href='Transferir.jsp'> Regresar </a>");
-    			out2.flush();
+    			error = 2;
+    			request.setAttribute("error", error);
+    			RequestDispatcher rd = request.getRequestDispatcher("/Transferir.jsp");
+                rd.forward(request, response);
     			return;
     		}
     		
     		
     		if(request.getParameter("btnConfirmar")!=null) {
+    			error = 3;
+    			request.setAttribute("error", error);		
     			negMov.CrearMovimiento(NroDeCuenta, Cbu, Monto, Detalle);
-    			response.sendRedirect("Movimientos.jsp");
+    			RequestDispatcher rd = request.getRequestDispatcher("/Transferir.jsp");
+                rd.forward(request, response);
+                return;
+    			
     		}
-        	
-        	
-            
-        } else {
-            response.sendRedirect("Transferir.jsp");
+    		
+    		RequestDispatcher rd = request.getRequestDispatcher("/Transferir.jsp");
+            rd.forward(request, response);
         }
 
 		
 		   
-	}			
-				
+		
 		
 		
 		

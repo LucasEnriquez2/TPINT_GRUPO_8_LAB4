@@ -26,29 +26,9 @@ if (session.getAttribute("username") != null) {
 	response.sendRedirect("Inicio.jsp");
 }
 %>
-<div class="nav">
-- Bienvenido,&nbsp;<%
-	if(sesion.getAttribute("username")!=null){
-		%><%=sesion.getAttribute("username")%><% 
-	}; %>
-		<ul>
-				<li>
-					<a href="Transferir.jsp">Transferir</a>
-				</li>
-				<li>
-					<a href="ServletMovimientos">Movimientos</a>
-				</li>
-				<li>
-					<a href="ServletPrestamos">Prestamos</a>
-				</li>
-				<li>
-					<a href="ServletDatos?Listar=1">Mis datos</a>
-				</li>
-				<li>
-					<a href="ServletLogout">Cerrar sesión</a>
-				</li>
-		</ul>
-	</div>
+
+<jsp:include page="NavBarCliente.jsp"/>
+
 <h1>Datos del Cliente</h1>
 <h2> Datos Personales</h2>
 <table style="width:100%" border="1">

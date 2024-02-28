@@ -26,31 +26,7 @@ if (sesion.getAttribute("username") == null) {
 }
 %>
 
-<div class="nav">
-    - Bienvenido,&nbsp;<%
-    if (sesion.getAttribute("username") != null) {
-        out.print(sesion.getAttribute("username"));
-    }
-    %>
-    <ul>
-        <li>
-            <a href="Transferir.jsp">Transferir</a>
-        </li>
-        <li>
-            <a href="ServletMovimientos">Movimientos</a>
-            
-        </li>
-        <li>
-            <a href="ServletPrestamos">Prestamos</a>
-        </li>
-        <li>
-            <a href="ServletDatos?Listar=1">Mis datos</a>
-        </li>
-        <li>
-            <a href="ServletLogout">Cerrar sesión</a>
-        </li>
-    </ul>
-</div>
+<jsp:include page="NavBarCliente.jsp"/>
 
 <%
 ArrayList<Movimiento> listaMovimientos = null;

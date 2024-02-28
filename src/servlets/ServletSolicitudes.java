@@ -41,16 +41,10 @@ public class ServletSolicitudes extends HttpServlet {
 		//CUENTAS
 		ClienteNegocioImpl neg = new ClienteNegocioImpl();
 		
-		//SOLICITUDES
 		
-		List<Solicitud> listaDeSolicitudes = neg.ListarTodasLasSolicitudes();
-		request.setAttribute("ListaDeSolicitudes", listaDeSolicitudes);
+		
 		
 		// APROBAR RECHAZAR.
-		
-		// ServletSolicitudes?NroDeSolicitud=1&Aprobar=Aprobar
-		
-		// UPDATE solicitud SET Estado = '?' WHERE NdeSolicitud = '?';
 		
 		String estado = "";
 		String nsolicitud = "";
@@ -69,6 +63,11 @@ public class ServletSolicitudes extends HttpServlet {
 			neg.AprobarRechazarSolicitud(estado, nsolicitud);
 			
 		}
+		
+		//SOLICITUDES
+		
+		List<Solicitud> listaDeSolicitudes = neg.ListarTodasLasSolicitudes();
+		request.setAttribute("ListaDeSolicitudes", listaDeSolicitudes);
 		
 		
 		

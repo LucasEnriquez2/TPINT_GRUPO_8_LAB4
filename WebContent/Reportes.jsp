@@ -25,29 +25,9 @@ if (session.getAttribute("username") != null) {
 }
 %>
 
-<div class="nav">
-- Bienvenido,&nbsp;<% 
-	if(sesion.getAttribute("username")!=null){
-		%><%=sesion.getAttribute("username")%><% 
-	}; %>
-		<ul>
-				<li>
-					<a href="ServletCuentas?Listar=1">Cuentas</a>
-				</li>
-				<li>
-					<a href="ServletClientes?Listar=1">Clientes</a>
-				</li>
-				<li>
-					<a href="PrestamosPendientes.jsp">Prestamos</a>
-				</li>
-				<li>
-					<a href="Reportes.jsp">Reportes</a>
-				</li>
-				<li>
-					<a href="ServletLogout">Cerrar sesion</a>
-				</li>
-		</ul>
-</div>
+<jsp:include page="NavBarAdmin.jsp"/>
+
+
 	<script>
 	function validarFormulario() {
             var minimo = parseInt(document.getElementById("min").value);
