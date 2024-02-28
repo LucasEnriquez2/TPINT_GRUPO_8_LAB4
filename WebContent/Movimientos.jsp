@@ -41,10 +41,10 @@ if (sesion.getAttribute("username") == null) {
             
         </li>
         <li>
-            <a href="Prestamos.jsp">Prestamo</a>
+            <a href="ServletPrestamos">Prestamo</a>
         </li>
         <li>
-            <a href="DatosClientes.jsp">Mis datos</a>
+            <a href="ServletDatos?Listar=1">Mis datos</a>
         </li>
         <li>
             <a href="ServletLogout">Cerrar sesión</a>

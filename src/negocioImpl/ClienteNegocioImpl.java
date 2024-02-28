@@ -39,9 +39,9 @@ public class ClienteNegocioImpl implements ClienteNegocio{
 	}
 
 	@Override
-	public List<Cliente> ListarCliente(int num) {
+	public List<Cliente> ListarCliente(String usuario) {
 		DaoClienteImpl listar=new DaoClienteImpl();
-		return listar.ListarCliente(num);
+		return listar.ListarCliente(usuario);
 	}
 	
 	@Override

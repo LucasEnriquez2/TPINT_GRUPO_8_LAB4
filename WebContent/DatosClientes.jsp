@@ -36,10 +36,10 @@ if (session.getAttribute("username") != null) {
 					<a href="Transferir.jsp">Transferir</a>
 				</li>
 				<li>
-					<a href="Movimientos.jsp">Movimientos</a>
+					<a href="ServletMovimientos">Movimientos</a>
 				</li>
 				<li>
-					<a href="Prestamos.jsp">Prestamo</a>
+					<a href="ServletPrestamos">Prestamo</a>
 				</li>
 				<li>
 					<a href="ServletDatos?Listar=1">Mis datos</a>
@@ -79,7 +79,7 @@ if (session.getAttribute("username") != null) {
 		{
 	%>
 		<tr>
-			<form action="ServletClientes" method = "post">
+			<form action="ServletDatos" method = "get">
 			<td><%= cliente.getNdeCliente()%> <input type="hidden" name="NroCliente" value="<%=cliente.getNdeCliente() %>"></td>
 			<td><%= cliente.getDNI()%></td>
 			<td><%= cliente.getCUIL()%></td>
@@ -121,13 +121,12 @@ if (session.getAttribute("username") != null) {
 		
 <% 		
 {
-	if(request.getAttribute("ListaCuenta")!=null){
-		ArrayList<Cuenta> listaCuentas =((ArrayList<Cuenta>)request.getAttribute("ListaCuenta"));
+	if(request.getAttribute("ListaCuentas")!=null){
+		ArrayList<Cuenta> listaCuentas =((ArrayList<Cuenta>)request.getAttribute("ListaCuentas"));
 		for(Cuenta cuenta:listaCuentas){%>
 			<tr>
-			<form action="ServletCuentas" method = "post">
-				<td><%= cuenta.getNroCuenta()%> <input type="hidden" name="NroCuenta" value="<%=cuenta.getNroCuenta() %>"></td>
-				
+			<form action="ServletDatos" method = "get">
+				<td><%= cuenta.getNroCuenta()%> <input type="hidden" name="NroCuenta" value="<%=cuenta.getNroCuenta() %>"></td>	
 				<td><%= cuenta.getTipoDeCuenta()%></td>
 				<td><%= cuenta.getFechaCreacion()%></td>
 				<td><%= cuenta.getCbu()%></td>

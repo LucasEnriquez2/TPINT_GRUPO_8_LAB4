@@ -216,14 +216,14 @@ public class DaoClienteImpl implements DaoCliente{
     }
 
 	@Override
-	public List<Cliente> ListarCliente(int num) {
+	public List<Cliente> ListarCliente(String usuario) {
 		PreparedStatement statement;
 		ResultSet resulSet;
 		ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 		Conexion conexion = Conexion.getConexion();
 		try {
-			statement = conexion.getSQLConexion().prepareStatement("SELECT * FROM cliente=c inner join persona=p on p.Dni = c.Dni inner join usuario=u on p.Dni = u.Dni where c.NdeCliente=?");
-			statement.setInt(1, num);
+			statement = conexion.getSQLConexion().prepareStatement("SELECT * FROM cliente=c inner join persona=p on p.Dni = c.Dni inner join usuario=u on p.Dni = u.Dni where u.Usuario=?");
+			statement.setString(1, usuario);
 			resulSet = statement.executeQuery();
 			while(resulSet.next()) {
 				Cliente cliente=new Cliente();

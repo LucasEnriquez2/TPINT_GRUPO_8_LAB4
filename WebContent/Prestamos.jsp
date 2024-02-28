@@ -35,13 +35,13 @@ if (session.getAttribute("username") != null) {
 					<a href="Transferir.jsp">Transferir</a>
 				</li>
 				<li>
-					<a href="Movimientos.jsp">Movimientos</a>
+					<a href="ServletMovimientos">Movimientos</a>
 				</li>
 				<li>
-					<a href="ServletPrestamos">Prestamos</a>
+					<a href="ServletPrestamos">Prestamo</a>
 				</li>
 				<li>
-					<a href="DatosClientes.jsp">Mis datos</a>
+					<a href="ServletDatos?Listar=1">Mis datos</a>
 				</li>
 				<li>
 					<a href="ServletLogout">Cerrar sesión</a>
