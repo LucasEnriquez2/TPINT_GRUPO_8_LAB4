@@ -41,7 +41,7 @@ if (sesion.getAttribute("username") == null) {
             
         </li>
         <li>
-            <a href="ServletPrestamos">Prestamo</a>
+            <a href="ServletPrestamos">Prestamos</a>
         </li>
         <li>
             <a href="ServletDatos?Listar=1">Mis datos</a>
