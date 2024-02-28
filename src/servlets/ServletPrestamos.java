@@ -44,7 +44,7 @@ public class ServletPrestamos extends HttpServlet {
     	HttpSession usuarioSession = request.getSession();
     	ClienteNegocioImpl neg = new ClienteNegocioImpl();
 		int numcliente = neg.ObtenerNdeCliente((String) usuarioSession.getAttribute("username"));
-    	
+    	int errorp = 0;
 		
     	
 		//CUENTAS
@@ -64,25 +64,28 @@ public class ServletPrestamos extends HttpServlet {
 			int Cuotas = Integer.parseInt(request.getParameter("cuotas"));
 			int Cuenta = Integer.parseInt(request.getParameter("cuenta"));
 			
-			response.setContentType("text/html");
-			response.setCharacterEncoding("UTF-8");
-			PrintWriter out = response.getWriter();
-			PrintWriter out2 = response.getWriter();
+			// errorp 1 : El monto ingresado debe ser mayor a 0
+			// errorp 2 : Solicitud de prestamo creada correctamente.
+			
 	
 	    	if(Monto <= 0){
+	    		errorp = 1;
+	    		request.setAttribute("errorp", errorp);
+    			RequestDispatcher rd = request.getRequestDispatcher("/Prestamos.jsp");
+                rd.forward(request, response);
+    			return;
 	    			
-	    			out.print("<p style='color: red;'> El monto ingresado debe ser mayor a 0.</p>"
-	    	                + "<a href='ServletPrestamos'> Regresar </a>");
-	    	        out.flush();
 	    			
 	    	} else {
-	    		
+	    		errorp=2;
 	    		Solicitud sol = new Solicitud(numcliente, Cuenta, Monto, Cuotas, "Pendiente");
 	    		neg.generarSolicitud(sol);
+	    		request.setAttribute("errorp", errorp);
+    			RequestDispatcher rd = request.getRequestDispatcher("/Prestamos.jsp");
+                rd.forward(request, response);
+    			return;
 	    		
-	    		out2.print("<p style='color: green;'> Solicitud de prestamo creada correctamente.</p>"
-    	                + "<a href='ServletPrestamos'> Regresar </a>");
-    	        out2.flush();
+	    		
 	    		
 	    	} 
 			

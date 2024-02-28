@@ -136,6 +136,31 @@ if (request.getAttribute("ListaSolicitudes") != null) {
 </table>
 
 
+<%
+int errorp=0;
+if(request.getAttribute("errorp")!=null)
+	errorp = (int)request.getAttribute("errorp");
+
+%>
+
+
+<% if(errorp==1) 
+    {
+%>
+    <script>
+        alert("El monto ingresado debe ser mayor a 0");
+    </script>
+<%} %>
+
+<% if(errorp==2) 
+    {
+
+%>
+    <script>
+        alert("Solicitud de prestamo creada correctamente.");
+    </script>
+<%} %>
+
 
 
 
@@ -149,7 +174,16 @@ if (request.getAttribute("ListaSolicitudes") != null) {
             return false; // Evita que el formulario se envíe si la validación no pasa
         }
         
-        return true; // Envía el formulario si la validación pasa
+        if(confirm("Seguro que desea adquirir este prestamo?")){
+        	return true; // Envía el formulario si la validación pasa
+        } else {
+        	return false;
+        }
+        
+        
+        
+        
+        
         
     }
 </script>
