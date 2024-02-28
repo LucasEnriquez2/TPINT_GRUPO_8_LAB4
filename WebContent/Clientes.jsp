@@ -176,7 +176,7 @@ if (session.getAttribute("username") != null) {
 	
 </table>
 
-<form action="ServletClientes" method="post">
+<form action="ServletClientes" method="post" onsubmit="return validarFormulario()">
 
 <br> <br>
 <h1>Agregar Cliente</h1>
@@ -199,8 +199,8 @@ if (session.getAttribute("username") != null) {
 	Email:  <input type="text" name="txtEmail" onkeypress="return //i.test(event.key)" required> <br><br>
 	Telefono:  <input type="text" name="txtTelefono" onkeypress="return //i.test(event.key)" required> <br><br>
 	Usuario:  <input type="text" name="txtUsuario" onkeypress="return //i.test(event.key)" required> <br><br>
-	Contraseña:  <input type="password" name="txtContrasenia" onkeypress="return //i.test(event.key)" required> <br><br>
-	Repetir Contraseña:  <input type="password" name="txtContrasenia2" onkeypress="return //i.test(event.key)" required> <br><br>
+	Contraseña:  <input type="password" id="pass1" name="txtContrasenia" onkeypress="return //i.test(event.key)" required> <br><br>
+	Repetir Contraseña:  <input type="password" id="pass2" name="txtContrasenia2" onkeypress="return //i.test(event.key)" required> <br><br>
 	<input type="submit" value="Aceptar" name="btnAceptar"><br><br>
 
 </form>
@@ -217,5 +217,28 @@ if (session.getAttribute("username") != null) {
 		Cliente agregado con éxito
 <%} %>
 
+<% if(filas==2) 
+	{
+	
+%>
+		Las contrasenias no coinciden
+<%} %>
+<script>
+    function validarFormulario() {
+        var pass1 = document.getElementById("pass1").value.trim();
+        var pass2 = document.getElementById("pass2").value.trim();
+        
+
+        if (pass1 != pass2) {
+            alert("Las contrasenias no coinciden.");
+            document.getElementById("pass1").value = "";
+            document.getElementById("pass2").value = "";
+            return false; // Evita que el formulario se envíe si la validación no pasa
+        }
+        
+        return true; // Envía el formulario si la validación pasa
+        
+    }
+</script>
 </body>
 </html>
