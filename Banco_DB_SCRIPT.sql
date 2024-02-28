@@ -495,6 +495,34 @@ END;
 
 DELIMITER ;
 
+#TRIGGER SOLICITUD A PRESTAMO
+
+DELIMITER //
+
+CREATE TRIGGER crear_movimiento_update_solicitud
+AFTER UPDATE ON solicitud
+FOR EACH ROW
+BEGIN
+	DECLARE nestado VARCHAR(45);
+
+	SELECT NEW.Estado INTO nestado
+    FROM solicitud	
+    WHERE NdeSolicitud = NEW.NdeSolicitud;
+    
+    -- Actualizar el saldo de la cuenta basado en el importe del movimiento si nestado es Aprobado
+	IF nestado = 'Aprobado' THEN
+		
+		INSERT INTO prestamo (NdeCliente, NdeCuenta, Fecha, ImporteSolicitado , ImporteAPagar, Plazo, Monto, Estado)
+		VALUES(NEW.NdeCliente, NEW.NdeCuenta, CURDATE(), NEW.ImporteSolicitado, NEW.ImporteAPagar, NEW.Plazo, NEW.Monto, 'En curso');
+        
+    END IF;
+END;
+//
+
+DELIMITER ;
+
+
+
 
 
 /* CALL Transferencia(1, '42470940090414778459', -1000, 'Compra de productos');

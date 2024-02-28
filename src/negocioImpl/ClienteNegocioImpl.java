@@ -62,5 +62,17 @@ public class ClienteNegocioImpl implements ClienteNegocio{
 		DaoClienteImpl dao= new DaoClienteImpl();
 		return dao.ListarSolicitudes(ncliente);
 	}
+	
+	@Override
+	public List<Solicitud> ListarTodasLasSolicitudes(){
+		DaoClienteImpl dao= new DaoClienteImpl();
+		return dao.ListarTodasLasSolicitudes();
+	}
+	
+	@Override
+	public void AprobarRechazarSolicitud(String estado, String nsolicitud) {
+		DaoClienteImpl dao= new DaoClienteImpl();
+		dao.AprobarRechazarSolicitud(estado, nsolicitud);
+	}
 }
 

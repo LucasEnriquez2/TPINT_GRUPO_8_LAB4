@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@page import="entidad.Solicitud"%>
+<%@page import="java.util.ArrayList"%>
+
+<%@page import="entidad.Cliente"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,7 +41,7 @@ if (session.getAttribute("username") != null) {
 					<a href="ServletClientes?Listar=1">Clientes</a>
 				</li>
 				<li>
-					<a href="PrestamosPendientes.jsp">Prestamos</a>
+					<a href="ServletSolicitudes">Prestamos</a>
 				</li>
 				<li>
 					<a href="Reportes.jsp">Reportes</a>
@@ -46,58 +51,84 @@ if (session.getAttribute("username") != null) {
 				</li>
 		</ul>
 </div>
+
+<% 
+
+
+ArrayList<Solicitud> listaDeSolicitudes = null;
+if (request.getAttribute("ListaDeSolicitudes") != null) {
+    listaDeSolicitudes = (ArrayList<Solicitud>)request.getAttribute("ListaDeSolicitudes");
+}
+
+
+
+%>	
+
+
+
+
+
+
 <table style="width:100%" border="1">
 <thead>
 		<tr>
-			<th>nro. de prestamo</th>
-			<th>nro. de cuenta</th>
-			<th>nro. de cliente</th>
+			<th>Nro de Solicitud</th>
+			<th>Nro de Cliente</th>
+			<th>Nro de CUENTA</th>
 			<th>Fecha</th>
 			<th>Importe solicitado</th>
-			<th>Importe total a pagar</th>
-			<th>Cantidad de cuotas</th>
-			<th>Cuota Mensual</th>
+			<th>Importe TOTAL a Pagar</th>
+			<th>Monto</th>
+			
 		</tr>
 </thead>
 <tbody>
-		<tr>
-			<td>3625498</td>
-			<td>66532</td>
-			<td>00001</td>
-			<td>01/03/2023</td>
-			<td>350000</td>
-			<td>420000</td>
-			<td>12</td>
-			<td>35000</td>
-			<td><a href="" style="color:green">Aprobar</a></td>
-			<td><a href="" style="color:red">Rechazar</a></td>
-		</tr>
-		<tr>
-			<td>3625499</td>
-			<td>66552</td>
-			<td>00002</td>
-			<td>01/03/2023</td>
-			<td>100000</td>
-			<td>120000</td>
-			<td>10</td>
-			<td>12000</td>
-			<td><a href="" style="color:green">Aprobar</a></td>
-			<td><a href="" style="color:red">Rechazar</a></td>
-		</tr>
-		<tr>
-			<td>3625500</td>
-			<td>66542</td>
-			<td>00003</td>
-			<td>01/03/2023</td>
-			<td>1500000</td>
-			<td>1800000</td>
-			<td>18</td>
-			<td>100000</td>
-			<td><a href="" style="color:green">Aprobar</a></td>
-			<td><a href="" style="color:red">Rechazar</a></td>
-		</tr>
+		
+		
+		
+		<%
+ 
+    if (listaDeSolicitudes != null) {
+    	
+    	String pendiente = "Pendiente";
+        for (Solicitud sol : listaDeSolicitudes) {
+        	if(pendiente.equals(String.valueOf(sol.getEstado()))){
+        		
+        		
+   			
+    %>
+    	<form action="ServletSolicitudes" method="get"> 
+            <tr>
+            	
+            	<td><%= sol.getNdeSolicitud()%> <input type="hidden" name="NroDeSolicitud" value="<%=sol.getNdeSolicitud() %>"></td>	
+                <td><%= sol.getNroCuenta() %> </td>
+                <td><%= sol.getFecha()%> </td>
+                <td><%= sol.getImporteSolicitado() %> </td>
+                <td><%= sol.getImporteAPagar() %> </td>
+                <td><%= sol.getPlazo() %> </td>
+                <td><%= sol.getMonto() %> </td>
+                
+                <td><input onclick= "return confirm('Aprobar la solicitud?')" type= "submit"  value="Aprobar" name="Aprobar"  style="color:green"></td>
+				<td><input onclick= "return confirm('Rechazar la solicitud?')" type= "submit" value="Rechazar" name="Rechazar"  style="color:red"></td>
+             
+            </tr>
+         </form> 
+        
+    <%      	
+        	}
+        	}
+    	
+        
+	}
+    
+    %>
+		
+			
+
+		
 	</tbody>
 
 </table>
+
 </body>
 </html>

@@ -344,6 +344,76 @@ public class DaoClienteImpl implements DaoCliente{
 		}
 		return solicitudes;
 	}
+	
+	
+		
+	
+	
+	
+	@Override
+	public void AprobarRechazarSolicitud(String estado, String nsolicitud) {
+		PreparedStatement statement;
+		
+		int nsolicitudINT = Integer.parseInt(nsolicitud);
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		try {
+			statement = conexion.prepareStatement("UPDATE solicitud SET Estado=? WHERE NdeSolicitud=?");
+			statement.setString(1, estado);
+			statement.setInt(2, nsolicitudINT);
+			statement.executeUpdate();
+			
+			if(statement.executeUpdate() > 0)
+			{
+				conexion.commit();
+				
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			try {
+				conexion.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
+		
+		
+		
+	} 
+	
+		
+
+	    
+	
+	@Override
+	public List<Solicitud> ListarTodasLasSolicitudes() {
+		PreparedStatement statement;
+		ResultSet rs;
+		ArrayList<Solicitud> solicitudes = new ArrayList<Solicitud>();
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement("SELECT * FROM solicitud");
+			rs = statement.executeQuery();
+			while(rs.next()) {
+				Solicitud sol=new Solicitud();
+				sol.setNdeSolicitud(rs.getInt("NdeSolicitud"));
+				sol.setNroDeCliente(rs.getInt("NdeCliente"));
+				sol.setNroCuenta(rs.getInt("NdeCuenta"));
+				sol.setFecha(rs.getDate("Fecha"));
+				sol.setImporteSolicitado(rs.getFloat("importeSolicitado"));
+				sol.setImporteAPagar(rs.getFloat("ImporteAPagar"));
+				sol.setPlazo(rs.getInt("Plazo"));
+				sol.setMonto(rs.getFloat("Monto"));
+				sol.setEstado(rs.getString("Estado"));
+				solicitudes.add(sol);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return solicitudes;
+	}
 			 
 		};
 
