@@ -77,7 +77,7 @@ if (session.getAttribute("username") != null) {
 	
 				<td><%=cliente.getNdeCliente()%><input type="hidden" name="NroCliente" value="<%=cliente.getNdeCliente() %>"></td>
 				<td><%=cliente.getDNI()%><input type="hidden" name="DNI" value="<%=cliente.getDNI() %>"></td>
-				<td><input type="text" name="CUIL" value="<%=cliente.getCUIL()%>"></td>
+				<td><input onkeypress="return //i.test(event.key)" required type="text" name="CUIL" value="<%=cliente.getCUIL()%>"></td>
 				<td><input type="text" name="Nombre" value="<%=cliente.getNombre()%>"></td>
 				<td><input type="text" name="Apellido" value="<%=cliente.getApellido()%>"></td>
 				<td><input type="text" name="Sexo" value="<%=cliente.getSexo()%>"></td>
@@ -223,9 +223,35 @@ if (session.getAttribute("username") != null) {
 	
 %>
 	<script>
-    	alert("Ya existe un cliente con ese DNI o Usuario");
+    	alert("Ya existe un cliente con ese DNI");
 	</script>
 <%} %>
+
+<% if(filas==3) 
+	{
+	
+%>
+	<script>
+    	alert("Ya existe un cliente con ese Usuario");
+	</script>
+<%} %>
+
+
+<%
+	int modif=0;
+	if(request.getAttribute("modif")!=null)
+		modif= (int)request.getAttribute("modif");	
+%>
+
+<% if(modif==1) 
+	{
+%>
+	<script>
+    	alert("Debes completar todos los campos!");
+	</script>
+<%} %>
+
+
 <script>
     function validarFormulario() {
         var pass1 = document.getElementById("pass1").value.trim();
