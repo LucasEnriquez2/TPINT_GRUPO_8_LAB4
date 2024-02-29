@@ -87,7 +87,7 @@ public class ServletCuentas extends HttpServlet {
 							request.setAttribute("CuentaModificar", c);
 							}
 						}else {
-							JOptionPane.showMessageDialog(null, "Da null pa");
+							JOptionPane.showMessageDialog(null, "null");
 						}
 					}
 

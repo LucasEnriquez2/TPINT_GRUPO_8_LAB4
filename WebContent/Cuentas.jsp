@@ -81,11 +81,11 @@ if(request.getAttribute("CuentaModificar")!=null){
 	<tr>
 	<form action="ServletCuentas" method="get">
 	
-				<td><input type="text" name="NroCuenta" value="<%=cuenta.getNroCuenta()%>" readonly="readonly"></td>
+				<td><input type="hidden" name="NroCuenta" value="<%=cuenta.getNroCuenta()%>"><%=cuenta.getNroCuenta()%></td>
 				<td><%= cuenta.getNroDeCliente()%></td>
 				<td><input type="text" name="tipoCuenta" value="<%=cuenta.getTipoDeCuenta()%>"></td>
 				<td><%=cuenta.getFechaCreacion()%></td>
-				<td><input type="text" name="cbu" value="<%=cuenta.getCbu()%>"></td>
+				<td><input type="text" name="cbu" value="<%=cuenta.getCbu()%>" onkeypress="return /[0-9]/i.test(event.key)"></td>
 				<td><input type="text" name="saldo" value="<%=cuenta.getSaldo()%>"></td>
 				<td><input type="submit" name="Modificar" value="Confirmar Modificacion" class="btn btn-success"> <input type="submit" name="Cancelar" value="Cancelar" class="btn btn-danger"></td>
 	</form>
@@ -130,7 +130,7 @@ if(request.getAttribute("CuentaEliminar")!=null){
             Cuenta cuenta = listaCuentas.get(i);
 %>
             <tr>
-                <form action="ServletCuentas" method="post">
+                <form action="ServletCuentas" method="get">
                     <td><%= cuenta.getNroCuenta() %><input type="hidden" name="NroCuenta" value="<%= cuenta.getNroCuenta() %>"></td>
                     <td><%= cuenta.getNroDeCliente() %></td>
                     <td><%= cuenta.getTipoDeCuenta() %></td>

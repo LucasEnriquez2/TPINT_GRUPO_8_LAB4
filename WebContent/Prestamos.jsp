@@ -133,7 +133,7 @@ if (request.getAttribute("ListaPrestamos") != null) {
                 <td><%= sol.getPlazo() %> </td>
                 <td><%= sol.getMonto() %> </td>
                 <td><%= sol.getEstado() %> </td>
-                
+                <td><%= sol.getEstado() %> </td>
             </tr>
     <%      
         	}
@@ -149,7 +149,11 @@ if (request.getAttribute("ListaPrestamos") != null) {
 <br><br>
 <h2> Mis prestamos </h2>
 
+<<<<<<< Updated upstream
 <table border="1" class="table table-striped">
+=======
+<table border="1" class="table table-striped" >
+>>>>>>> Stashed changes
     <tr>
         <th>Numero de Prestamo</th>
         <th>Numero de Cuenta</th>
@@ -171,7 +175,9 @@ if (request.getAttribute("ListaPrestamos") != null) {
         	
    			
     %>
+    
             <tr>
+           		<form action="ServletPrestamos" method="post">
                 <td><%= pre.getNdeSolicitud() %> </td>
                 <td><%= pre.getNroCuenta() %> </td>
                 <td><%= pre.getFecha()%> </td>
@@ -181,7 +187,8 @@ if (request.getAttribute("ListaPrestamos") != null) {
                 <td><%= pre.getMonto() %> </td>
                 <td><%= pre.getCuotasPagas() %> </td>
                 <td><%= pre.getEstado() %> </td>
-                
+                <td><input type="submit" value="Pagar cuota" name="Pagar"> </td>
+                </form>
             </tr>
     <%      
         	
