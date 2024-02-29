@@ -1,7 +1,11 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -59,12 +63,86 @@ public class ServletMovimientos extends HttpServlet {
 	    
 	    request.setAttribute("RadioValue", radiovalue);
 	    
+	    if(request.getParameter("BuscarFiltro") != null) {
+
+	    if (!request.getParameter("idMov").isEmpty()) {
+	    	int i = Integer.parseInt(request.getParameter("idMov"));
+	        Iterator<Movimiento> iterator = listaMovimientos.iterator();
+	        while (iterator.hasNext()) {
+	        	Movimiento mov1 = iterator.next();
+	        	if (mov1.getIdMovimiento() != i) {
+	            	iterator.remove();
+	        	}
+	            
+	        }
+	    }
+	    
+	    if (!"Seleccione una opcion".equals(request.getParameter("tipo"))) {
+	        Iterator<Movimiento> iterator = listaMovimientos.iterator();
+	        String tipo = request.getParameter("tipo");
+	        while (iterator.hasNext()) {
+	        	Movimiento m = iterator.next();
+	            if (!m.getTipoDeMovimiento().equals(tipo)) {
+	                iterator.remove();
+	            }
+	        }
+	    }
+	    
+	    if (!request.getParameter("txtFechaDesde").isEmpty() && !request.getParameter("txtFechaHasta").isEmpty()) {
+	        Iterator<Movimiento> iterator = listaMovimientos.iterator();
+	        
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	        java.util.Date fechaDesde = null;
+	        java.util.Date fechaHasta = null;
+
+	        try {
+	            fechaDesde = dateFormat.parse(request.getParameter("txtFechaDesde"));
+	            fechaHasta = dateFormat.parse(request.getParameter("txtFechaHasta"));
+	        } catch (ParseException e) {
+	            e.printStackTrace();
+	        }
+	        
+
+	        while (iterator.hasNext()) {
+	            Movimiento mov1 = iterator.next();
+	            Date fechaNac = mov1.getFecha();
+	 
+	            if (fechaNac.after(fechaHasta) || fechaNac.before(fechaDesde)) {
+	                iterator.remove();
+	            }
+	        }
+	    }
+	    
+	    if (!request.getParameter("minimo").isEmpty() && !request.getParameter("maximo").isEmpty()) {
+	        Iterator<Movimiento> iterator = listaMovimientos.iterator();
+
+	        while (iterator.hasNext()) {
+	            Movimiento m = iterator.next();
+	            float saldo = m.getImporte();
+	            int minimo = Integer.parseInt(request.getParameter("minimo"));
+	            int maximo = Integer.parseInt(request.getParameter("maximo"));
+	 
+	            if (saldo<minimo || saldo>maximo) {
+	                iterator.remove();
+	            }
+	        }
+	    }
+	    
+	    }
+	    
+	    if(request.getParameter("Limpiar")!=null) {
+			MovimientoNegocioImpl mov1 = new MovimientoNegocioImpl();
+		    List<Movimiento> listaMovimientos1 = mov1.ListarMovimientos(numcliente);
+		    request.setAttribute("ListaMovimientos", listaMovimientos1);
+	        RequestDispatcher rd = request.getRequestDispatcher("/Movimientos.jsp");
+	        rd.forward(request, response);
+		}
 	    
 	    
-	    
-    	
         RequestDispatcher rd = request.getRequestDispatcher("/Movimientos.jsp");
         rd.forward(request, response);
+        
+	    
     }
         
     
@@ -73,17 +151,7 @@ public class ServletMovimientos extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
         doGet(request, response);
         
-        
-        
-        
-        
-		
-		
-	        
-		
-		
-		
-    	
-}
+   
 
+	}
 }

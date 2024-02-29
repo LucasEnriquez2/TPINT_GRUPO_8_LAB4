@@ -71,7 +71,7 @@ if (session.getAttribute("username") != null) {
 	Nacionalidad: <select name="nac" id="nac">
 		<option value="Seleccione una opcion"> Seleccione una opcion</option>
 		<option value="Argentino"> Argentino</option>
-		<option value="Chileno"> Chilena </option>
+		<option value="Chilena"> Chilena </option>
 		<option value="Uruguayo"> Uruguayo </option>
 		</select> <br> <br>
 

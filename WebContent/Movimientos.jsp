@@ -84,6 +84,30 @@ if (request.getAttribute("RadioValue") != null) {
  </form>
 </fieldset>
 
+<form id="formulario" action="ServletMovimientos" method="get">
+	<br> <br>
+	   <input type="number" name="idMov" placeholder="Id Movimiento" onkeypress="return /[0-9]/i.test(event.key)">
+	   	Tipo de Movimiento: <select name="tipo" id="tipo">
+		<option value="Seleccione una opcion"> Seleccione una opcion</option>
+		<option value="Alta de Cuenta"> Alta de Cuenta</option>
+		<option value=Transferencia> Transferencia </option>
+		<option value="Alta de Prestamo"> Alta de Prestamo </option>
+		<option value="Pago de Prestamo"> Pago de Prestamo </option>
+		</select>
+		Fecha: 
+		Desde <input type="date" name="txtFechaDesde" onkeypress="return //i.test(event.key)" >
+		Hasta <input type="date" name="txtFechaHasta" onkeypress="return //i.test(event.key)" >
+		Importe:  
+		<input type="number" name="minimo" placeholder="Minimo" onkeypress="return /[0-9]/i.test(event.key)" > 
+		<input type="number" name="maximo" placeholder="Maximo" onkeypress="return /[0-9]/i.test(event.key)" >
+	   <input type="submit" name="BuscarFiltro" value="Buscar">
+
+</form>
+
+<form id="formulario" action="ServletMovimientos" method="get">
+    <input type="submit" name="Limpiar" value="Limpiar Filtros">
+</form>
+
 <br> <br>
 <table border="1" class="table table-striped">
     <tr>
