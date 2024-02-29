@@ -117,6 +117,20 @@ public class ServletCuentas extends HttpServlet {
 						rd.forward(request, response);}
 				}
 				
+				if(request.getParameter("btnEliminar")!=null)
+				{
+					int nro = Integer.parseInt(sesion.getAttribute("NroCuenta").toString()) ;
+					CuentaNegocioImpl cuenta = new CuentaNegocioImpl();
+					cuenta.borrar(nro);
+					
+					ArrayList<Cuenta> listaCuentas = (ArrayList<Cuenta>) cuenta.ListarCuentas();
+		    		request.setAttribute("ListaCuentas", listaCuentas);
+		    		
+		    		RequestDispatcher rd = request.getRequestDispatcher("/Cuentas.jsp");
+		    		rd.forward(request, response);
+					
+				}
+				
 				if(request.getParameter("Eliminar")!=null) {
 					if(request.getParameter("Eliminar")!=null) {
 						CuentaNegocioImpl cuenta = new CuentaNegocioImpl();
@@ -307,19 +321,7 @@ public class ServletCuentas extends HttpServlet {
 		
 		HttpSession sesion = request.getSession();
 		
-		if(request.getParameter("btnEliminar")!=null)
-		{
-			int nro = Integer.parseInt(sesion.getAttribute("NroCuenta").toString()) ;
-			CuentaNegocioImpl cuenta = new CuentaNegocioImpl();
-			cuenta.borrar(nro);
-			
-			ArrayList<Cuenta> listaCuentas = (ArrayList<Cuenta>) cuenta.ListarCuentas();
-    		request.setAttribute("ListaCuentas", listaCuentas);
-    		
-    		RequestDispatcher rd = request.getRequestDispatcher("/Cuentas.jsp");
-    		rd.forward(request, response);
-			
-		}
+		
 	}
 }
 

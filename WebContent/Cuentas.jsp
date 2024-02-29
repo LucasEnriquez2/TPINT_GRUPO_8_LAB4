@@ -97,7 +97,7 @@ if(request.getAttribute("CuentaEliminar")!=null){
 	session.setAttribute("NroCuenta", cuenta.getNroCuenta());
 	%>
 	<tr>
-	<form action="ServletCuentas" method="post">
+	<form action="ServletCuentas" method="get">
 	
 				<td><%= cuenta.getNroCuenta()%></td>
 				<td><%= cuenta.getNroDeCliente()%></td>
