@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import entidad.Cliente;
 import entidad.Cuenta;
 import entidad.Movimiento;
+import negocioImpl.ClienteNegocioImpl;
 import negocioImpl.CuentaNegocioImpl;
 import negocioImpl.MovimientoNegocioImpl;
 
@@ -45,14 +47,24 @@ public class ServletReportes extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		
+		
+		
 		int minimo = Integer.parseInt(request.getParameter("min"));
 	    int maximo = Integer.parseInt(request.getParameter("max"));
 	    
 		if(minimo != maximo && maximo > minimo) {
 			
+			if(request.getParameter("pagina")!=null) {
+				String pagina = request.getParameter("pagina");
+				request.setAttribute("ListaMovimientos", null);
+				MovimientoNegocioImpl movimiento = new MovimientoNegocioImpl();
+				ArrayList<Movimiento> listaMovimientos = (ArrayList<Movimiento>) movimiento.ListarMovimientoParametrizados(minimo, maximo);
+				request.setAttribute("ListaMovimientos", listaMovimientos);
+				request.setAttribute("pagina",pagina);
+			}
+			
 			MovimientoNegocioImpl movimiento = new MovimientoNegocioImpl();
 			ArrayList<Movimiento> listaMovimientos = (ArrayList<Movimiento>) movimiento.ListarMovimientoParametrizados(minimo, maximo);
-			request.setAttribute("ListaMovimientos", listaMovimientos);
 			
 			float totalPositivo = 0;
 			float totalNegativo = 0;

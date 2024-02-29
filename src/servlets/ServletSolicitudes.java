@@ -54,6 +54,8 @@ public class ServletSolicitudes extends HttpServlet {
 			estado = "Aprobado";
 			nsolicitud = request.getParameter("NroDeSolicitud");
 			neg.AprobarRechazarSolicitud(estado, nsolicitud);
+			List<Solicitud> listaDeSolicitudes = neg.ListarTodasLasSolicitudes();
+			request.setAttribute("ListaDeSolicitudes", listaDeSolicitudes);
 			RequestDispatcher rd = request.getRequestDispatcher("/PrestamosPendientes.jsp");
 		    rd.forward(request, response);
 			return;
@@ -63,6 +65,8 @@ public class ServletSolicitudes extends HttpServlet {
 			nsolicitud = request.getParameter("NroDeSolicitud");
 			estado = "Rechazado";
 			neg.AprobarRechazarSolicitud(estado, nsolicitud);
+			List<Solicitud> listaDeSolicitudes = neg.ListarTodasLasSolicitudes();
+			request.setAttribute("ListaDeSolicitudes", listaDeSolicitudes);
 			RequestDispatcher rd = request.getRequestDispatcher("/PrestamosPendientes.jsp");
 		    rd.forward(request, response);
 			return;

@@ -42,7 +42,7 @@ if (session.getAttribute("username") != null) {
             return true; // Envía el formulario si la validación es exitosa.
         }
 	</script>
-	<form action="ServletReportes" method="post" onsubmit="return validarFormulario();">
+	<form action="ServletReportes" method="post" onsubmit="return validarFormulario()">
 		<p> Buscar los movimientos que se encuentren entre el monto minimo y maximo ingresado.</p>
 		
 		
@@ -52,21 +52,14 @@ if (session.getAttribute("username") != null) {
     
         <input type="submit" value="Buscar">      
     </form>
-    
-	<%
-    ArrayList<Movimiento> listaMovimientos=null;
-    if(request.getAttribute("ListaMovimientos")!= null)
-    {
-    	listaMovimientos = (ArrayList<Movimiento>) request.getAttribute("ListaMovimientos");
-    } 
-  
-	%>
 	
 	<br> <br>
 	
 	<%
-	if(listaMovimientos!=null) 
-	{ %>
+	if(request.getAttribute("ListaMovimientos")!=null) 
+	{
+		ArrayList<Movimiento> listaMovimientos = (ArrayList<Movimiento>) request.getAttribute("ListaMovimientos");
+		%>
 	
 	<table border="1" class="table table-striped"> 
 	
@@ -95,7 +88,21 @@ if (session.getAttribute("username") != null) {
 	</tr>
 	
 	<%
-	for(Movimiento mov : listaMovimientos){ %>
+	
+	int itemsPorPagina = 10;
+    int paginaActual = 1;
+	
+    String numeroPagina = request.getParameter("pagina");
+    if (numeroPagina != null && !numeroPagina.isEmpty()) {
+        paginaActual = Integer.parseInt(numeroPagina);
+    }
+
+    int empieza = (paginaActual - 1) * itemsPorPagina;
+    int termina = Math.min(empieza + itemsPorPagina, listaMovimientos.size());
+    
+	for(int i = empieza; i < termina; i++)
+	{
+		Movimiento mov = listaMovimientos.get(i); %>
 	<tr>
 		<td><%= mov.getIdMovimiento() %> </td>  
 		<td><%= mov.getNdeCuenta() %> </td>  
@@ -104,8 +111,15 @@ if (session.getAttribute("username") != null) {
 		<td><%= mov.getDetalle() %> </td>
 		<td><%= mov.getImporte() %> </td> 
 	</tr>
-	<%}} %>
-	
+	<%} %>
+	<br><ul class="pagination"><% 
+		        // links de paginacion
+		        int totalPaginas = (int) Math.ceil((double) listaMovimientos.size() / itemsPorPagina);
+		        for (int pageLink = 1; pageLink <= totalPaginas; pageLink++) {
+		        	%>
+		        	 <li class="page-item"><a class="page-link" href="ServletReportes?pagina=<%= pageLink %>"><%= pageLink %></a></li>
+	<%
+		        }};%>
 	
 	
 	</table>

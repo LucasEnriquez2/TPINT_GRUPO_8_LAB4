@@ -217,7 +217,9 @@ if(request.getAttribute("errorp")!=null)
     <script>
         alert("Solicitud de prestamo creada correctamente.");
     </script>
-<%} %>
+<%
+	response.sendRedirect("ServletPrestamos");
+    } %>
 
 
 
