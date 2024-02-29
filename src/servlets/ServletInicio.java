@@ -1,6 +1,8 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import entidad.Cuenta;
+import negocioImpl.CuentaNegocioImpl;
 import negocioImpl.UsuarioNegocioImpl;
 
 /**
@@ -44,6 +48,9 @@ public class ServletInicio extends HttpServlet {
 	            	response.sendRedirect("Inicio.jsp");
 	            } else if(existe == 1) {	       
 	            	usuarioSession.setAttribute("esAdmin", 0);
+	            	
+	            	
+	                
 	            	response.sendRedirect("Transferir.jsp");
 	            } else {	            	
 	            	usuarioSession.setAttribute("esAdmin", 1);

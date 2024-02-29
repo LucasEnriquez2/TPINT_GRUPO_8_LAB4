@@ -28,7 +28,14 @@ if (session.getAttribute("username") != null) {
 }
 %>
 
+<%
 
+ArrayList<Cuenta> listaCuentas = null;
+if (request.getAttribute("ListaCuentas") != null) {
+    listaCuentas = (ArrayList<Cuenta>)request.getAttribute("ListaCuentas");
+}
+
+%>
 <jsp:include page="NavBarCliente.jsp"/>
 	
 	
@@ -38,15 +45,16 @@ if (session.getAttribute("username") != null) {
 			<p>Origen:</p>
 			<div>
 				<select name="ncuenta">
-				
-				 <%
-				if((String)sesion.getAttribute("username")!=null){
-                CuentaNegocioImpl neg = new CuentaNegocioImpl();
-                ArrayList<Cuenta> cuentas = neg.ListarCuentaPorUsuario((String)sesion.getAttribute("username"));
-                for (Cuenta cuenta : cuentas) {
+								
+				<%
+				if(listaCuentas != null){
+                	for (Cuenta cuenta : listaCuentas) {
                 %>
                 <option value="<%= cuenta.getNroCuenta()%>"> <%= cuenta.getNroCuenta()%> - <%= cuenta.getTipoDeCuenta()%> - $ <%= cuenta.getSaldo()%> </option>
-                <% }}; %>
+                <% 
+                	}
+                }
+                %>
 				</select>
 			</div>
 	

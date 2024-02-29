@@ -3,6 +3,8 @@ package servlets;
 import java.io.IOException;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,8 +12,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.swing.JOptionPane;
 
+import entidad.Cuenta;
+import negocioImpl.ClienteNegocioImpl;
 import negocioImpl.CuentaNegocioImpl;
 import negocioImpl.MovimientoNegocioImpl;
 
@@ -35,14 +40,25 @@ public class ServletTransferir extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		
+		//OBTENER SESSION Y USUARIO
+    	HttpSession usuarioSession = request.getSession();
+    	
+    	//CUENTAS
+    	CuentaNegocioImpl negC = new CuentaNegocioImpl();
+    	List<Cuenta> listaCuentas = negC.ListarCuentaPorUsuario((String) usuarioSession.getAttribute("username"));
+    	request.setAttribute("ListaCuentas", listaCuentas);
+
+		
 		int error = 0;
 		String NroDeCuenta = request.getParameter("ncuenta");
 		String Monto = request.getParameter("monto");
 		String Detalle = request.getParameter("detalle");
 		String Cbu = request.getParameter("cbu");
+		
+		
 		    
-		    
-		CuentaNegocioImpl neg = new CuentaNegocioImpl();
+	
 		CuentaNegocioImpl negM = new CuentaNegocioImpl();
 		MovimientoNegocioImpl negMov = new MovimientoNegocioImpl();
 
@@ -52,7 +68,7 @@ public class ServletTransferir extends HttpServlet {
 	
         // Verificar la respuesta del usuario
         
-        	if (!neg.ExisteCbu(Cbu)) {
+        	if (!negM.ExisteCbu(Cbu)) {
     			
     			error = 1;
     			request.setAttribute("error", error);

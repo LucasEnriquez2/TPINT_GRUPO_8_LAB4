@@ -4,6 +4,7 @@
 
 <%@page import="entidad.Cuenta"%>
 <%@page import="entidad.Solicitud"%>
+<%@page import="entidad.Prestamo"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,6 +40,11 @@ if (request.getAttribute("ListaCuentas") != null) {
 ArrayList<Solicitud> listaSolicitudes = null;
 if (request.getAttribute("ListaSolicitudes") != null) {
     listaSolicitudes = (ArrayList<Solicitud>)request.getAttribute("ListaSolicitudes");
+}
+
+ArrayList<Prestamo> listaPrestamos = null;
+if (request.getAttribute("ListaPrestamos") != null) {
+    listaPrestamos = (ArrayList<Prestamo>)request.getAttribute("ListaPrestamos");
 }
 
 
@@ -113,6 +119,7 @@ if (request.getAttribute("ListaSolicitudes") != null) {
     if (listaSolicitudes != null) {
     	
         for (Solicitud sol : listaSolicitudes) {
+        	if(!"Aprobado".equals(String.valueOf(sol.getEstado()))){
    			
     %>
             <tr>
@@ -126,7 +133,56 @@ if (request.getAttribute("ListaSolicitudes") != null) {
                 <td><%= sol.getEstado() %> </td>
                 
             </tr>
-    <%      	
+    <%      
+        	}
+   			}
+    	
+        
+	}
+    
+    %>
+</table>
+
+
+<br><br>
+<h2> Mis prestamos </h2>
+
+<table border="1">
+    <tr>
+        <th>Numero de Prestamo</th>
+        <th>Numero de Cuenta</th>
+        <th>Fecha</th>
+        <th>Importe Solicitado</th>
+        <th>Importe a pagar</th>
+        <th>Plazo</th>
+        <th>Monto</th>
+        <th>Cuotas Pagas</th>
+        <th>Estado</th>
+    </tr>
+    
+
+    <%
+ 
+    if (listaSolicitudes != null) {
+    	
+        for (Prestamo pre : listaPrestamos) {
+        	
+   			
+    %>
+            <tr>
+                <td><%= pre.getNdeSolicitud() %> </td>
+                <td><%= pre.getNroCuenta() %> </td>
+                <td><%= pre.getFecha()%> </td>
+                <td><%= pre.getImporteSolicitado() %> </td>
+                <td><%= pre.getImporteAPagar() %> </td>
+                <td><%= pre.getPlazo() %> </td>
+                <td><%= pre.getMonto() %> </td>
+                <td><%= pre.getCuotasPagas() %> </td>
+                <td><%= pre.getEstado() %> </td>
+                
+            </tr>
+    <%      
+        	
    			}
     	
         

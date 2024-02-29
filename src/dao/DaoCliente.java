@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import entidad.Cliente;
+import entidad.Prestamo;
 import entidad.Solicitud;
 import entidad.Usuario;
 
@@ -17,6 +18,7 @@ public interface DaoCliente {
 	public int obtenerNdeCliente(String usuario);
 	public void generarSolicitud(Solicitud sol);
 	public List<Solicitud> ListarSolicitudes(int ncliente);
+	public List<Prestamo> ListarPrestamos(int ncliente);
 	public List<Solicitud> ListarTodasLasSolicitudes();
 	public void AprobarRechazarSolicitud(String estado, String nsolicitud);
 	

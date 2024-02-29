@@ -19,6 +19,8 @@ import javax.servlet.http.HttpSession;
 
 import daoImpl.DaoCuentaImpl;
 import javax.swing.JOptionPane;
+
+import entidad.Cliente;
 import entidad.Cuenta;
 import negocioImpl.ClienteNegocioImpl;
 import negocioImpl.CuentaNegocioImpl;

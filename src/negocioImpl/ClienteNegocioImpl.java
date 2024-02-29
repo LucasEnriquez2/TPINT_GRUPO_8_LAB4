@@ -7,6 +7,7 @@ import daoImpl.DaoClienteImpl;
 import daoImpl.DaoCuentaImpl;
 import entidad.Cliente;
 import entidad.Cuenta;
+import entidad.Prestamo;
 import entidad.Solicitud;
 import entidad.Usuario;
 import negocio.ClienteNegocio;
@@ -64,10 +65,19 @@ public class ClienteNegocioImpl implements ClienteNegocio{
 	}
 	
 	@Override
+	public List<Prestamo> ListarPrestamos(int ncliente){
+		DaoClienteImpl dao= new DaoClienteImpl();
+		return dao.ListarPrestamos(ncliente);
+	}
+	
+	
+	@Override
 	public List<Solicitud> ListarTodasLasSolicitudes(){
 		DaoClienteImpl dao= new DaoClienteImpl();
 		return dao.ListarTodasLasSolicitudes();
 	}
+	
+	
 	
 	@Override
 	public void AprobarRechazarSolicitud(String estado, String nsolicitud) {

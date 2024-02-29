@@ -12,6 +12,7 @@ import java.util.List;
 
 import dao.DaoCliente;
 import entidad.Cliente;
+import entidad.Prestamo;
 import entidad.Solicitud;
 import entidad.Usuario;
 
@@ -343,6 +344,36 @@ public class DaoClienteImpl implements DaoCliente{
 			e.printStackTrace();
 		}
 		return solicitudes;
+	}
+	
+	@Override
+	public List<Prestamo> ListarPrestamos(int ncliente) {
+		PreparedStatement statement;
+		ResultSet rs;
+		ArrayList<Prestamo> prestamos = new ArrayList<Prestamo>();
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement("SELECT * FROM prestamo where NdeCliente=?");
+			statement.setInt(1, ncliente);
+			rs = statement.executeQuery();
+			while(rs.next()) {
+				Prestamo pre = new Prestamo();
+				pre.setNdeSolicitud(rs.getInt("NdePrestamo"));
+				pre.setNroDeCliente(rs.getInt("NdeCliente"));
+				pre.setNroCuenta(rs.getInt("NdeCuenta"));
+				pre.setFecha(rs.getDate("Fecha"));
+				pre.setImporteSolicitado(rs.getFloat("importeSolicitado"));
+				pre.setImporteAPagar(rs.getFloat("ImporteAPagar"));
+				pre.setPlazo(rs.getInt("Plazo"));
+				pre.setMonto(rs.getFloat("Monto"));
+				pre.setEstado(rs.getString("Estado"));
+				pre.setCuotasPagas(rs.getInt("CuotasPagas"));
+				prestamos.add(pre);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return prestamos;
 	}
 	
 	

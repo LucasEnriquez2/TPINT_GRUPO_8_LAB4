@@ -528,6 +528,10 @@ DELIMITER ;
 
 
 
+
+
+
+
 /* CALL Transferencia(1, '42470940090414778459', -1000, 'Compra de productos');
 CALL Transferencia(7, '42470940090414778459', 2500, 'Varios'); */
 

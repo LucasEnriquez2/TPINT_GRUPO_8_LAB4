@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import javax.swing.JOptionPane;
 
 import entidad.Cuenta;
+import entidad.Prestamo;
 import entidad.Solicitud;
 import negocioImpl.ClienteNegocioImpl;
 import negocioImpl.CuentaNegocioImpl;
@@ -56,6 +57,9 @@ public class ServletPrestamos extends HttpServlet {
 		
 		List<Solicitud> listaSolicitudes = neg.ListarSolicitudes(numcliente);
 		request.setAttribute("ListaSolicitudes", listaSolicitudes);
+		
+		List<Prestamo> listaPrestamos = neg.ListarPrestamos(numcliente);
+		request.setAttribute("ListaPrestamos", listaPrestamos);
 				
 		
 		if(request.getParameter("btnAceptar")!=null) {
