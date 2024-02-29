@@ -8,7 +8,7 @@
 			<attribute name="owner.project.facets" value="#system#;jst.web"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Alejo Maidana/Documents/GitHub/TPINT_GRUPO_8_LAB4/mysql-connector-java-8.0.25.jar">
+	<classpathentry kind="lib" path="C:/Users/tomas/Desktop/TPINT_GRUPO_8_LAB4/mysql-connector-java-8.0.25.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
