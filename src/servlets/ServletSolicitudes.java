@@ -54,14 +54,18 @@ public class ServletSolicitudes extends HttpServlet {
 			estado = "Aprobado";
 			nsolicitud = request.getParameter("NroDeSolicitud");
 			neg.AprobarRechazarSolicitud(estado, nsolicitud);
-			
+			RequestDispatcher rd = request.getRequestDispatcher("/PrestamosPendientes.jsp");
+		    rd.forward(request, response);
+			return;
 		};
 		
 		if(request.getParameter("Rechazar")!=null) {
 			nsolicitud = request.getParameter("NroDeSolicitud");
 			estado = "Rechazado";
 			neg.AprobarRechazarSolicitud(estado, nsolicitud);
-			
+			RequestDispatcher rd = request.getRequestDispatcher("/PrestamosPendientes.jsp");
+		    rd.forward(request, response);
+			return;
 		}
 		
 		//SOLICITUDES

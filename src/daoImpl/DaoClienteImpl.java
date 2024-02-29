@@ -360,7 +360,7 @@ public class DaoClienteImpl implements DaoCliente{
 			statement = conexion.prepareStatement("UPDATE solicitud SET Estado=? WHERE NdeSolicitud=?");
 			statement.setString(1, estado);
 			statement.setInt(2, nsolicitudINT);
-			statement.executeUpdate();
+			
 			
 			if(statement.executeUpdate() > 0)
 			{

@@ -67,6 +67,8 @@ CREATE TABLE `prestamo` (
   `Plazo` int NOT NULL,
   `Monto` decimal(10,0) NOT NULL,
   `Estado` varchar(45) NOT NULL,
+  `CuotasPagas` int NOT NULL DEFAULT '0',
+  
   PRIMARY KEY (`NdePrestamo`),
   FOREIGN KEY (`NdeCliente`) REFERENCES cliente (`NdeCliente`),
   FOREIGN KEY (`NdeCuenta`) REFERENCES cuenta (`NdeCuenta`)
@@ -504,7 +506,6 @@ AFTER UPDATE ON solicitud
 FOR EACH ROW
 BEGIN
 	DECLARE nestado VARCHAR(45);
-
 	SELECT NEW.Estado INTO nestado
     FROM solicitud	
     WHERE NdeSolicitud = NEW.NdeSolicitud;
@@ -514,11 +515,13 @@ BEGIN
 		
 		INSERT INTO prestamo (NdeCliente, NdeCuenta, Fecha, ImporteSolicitado , ImporteAPagar, Plazo, Monto, Estado)
 		VALUES(NEW.NdeCliente, NEW.NdeCuenta, CURDATE(), NEW.ImporteSolicitado, NEW.ImporteAPagar, NEW.Plazo, NEW.Monto, 'En curso');
+      
+        INSERT INTO movimiento (NdeCuenta, TipoDeMovimiento, Fecha, Detalle, Importe)
+		VALUES(NEW.NdeCuenta, 'Alta de Prestamo', CURDATE(), (concat('TOTAL A PAGAR: ', NEW.ImporteAPagar, ' en ', NEW.Plazo, ' cuotas' )), NEW.ImporteSolicitado);
         
     END IF;
 END;
 //
-
 DELIMITER ;
 
 
