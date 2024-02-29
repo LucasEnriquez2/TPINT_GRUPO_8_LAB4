@@ -46,13 +46,13 @@ if (session.getAttribute("username") != null) {
 			<th>Sexo</th>
 			<th>Nacionalidad</th>
 			<th>Fecha de nac.</th>
-			<th>Direcci�n</th>
+			<th>Direccion</th>
 			<th>Localidad</th>
 			<th>Provincia</th>
 			<th>Mail</th>
 			<th>Telefono</th>
 			<th>Usuario</th>
-			<th>Contrase�a</th>
+			<th>Contrasenia</th>
 		</tr>
 </thead>
 <tbody>
@@ -197,8 +197,8 @@ if (session.getAttribute("username") != null) {
 	Email:  <input type="text" name="txtEmail" onkeypress="return //i.test(event.key)" required> <br><br>
 	Telefono:  <input type="text" name="txtTelefono" onkeypress="return //i.test(event.key)" required> <br><br>
 	Usuario:  <input type="text" name="txtUsuario" onkeypress="return //i.test(event.key)" required> <br><br>
-	Contrase�a:  <input type="password" id="pass1" name="txtContrasenia" onkeypress="return //i.test(event.key)" required> <br><br>
-	Repetir Contrase�a:  <input type="password" id="pass2" name="txtContrasenia2" onkeypress="return //i.test(event.key)" required> <br><br>
+	Contrasenia:  <input type="password" id="pass1" name="txtContrasenia" onkeypress="return //i.test(event.key)" required> <br><br>
+	Repetir Contrasenia:  <input type="password" id="pass2" name="txtContrasenia2" onkeypress="return //i.test(event.key)" required> <br><br>
 	<input type="submit" value="Aceptar" name="btnAceptar"><br><br>
 
 </form>

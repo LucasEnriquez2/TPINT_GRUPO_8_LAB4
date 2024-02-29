@@ -85,7 +85,7 @@ if (request.getAttribute("RadioValue") != null) {
 </fieldset>
 
 <br> <br>
-<table border="1">
+<table border="1" class="table table-striped">
     <tr>
         <th>Id Movimiento</th>
         <th>Nro de Cuenta</th>

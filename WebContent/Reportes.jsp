@@ -68,7 +68,7 @@ if (session.getAttribute("username") != null) {
 	if(listaMovimientos!=null) 
 	{ %>
 	
-	<table border="1"> 
+	<table border="1" class="table table-striped"> 
 	
 	<tr>
 		<th>Importes Positivos</th> <th>Importes Negativos</th> <th>Transferencias</th> 
@@ -88,7 +88,7 @@ if (session.getAttribute("username") != null) {
 	
 	<br> <br>
 	
-	<table border="1"> 
+	<table border="1" class="table table-striped"> 
 	<tr>
 		<th>Id Movimiento</th> <th>Nro de Cuenta</th> <th>Tipo de Movimiento</th> 
 		<th>Fecha</th> <th>Detalle</th> <th>Importe</th>

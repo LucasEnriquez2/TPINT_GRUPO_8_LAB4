@@ -103,7 +103,7 @@ if (request.getAttribute("ListaPrestamos") != null) {
 
 <h2> Mis solicitudes </h2>
 
-<table border="1">
+<table border="1" class="table table-striped">
     <tr>
         <th>Numero de Solicitud</th>
         <th>Numero de Cuenta</th>

@@ -33,7 +33,7 @@ if (session.getAttribute("username") != null) {
 
 <h1>Datos del Cliente</h1>
 <h2> Datos Personales</h2>
-<table style="width:100%" border="1">
+<table style="width:100%" border="1" class="table table-striped">
 <thead>
 		<tr>
 			<th>Nro. de Cliente</th>
@@ -84,10 +84,10 @@ if (session.getAttribute("username") != null) {
 </tbody>
 
 
-</table>
+</table >
 
 <h2> Cuentas</h2>
-<table style="width:100%" border="1">
+<table style="width:100%" border="1" class="table table-striped">
 <thead>
 		<tr>
 			<th>Nro. de Cuenta</th>
