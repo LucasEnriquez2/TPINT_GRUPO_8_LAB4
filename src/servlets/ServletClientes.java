@@ -19,6 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 import daoImpl.DaoClienteImpl;
 import entidad.Cliente;
 import entidad.Cuenta;
+import entidad.FaltaArrobaException;
+import entidad.FaltaPuntoException;
+import entidad.Mail;
 import entidad.Usuario;
 import negocioImpl.ClienteNegocioImpl;
 import negocioImpl.CuentaNegocioImpl;
@@ -130,6 +133,16 @@ public class ServletClientes extends HttpServlet {
 			c.setUsuario(request.getParameter("Usuario"));
 			c.setContrasenia(request.getParameter("Contrasenia"));
 			
+			try {
+				Mail.validarMail(request.getParameter("Mail"));
+			} catch (FaltaArrobaException e) {
+				modif = 2;
+				e.printStackTrace();
+			} catch (FaltaPuntoException e) {
+				modif = 2;
+				e.printStackTrace();
+			}
+			
 			if (request.getParameter("CUIL").equals("")) modif = 1;
 			if (request.getParameter("Nombre").equals("")) modif = 1;
 			if (request.getParameter("Apellido").equals("")) modif = 1;
@@ -142,7 +155,7 @@ public class ServletClientes extends HttpServlet {
 			if (request.getParameter("Contrasenia").equals("")) modif = 1;
 			
 			
-			if (modif == 1) {
+			if (modif > 0 ) {
 				ClienteNegocioImpl lista = new ClienteNegocioImpl();
 	    		ArrayList<Cliente> listaClientes2 = (ArrayList<Cliente>) lista.ListarClientes();
 	    		request.setAttribute("ListaClientes", listaClientes2);
@@ -415,6 +428,28 @@ public class ServletClientes extends HttpServlet {
 			
 			ClienteNegocioImpl lista = new ClienteNegocioImpl();
     		ArrayList<Cliente> listaClientes2 = (ArrayList<Cliente>) lista.ListarClientes();
+    		
+    		try {
+				Mail.validarMail(cliente.getMail());
+			} catch (FaltaArrobaException e1) {
+				filas = 4;
+				e1.printStackTrace();
+				request.setAttribute("ListaClientes", listaClientes2);
+				request.setAttribute("cantFilas", filas);
+				RequestDispatcher rd = request.getRequestDispatcher("/Clientes.jsp");   
+				
+		        rd.forward(request, response);
+				return;
+			} catch (FaltaPuntoException e1) {
+				filas = 4;
+				e1.printStackTrace();
+				request.setAttribute("ListaClientes", listaClientes2);
+				request.setAttribute("cantFilas", filas);
+				RequestDispatcher rd = request.getRequestDispatcher("/Clientes.jsp");   
+				
+		        rd.forward(request, response);
+				return;
+			}
     		
     		for (Cliente z: listaClientes2) {
     			if (cliente.getDNI().equals(z.getDNI())) {

@@ -265,6 +265,14 @@ if (session.getAttribute("username") != null) {
     	alert("Ya existe un cliente con ese Usuario");
 	</script>
 <%} %>
+<% if(filas==4) 
+	{
+	
+%>
+	<script>
+    	alert("Debe ingresar un mail valido!");
+	</script>
+<%} %>
 
 
 <%
@@ -278,6 +286,13 @@ if (session.getAttribute("username") != null) {
 %>
 	<script>
     	alert("Debes completar todos los campos!");
+	</script>
+<%} %>
+<% if(modif==2) 
+	{
+%>
+	<script>
+    	alert("Debe ingresar un mail valido!");
 	</script>
 <%} %>
 
