@@ -108,6 +108,43 @@ public class DaoMovimientoImpl implements DaoMovimiento{
 	    }
 	    
 	    }
+	@Override
+	public void PagarPrestamo(String nro, String nroP, String monto, String detalle, String cuotas) {
+	    Conexion conexion = Conexion.getConexion();
+	    java.sql.CallableStatement callableStatement = null;
+	    
+	    try {
+	        callableStatement = conexion.getSQLConexion().prepareCall("{ call PagarCuota(?, ?, ?, ?, ?) }");
+
+	        callableStatement.setInt(1, Integer.parseInt(nro));
+	        callableStatement.setInt(2, Integer.parseInt(nroP));
+	        callableStatement.setFloat(3, Float.parseFloat(monto));
+	        callableStatement.setString(4, detalle);
+	        callableStatement.setInt(5, Integer.parseInt(cuotas)+1);
+
+	        
+	        callableStatement.execute();
+	         
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();  
+	    } finally {
+	       
+	        if (callableStatement != null) {
+	            try {
+	                callableStatement.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace(); 
+	            }
+	        }
+
+	       
+	        if (conexion != null) {
+	            conexion.cerrarConexion();
+	        }
+	    }
+	    
+	    }
 	
 }	
         

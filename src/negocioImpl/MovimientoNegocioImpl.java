@@ -27,4 +27,9 @@ public class MovimientoNegocioImpl implements MovimientoNegocio {
 		
 	}
 
+	@Override
+	public void PagarPrestamo(String nro, String nroP, String monto, String detalle, String cuotas) {
+		DaoMovimientoImpl dao = new DaoMovimientoImpl();
+		dao.PagarPrestamo(nro, nroP, monto, detalle,cuotas);	
+	}
 }

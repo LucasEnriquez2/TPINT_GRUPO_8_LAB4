@@ -427,6 +427,49 @@ END //
 DELIMITER ;
 
 
+# PROC Pagar Cuota
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `PagarCuota`(
+	IN pNroCuenta INT,
+    IN pNroPrestamo INT,
+    IN pMonto DECIMAL(10, 0),
+    IN PDetalle VARCHAR(45),
+    IN pCuotasPagas INT)
+BEGIN
+    DECLARE vTipoMovimiento VARCHAR(45);
+    DECLARE vFecha DATE;
+     DECLARE pPlazo int;
+     
+    select pPlazo=Plazo from prestamo where NdePrestamo =pNroPrestamo;
+    
+	
+-- Establecer el tipo de movimiento (puedes ajustar esto según tus necesidades)
+    SET vTipoMovimiento = 'Pago de Prestamo';
+
+    -- Obtener la fecha actual
+    SET vFecha = CURDATE();
+	
+    UPDATE cuenta
+	SET Saldo = Saldo - pMonto
+	WHERE NdeCuenta=pNroCuenta;
+    
+    UPDATE prestamo
+	SET CuotasPagas = pCuotasPagas
+	WHERE NdePrestamo=pNroPrestamo;
+    
+    if  pPlazo=pCuotasPagas then
+     UPDATE prestamo
+	SET Estado = 'Pago'
+	WHERE NdePrestamo=pNroPrestamo;
+    end if;
+    -- Insertar el nuevo movimiento en la tabla Movimientos
+    INSERT INTO movimiento (NdeCuenta, TipoDeMovimiento, Fecha, Detalle, Importe)
+    VALUES (pNroCuenta, vTipoMovimiento, vFecha, pDetalle, -pMonto);
+END$$
+DELIMITER ;
+
+
+
 # PROC Solicitud
 DELIMITER //
 

@@ -82,6 +82,7 @@ if (request.getAttribute("ListaPrestamos") != null) {
     %>
   		
 	<option value="<%= cta.getNroCuenta()%>"> <%= cta.getNroCuenta()%> - <%= cta.getTipoDeCuenta()%> - $ <%= cta.getSaldo()%> </option>
+	
 <%
     }
         }
@@ -174,14 +175,14 @@ if (request.getAttribute("ListaPrestamos") != null) {
     
             <tr>
            		<form action="ServletPrestamos" method="post">
-                <td><%= pre.getNdeSolicitud() %> </td>
-                <td><%= pre.getNroCuenta() %> </td>
+                <td><%= pre.getNdeSolicitud() %><input type="hidden" name="NdePrestamo" value="<%=pre.getNdeSolicitud()%>"></td>
+                <td><%= pre.getNroCuenta() %> <input type="hidden" name="NdeCuenta" value="<%=pre.getNroCuenta()%>"></td>
                 <td><%= pre.getFecha()%> </td>
                 <td><%= pre.getImporteSolicitado() %> </td>
                 <td><%= pre.getImporteAPagar() %> </td>
                 <td><%= pre.getPlazo() %> </td>
-                <td><%= pre.getMonto() %> </td>
-                <td><%= pre.getCuotasPagas() %> </td>
+                <td><%= pre.getMonto() %> <input type="hidden" name="Monto" value="<%=pre.getMonto()%>"></td>
+                <td><%= pre.getCuotasPagas() %><input type="hidden" name="CuotasPagas" value="<%=pre.getCuotasPagas()%>"> </td>
                 <td><%= pre.getEstado() %> </td>
                 <td><input type="submit" value="Pagar cuota" name="Pagar"> </td>
                 </form>
@@ -195,7 +196,34 @@ if (request.getAttribute("ListaPrestamos") != null) {
     
     %>
 </table>
+<%
+int errorS=0;
+if(request.getAttribute("error")!=null)
+	errorS = (int)request.getAttribute("error");
 
+%>
+
+
+<% if(errorS==1) 
+    {
+%>
+    <script>
+        alert("No posee el monto actualmente para realizar el pago de la cuota);
+    </script>
+<%} %>
+
+<% if(errorS==2) 
+    {
+
+%>
+	<script>
+        alert("Pago Esxitoso");
+    </script>
+    
+    
+<%
+		response.sendRedirect("ServletPrestamos");}
+    %>
 
 <%
 int errorp=0;
@@ -221,8 +249,8 @@ if(request.getAttribute("errorp")!=null)
         alert("Solicitud de prestamo creada correctamente.");
     </script>
 <%
-	response.sendRedirect("ServletPrestamos");
-    } %>
+	response.sendRedirect("ServletPrestamos");}
+%>
 
 
 
