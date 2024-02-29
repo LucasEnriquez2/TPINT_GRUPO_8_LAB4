@@ -9,7 +9,7 @@ HttpSession sesion = request.getSession();
 	} %>
 		<ul>
 				<li>
-					<a href="Transferir.jsp">Transferir</a>
+					<a href="ServletTransferir">Transferir</a>
 				</li>
 				<li>
 					<a href="ServletMovimientos">Movimientos</a>

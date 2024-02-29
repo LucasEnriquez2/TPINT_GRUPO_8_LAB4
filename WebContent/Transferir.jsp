@@ -34,7 +34,7 @@ if (session.getAttribute("username") != null) {
 
 ArrayList<Cuenta> listaCuentas = null;
 if (request.getAttribute("ListaCuentas") != null) {
-    listaCuentas = (ArrayList<Cuenta>)request.getAttribute("ListaCuentas");
+	listaCuentas = (ArrayList<Cuenta>)request.getAttribute("ListaCuentas");
 }
 
 %>
@@ -110,12 +110,14 @@ if(request.getAttribute("error")!=null)
 
 <% if(error==3) 
     {
-
 %>
     <script>
         alert("Transferencia exitosa");
     </script>
-<%} %>
+    
+<%
+		response.sendRedirect("ServletTransferir");
+    } %>
 
 
 <script>

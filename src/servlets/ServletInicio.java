@@ -51,7 +51,7 @@ public class ServletInicio extends HttpServlet {
 	            	
 	            	
 	                
-	            	response.sendRedirect("Transferir.jsp");
+	            	response.sendRedirect("ServletTransferir");
 	            } else {	            	
 	            	usuarioSession.setAttribute("esAdmin", 1);
 	            	response.sendRedirect("Reportes.jsp");

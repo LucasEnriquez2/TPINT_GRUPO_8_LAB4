@@ -48,26 +48,26 @@ public class ServletTransferir extends HttpServlet {
     	CuentaNegocioImpl negC = new CuentaNegocioImpl();
     	List<Cuenta> listaCuentas = negC.ListarCuentaPorUsuario((String) usuarioSession.getAttribute("username"));
     	request.setAttribute("ListaCuentas", listaCuentas);
+    	
+    	
+    	int error = 0;
+    	if(request.getParameter("btnConfirmar")!=null)
+		{
+			
+			String NroDeCuenta = request.getParameter("ncuenta");
+			String Monto = request.getParameter("monto");
+			String Detalle = request.getParameter("detalle");
+			String Cbu = request.getParameter("cbu");
+		
+			CuentaNegocioImpl negM = new CuentaNegocioImpl();
+			MovimientoNegocioImpl negMov = new MovimientoNegocioImpl();
 
+			// CBU = 1  El CBU no existe. Por favor, verifique el CBU ingresado.
+			// MONTO = 2   No posee este monto actualmente para realizar una transferencia y/o el monto ingresado debe ser mayor a 0
+			// TRANSFERENCIA EXITOSA = 3
 		
-		int error = 0;
-		String NroDeCuenta = request.getParameter("ncuenta");
-		String Monto = request.getParameter("monto");
-		String Detalle = request.getParameter("detalle");
-		String Cbu = request.getParameter("cbu");
+	        // Verificar la respuesta del usuario
 		
-		
-		    
-	
-		CuentaNegocioImpl negM = new CuentaNegocioImpl();
-		MovimientoNegocioImpl negMov = new MovimientoNegocioImpl();
-
-		// CBU = 1  El CBU no existe. Por favor, verifique el CBU ingresado.
-		// MONTO = 2   No posee este monto actualmente para realizar una transferencia y/o el monto ingresado debe ser mayor a 0
-		// TRANSFERENCIA EXITOSA = 3
-	
-        // Verificar la respuesta del usuario
-        
         	if (!negM.ExisteCbu(Cbu)) {
     			
     			error = 1;
@@ -78,7 +78,6 @@ public class ServletTransferir extends HttpServlet {
     			
     		}
     		
-    		
     		if(!negM.PuedeTransferir(Float.parseFloat(Monto), NroDeCuenta)){
     			error = 2;
     			request.setAttribute("error", error);
@@ -87,31 +86,18 @@ public class ServletTransferir extends HttpServlet {
     			return;
     		}
     		
-    		
-    		if(request.getParameter("btnConfirmar")!=null) {
-    			error = 3;
-    			request.setAttribute("error", error);		
-    			negMov.CrearMovimiento(NroDeCuenta, Cbu, Monto, Detalle);
-    			RequestDispatcher rd = request.getRequestDispatcher("/Transferir.jsp");
-                rd.forward(request, response);
-                return;
-    			
-    		}
-    		
+    		error = 3;
+    		request.setAttribute("error", error);		
+    		negMov.CrearMovimiento(NroDeCuenta, Cbu, Monto, Detalle);
     		RequestDispatcher rd = request.getRequestDispatcher("/Transferir.jsp");
             rd.forward(request, response);
-        }
+            return;
+		}
+    	
+    	RequestDispatcher rd = request.getRequestDispatcher("/Transferir.jsp");
+        rd.forward(request, response);
+	}
 
-		
-		   
-		
-		
-		
-		
-	   
-	   
-	    
-	    
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
