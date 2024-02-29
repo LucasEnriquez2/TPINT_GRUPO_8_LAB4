@@ -85,7 +85,7 @@ if(request.getAttribute("CuentaModificar")!=null){
 				<td><%= cuenta.getNroDeCliente()%></td>
 				<td><input type="text" name="tipoCuenta" value="<%=cuenta.getTipoDeCuenta()%>"></td>
 				<td><%=cuenta.getFechaCreacion()%></td>
-				<td><input type="text" name="cbu" value="<%=cuenta.getCbu()%>" onkeypress="return /[0-9]/i.test(event.key)"></td>
+				<td><input type="text" name="cbu" value="<%=cuenta.getCbu()%>" onkeypress="return /[0-9]/i.test(event.key)" readonly="readonly"></td>
 				<td><input type="text" name="saldo" value="<%=cuenta.getSaldo()%>"></td>
 				<td><input type="submit" name="Modificar" value="Confirmar Modificacion" class="btn btn-success"> <input type="submit" name="Cancelar" value="Cancelar" class="btn btn-danger"></td>
 	</form>
