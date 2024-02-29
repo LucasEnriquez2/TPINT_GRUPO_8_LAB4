@@ -61,6 +61,31 @@ if (session.getAttribute("username") != null) {
 	%>
 	
 	<br> <br>
+	
+	<%
+	if(listaMovimientos!=null) 
+	{ %>
+	
+	<table border="1"> 
+	
+	<tr>
+		<th>Importes Positivos</th> <th>Importes Negativos</th> <th>Transferencias</th> 
+		<th>Altas de Cuenta</th> <th>Altas de Prestamo</th> <th>Pagos de prestamo</th> <th>Numero de Movimientos</th>
+	</tr>
+	
+	<tr>
+		<td><%= request.getAttribute("TotalPositivo") %> </td>  
+		<td><%= request.getAttribute("TotalNegativo") %> </td>  
+		<td><%= request.getAttribute("Transferencias") %> </td>  
+		<td><%= request.getAttribute("AltaDeCuentas")%> </td>  
+		<td><%= request.getAttribute("AltaDePrestamos") %> </td>
+		<td><%= request.getAttribute("PagoDePrestamos") %> </td> 
+		<td><%= request.getAttribute("Movimientos") %> </td>
+	</tr>
+	</table>
+	
+	<br> <br>
+	
 	<table border="1"> 
 	<tr>
 		<th>Id Movimiento</th> <th>Nro de Cuenta</th> <th>Tipo de Movimiento</th> 
@@ -68,7 +93,6 @@ if (session.getAttribute("username") != null) {
 	</tr>
 	
 	<%
-	if(listaMovimientos!=null) 
 	for(Movimiento mov : listaMovimientos){ %>
 	<tr>
 		<td><%= mov.getIdMovimiento() %> </td>  
@@ -78,7 +102,7 @@ if (session.getAttribute("username") != null) {
 		<td><%= mov.getDetalle() %> </td>
 		<td><%= mov.getImporte() %> </td> 
 	</tr>
-	<%} %>
+	<%}} %>
 	
 	
 	
