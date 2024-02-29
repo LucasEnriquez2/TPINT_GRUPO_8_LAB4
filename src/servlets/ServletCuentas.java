@@ -19,6 +19,8 @@ import javax.servlet.http.HttpSession;
 
 import daoImpl.DaoCuentaImpl;
 import javax.swing.JOptionPane;
+
+import entidad.Cliente;
 import entidad.Cuenta;
 import negocioImpl.ClienteNegocioImpl;
 import negocioImpl.CuentaNegocioImpl;
@@ -145,19 +147,85 @@ public class ServletCuentas extends HttpServlet {
 				        listaCuentas = (ArrayList<Cuenta>) cuenta.ListarCuentas();
 				    }
 				    
-				    Iterator<Cuenta> iterator = listaCuentas.iterator();
-				    int i = Integer.parseInt(request.getParameter("nroDeCliente"));
-				    while (iterator.hasNext()) {
-				        Cuenta c = iterator.next();
-				        if (c.getNroDeCliente() != i) {
-				            iterator.remove();
+				    if(request.getParameter("nroDeCliente") != "") {
+				    	Iterator<Cuenta> iterator = listaCuentas.iterator();
+				    	int i = Integer.parseInt(request.getParameter("nroDeCliente"));
+				    	while (iterator.hasNext()) {
+				    		Cuenta c = iterator.next();
+				    		if (c.getNroDeCliente() != i) {
+				    			iterator.remove();
+				    		}
+				    	}
+				    }
+				    
+				    if(request.getParameter("nroDeCuenta") != "") {
+				    	Iterator<Cuenta> iterator = listaCuentas.iterator();
+				    	int cue = Integer.parseInt(request.getParameter("nroDeCuenta"));
+				    	while (iterator.hasNext()) {
+				    		Cuenta c = iterator.next();
+				    		if (c.getNroCuenta() != cue) {
+				    			iterator.remove();
+				    		}
+				    	}
+				    }
+				    
+			    	
+				    if (!"Seleccione una opcion".equals(request.getParameter("tipo"))) {
+				        Iterator<Cuenta> iterator = listaCuentas.iterator();
+				        String tipo = request.getParameter("tipo");
+				        while (iterator.hasNext()) {
+				            Cuenta c = iterator.next();
+				            if (!c.getTipoDeCuenta().equals(tipo)) {
+				                iterator.remove();
+				            }
+				        }
+				    }
+				    
+				    if (!request.getParameter("txtFechaDesde").isEmpty() && !request.getParameter("txtFechaHasta").isEmpty()) {
+				        Iterator<Cuenta> iterator = listaCuentas.iterator();
+				        
+				        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				        java.util.Date fechaDesde = null;
+				        java.util.Date fechaHasta = null;
+
+				        try {
+				            fechaDesde = dateFormat.parse(request.getParameter("txtFechaDesde"));
+				            fechaHasta = dateFormat.parse(request.getParameter("txtFechaHasta"));
+				        } catch (ParseException e) {
+				            e.printStackTrace();
+				        }
+				        
+
+				        while (iterator.hasNext()) {
+				            Cuenta c = iterator.next();
+				            Date fechaCreacion = c.getFechaCreacion();
+				 
+				            if (fechaCreacion.after(fechaHasta) || fechaCreacion.before(fechaDesde)) {
+				                iterator.remove();
+				            }
+				        }
+				    }
+				    
+				    if (!request.getParameter("minimo").isEmpty() && !request.getParameter("maximo").isEmpty()) {
+				        Iterator<Cuenta> iterator = listaCuentas.iterator();
+
+				        while (iterator.hasNext()) {
+				            Cuenta c = iterator.next();
+				            float saldo = c.getSaldo();
+				            int minimo = Integer.parseInt(request.getParameter("minimo"));
+				            int maximo = Integer.parseInt(request.getParameter("maximo"));
+				 
+				            if (saldo<minimo || saldo>maximo) {
+				                iterator.remove();
+				            }
 				        }
 				    }
 				    
 				    request.setAttribute("ListaCuentas", listaCuentas);
 				    RequestDispatcher rd = request.getRequestDispatcher("/Cuentas.jsp");
 				    rd.forward(request, response);
-				}
+				    
+				    }
 		
 				if(request.getParameter("Limpiar")!=null) {
 					request.setAttribute("ListaCuentas", null);

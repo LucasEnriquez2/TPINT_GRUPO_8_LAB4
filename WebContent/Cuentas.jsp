@@ -46,17 +46,32 @@ if (session.getAttribute("username") != null) {
 <%if(request.getAttribute("CuentaModificar")==null&&request.getAttribute("CuentaEliminar")==null) {%>
 
 <form action="ServletCuentas" method="get">
-<input type="number" name="nroDeCliente" placeholder="Numero de Cliente" onkeypress="return /[0-9]/i.test(event.key)" required>
-<input type="submit" name="Buscar" value="Buscar" >
-</form>
-
-<form action="ServletAltaCuenta" method="post">
-<input type="submit" name="btnCrearCuenta" value="Crear Cuenta" >
+<br><br>
+<input type="number" name="nroDeCuenta" placeholder="Numero de Cuenta" onkeypress="return /[0-9]/i.test(event.key)" > <br><br>
+<input type="number" name="nroDeCliente" placeholder="Numero de Cliente" onkeypress="return /[0-9]/i.test(event.key)" > <br><br>
+Tipo de Cuenta: <select name="tipo" id="tipo">
+			<option value="Seleccione una opcion"> Seleccione una opcion</option>
+			<option value="Caja de Ahorro"> Caja de Ahorro</option>
+			<option value="Cuenta Corriente"> Cuenta Corriente </option>
+			</select> <br><br>
+Fecha de Creacion:  <br><br>
+Desde: <input type="date" name="txtFechaDesde" onkeypress="return //i.test(event.key)" > <br><br>
+Hasta: <input type="date" name="txtFechaHasta" onkeypress="return //i.test(event.key)" > <br><br>
+Saldo:  <br><br>
+<input type="number" name="minimo" placeholder="Minimo" onkeypress="return /[0-9]/i.test(event.key)" > <br><br>
+<input type="number" name="maximo" placeholder="Maximo" onkeypress="return /[0-9]/i.test(event.key)" > <br><br>
+<input type="submit" name="Buscar" value="Buscar" > <br><br>
 </form>
 
 <form action="ServletCuentas" method="get">
-<input type="submit" name="Limpiar" value="Limpiar Filtros" >
+<input type="submit" name="Limpiar" value="Limpiar Filtros" > <br><br>
 </form>
+
+<form action="ServletAltaCuenta" method="post">
+<input type="submit" name="btnCrearCuenta" value="Crear Cuenta" > <br><br>
+</form>
+
+
 
 <%}
 if(request.getAttribute("CuentaModificar")!=null){
