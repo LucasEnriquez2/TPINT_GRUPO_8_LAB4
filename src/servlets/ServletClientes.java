@@ -408,6 +408,7 @@ public class ServletClientes extends HttpServlet {
 			cliente.setProvincia(request.getParameter("txtProvincia"));
 			cliente.setMail(request.getParameter("txtEmail"));
 			cliente.setTelefono(request.getParameter("txtTelefono"));
+			cliente.setUsuario(request.getParameter("txtUsuario"));
 			usuario.setUsuario(request.getParameter("txtUsuario"));
 			usuario.setContrasenia(request.getParameter("txtContrasenia"));
 
@@ -426,7 +427,7 @@ public class ServletClientes extends HttpServlet {
     		}
 			
 			
-			if (filas == 2) {
+			if (filas > 1) {
 	    		request.setAttribute("ListaClientes", listaClientes2);
 				request.setAttribute("cantFilas", filas);
 				RequestDispatcher rd = request.getRequestDispatcher("/Clientes.jsp");   
