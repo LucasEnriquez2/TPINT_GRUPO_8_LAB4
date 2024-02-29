@@ -149,11 +149,7 @@ if (request.getAttribute("ListaPrestamos") != null) {
 <br><br>
 <h2> Mis prestamos </h2>
 
-<<<<<<< Updated upstream
-<table border="1" class="table table-striped">
-=======
 <table border="1" class="table table-striped" >
->>>>>>> Stashed changes
     <tr>
         <th>Numero de Prestamo</th>
         <th>Numero de Cuenta</th>

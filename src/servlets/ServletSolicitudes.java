@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import entidad.Cliente;
 import entidad.Cuenta;
 import entidad.Solicitud;
 import negocioImpl.ClienteNegocioImpl;
@@ -38,6 +40,15 @@ public class ServletSolicitudes extends HttpServlet {
 		
 
     	
+		if(request.getParameter("pagina")!=null) {
+			String pagina = request.getParameter("pagina");
+			request.setAttribute("ListaDeSolicitudes", null);
+			ClienteNegocioImpl solicitud = new ClienteNegocioImpl();
+			ArrayList<Solicitud> listaDeSolicitudes = (ArrayList<Solicitud>) solicitud.ListarTodasLasSolicitudes();
+			request.setAttribute("ListaDeSolicitudes", listaDeSolicitudes);
+			request.setAttribute("pagina",pagina);
+		}
+		
 		//CUENTAS
 		ClienteNegocioImpl neg = new ClienteNegocioImpl();
 		
@@ -73,17 +84,6 @@ public class ServletSolicitudes extends HttpServlet {
 		}
 		
 		//SOLICITUDES
-		
-		List<Solicitud> listaDeSolicitudes = neg.ListarTodasLasSolicitudes();
-		request.setAttribute("ListaDeSolicitudes", listaDeSolicitudes);
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/PrestamosPendientes.jsp");
 	    rd.forward(request, response);

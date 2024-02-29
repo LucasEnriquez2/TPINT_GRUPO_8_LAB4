@@ -438,7 +438,9 @@ public class DaoClienteImpl implements DaoCliente{
 				sol.setPlazo(rs.getInt("Plazo"));
 				sol.setMonto(rs.getFloat("Monto"));
 				sol.setEstado(rs.getString("Estado"));
-				solicitudes.add(sol);
+				if(sol.getEstado().equals("Pendiente")) {
+					solicitudes.add(sol);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

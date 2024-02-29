@@ -70,9 +70,23 @@ if (request.getAttribute("ListaDeSolicitudes") != null) {
  
     if (listaDeSolicitudes != null) {
     	
-    	String pendiente = "Pendiente";
-        for (Solicitud sol : listaDeSolicitudes) {
-        	if(pendiente.equals(String.valueOf(sol.getEstado()))){
+		int itemsPorPagina = 10;
+        int paginaActual = 1;
+		
+        String numeroPagina = request.getParameter("pagina");
+        if (numeroPagina != null && !numeroPagina.isEmpty()) {
+            paginaActual = Integer.parseInt(numeroPagina);
+        }
+
+        int empieza = (paginaActual - 1) * itemsPorPagina;
+        int termina = Math.min(empieza + itemsPorPagina, listaDeSolicitudes.size());
+        
+        String pendiente = "Pendiente";
+        
+		for(int i = empieza; i < termina; i++)
+		{
+			Solicitud solicitud = listaDeSolicitudes.get(i);
+        	if(pendiente.equals(String.valueOf(solicitud.getEstado()))){
         		
         		
    			
@@ -80,13 +94,13 @@ if (request.getAttribute("ListaDeSolicitudes") != null) {
     	<form action="ServletSolicitudes" method="get"> 
             <tr>
             	
-            	<td><%= sol.getNdeSolicitud()%> <input type="hidden" name="NroDeSolicitud" value="<%=sol.getNdeSolicitud() %>"></td>	
-                <td><%= sol.getNroCuenta() %> </td>
-                <td><%= sol.getFecha()%> </td>
-                <td><%= sol.getImporteSolicitado() %> </td>
-                <td><%= sol.getImporteAPagar() %> </td>
-                <td><%= sol.getPlazo() %> </td>
-                <td><%= sol.getMonto() %> </td>
+            	<td><%= solicitud.getNdeSolicitud()%> <input type="hidden" name="NroDeSolicitud" value="<%=solicitud.getNdeSolicitud() %>"></td>	
+                <td><%= solicitud.getNroCuenta() %> </td>
+                <td><%= solicitud.getFecha()%> </td>
+                <td><%= solicitud.getImporteSolicitado() %> </td>
+                <td><%= solicitud.getImporteAPagar() %> </td>
+                <td><%= solicitud.getPlazo() %> </td>
+                <td><%= solicitud.getMonto() %> </td>
                 
                 <td><input onclick= "return confirm('Aprobar la solicitud?')" type= "submit"  value="Aprobar" name="Aprobar"  style="color:green"></td>
 				<td><input onclick= "return confirm('Rechazar la solicitud?')" type= "submit" value="Rechazar" name="Rechazar"  style="color:red"></td>
@@ -95,7 +109,14 @@ if (request.getAttribute("ListaDeSolicitudes") != null) {
          </form> 
         
     <%      	
-        	}
+        	}}
+        	%><br><ul class="pagination"><% 
+    		        // links de paginacion
+    		        int totalPaginas = (int) Math.ceil((double) listaDeSolicitudes.size() / itemsPorPagina);
+    		        for (int pageLink = 1; pageLink <= totalPaginas; pageLink++) {
+    		        	%>
+    		        	           <li class="page-item"><a class="page-link" href="ServletSolicitudes?pagina=<%= pageLink %>"><%= pageLink %></a></li>
+    		<%
         	}
     	
         
