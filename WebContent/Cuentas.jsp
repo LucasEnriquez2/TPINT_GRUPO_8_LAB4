@@ -50,6 +50,10 @@ if (session.getAttribute("username") != null) {
 <input type="submit" name="Buscar" value="Buscar" >
 </form>
 
+<form action="ServletAltaCuenta" method="post">
+<input type="submit" name="btnCrearCuenta" value="Crear Cuenta" >
+</form>
+
 <form action="ServletCuentas" method="get">
 <input type="submit" name="Limpiar" value="Limpiar Filtros" >
 </form>
@@ -138,5 +142,25 @@ if(request.getAttribute("CuentaEliminar")!=null){
 %>
 </ul>
 </table>
+<%
+	int error=0;
+	if(request.getAttribute("error")!=null)
+		error= (int)request.getAttribute("error");	
+%>
+<%if(error==1)
+	{
+%>
+	<script>
+        alert("El cliente seleccionado alcanzo el limite de cuentas permitidas");
+    </script>
+    <%} %>
+    
+<% if(error==2) 
+    {
+%>
+    <script>
+        alert("Cuenta creada y asignada!");
+    </script>
+<%} %>
 </body>
 </html>

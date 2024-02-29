@@ -43,7 +43,7 @@ public class Cliente {
 	}
 	
 	public Cliente() {}
-//test
+
 	
 	public String getTelefono() {
 		return Telefono;

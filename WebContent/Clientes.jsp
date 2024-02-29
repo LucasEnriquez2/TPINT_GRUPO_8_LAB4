@@ -24,7 +24,6 @@ if (session.getAttribute("username") != null) {
     }
 } else {
 	// No esta logeado.
-	
 	response.sendRedirect("Inicio.jsp");
 }
 %>
@@ -47,13 +46,13 @@ if (session.getAttribute("username") != null) {
 			<th>Sexo</th>
 			<th>Nacionalidad</th>
 			<th>Fecha de nac.</th>
-			<th>Dirección</th>
+			<th>Direcciï¿½n</th>
 			<th>Localidad</th>
 			<th>Provincia</th>
 			<th>Mail</th>
 			<th>Telefono</th>
 			<th>Usuario</th>
-			<th>Contraseña</th>
+			<th>Contraseï¿½a</th>
 		</tr>
 </thead>
 <tbody>
@@ -198,8 +197,8 @@ if (session.getAttribute("username") != null) {
 	Email:  <input type="text" name="txtEmail" onkeypress="return //i.test(event.key)" required> <br><br>
 	Telefono:  <input type="text" name="txtTelefono" onkeypress="return //i.test(event.key)" required> <br><br>
 	Usuario:  <input type="text" name="txtUsuario" onkeypress="return //i.test(event.key)" required> <br><br>
-	Contraseña:  <input type="password" id="pass1" name="txtContrasenia" onkeypress="return //i.test(event.key)" required> <br><br>
-	Repetir Contraseña:  <input type="password" id="pass2" name="txtContrasenia2" onkeypress="return //i.test(event.key)" required> <br><br>
+	Contraseï¿½a:  <input type="password" id="pass1" name="txtContrasenia" onkeypress="return //i.test(event.key)" required> <br><br>
+	Repetir Contraseï¿½a:  <input type="password" id="pass2" name="txtContrasenia2" onkeypress="return //i.test(event.key)" required> <br><br>
 	<input type="submit" value="Aceptar" name="btnAceptar"><br><br>
 
 </form>
@@ -262,10 +261,10 @@ if (session.getAttribute("username") != null) {
             alert("Las contrasenias no coinciden.");
             document.getElementById("pass1").value = "";
             document.getElementById("pass2").value = "";
-            return false; // Evita que el formulario se envíe si la validación no pasa
+            return false; // Evita que el formulario se envï¿½e si la validaciï¿½n no pasa
         }
         
-        return true; // Envía el formulario si la validación pasa
+        return true; // Envï¿½a el formulario si la validaciï¿½n pasa
         
     }
 </script>
