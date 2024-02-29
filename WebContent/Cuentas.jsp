@@ -47,20 +47,20 @@ if (session.getAttribute("username") != null) {
 
 <form action="ServletCuentas" method="get">
 <br><br>
-<input type="number" name="nroDeCuenta" placeholder="Numero de Cuenta" onkeypress="return /[0-9]/i.test(event.key)" > <br><br>
-<input type="number" name="nroDeCliente" placeholder="Numero de Cliente" onkeypress="return /[0-9]/i.test(event.key)" > <br><br>
+<input type="number" name="nroDeCuenta" placeholder="Numero de Cuenta" onkeypress="return /[0-9]/i.test(event.key)" > 
+<input type="number" name="nroDeCliente" placeholder="Numero de Cliente" onkeypress="return /[0-9]/i.test(event.key)" > 
 Tipo de Cuenta: <select name="tipo" id="tipo">
 			<option value="Seleccione una opcion"> Seleccione una opcion</option>
 			<option value="Caja de Ahorro"> Caja de Ahorro</option>
 			<option value="Cuenta Corriente"> Cuenta Corriente </option>
-			</select> <br><br>
-Fecha de Creacion:  <br><br>
-Desde: <input type="date" name="txtFechaDesde" onkeypress="return //i.test(event.key)" > <br><br>
-Hasta: <input type="date" name="txtFechaHasta" onkeypress="return //i.test(event.key)" > <br><br>
-Saldo:  <br><br>
-<input type="number" name="minimo" placeholder="Minimo" onkeypress="return /[0-9]/i.test(event.key)" > <br><br>
-<input type="number" name="maximo" placeholder="Maximo" onkeypress="return /[0-9]/i.test(event.key)" > <br><br>
-<input type="submit" name="Buscar" value="Buscar" > <br><br>
+			</select>
+Fecha de Creacion: 
+Desde <input type="date" name="txtFechaDesde" onkeypress="return //i.test(event.key)" > 
+Hasta <input type="date" name="txtFechaHasta" onkeypress="return //i.test(event.key)" > 
+Saldo:  
+<input type="number" name="minimo" placeholder="Minimo" onkeypress="return /[0-9]/i.test(event.key)" > 
+<input type="number" name="maximo" placeholder="Maximo" onkeypress="return /[0-9]/i.test(event.key)" >
+<input type="submit" name="Buscar" value="Buscar" >
 </form>
 
 <form action="ServletCuentas" method="get">

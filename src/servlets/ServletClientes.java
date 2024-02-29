@@ -244,12 +244,109 @@ public class ServletClientes extends HttpServlet {
 		        listaClientes = (ArrayList<Cliente>) cliente.ListarClientes();
 		    }
 		    
-		    Iterator<Cliente> iterator = listaClientes.iterator();
-		    int i = Integer.parseInt(request.getParameter("NdeCliente"));
-		    while (iterator.hasNext()) {
-		        Cliente c = iterator.next();
-		        if (c.getNdeCliente() != i) {
-		            iterator.remove();
+		    if(request.getParameter("NdeCliente") != "") {
+		    	Iterator<Cliente> iterator = listaClientes.iterator();
+		    	int i = Integer.parseInt(request.getParameter("NdeCliente"));
+		    	while (iterator.hasNext()) {
+		        	Cliente c = iterator.next();
+		        	if (c.getNdeCliente() != i) {
+		            	iterator.remove();
+		        	}
+		    	}
+		    }
+		    
+		    if (!request.getParameter("nombre").isEmpty()) {
+		        String nombre = request.getParameter("nombre").toLowerCase();;
+		        Iterator<Cliente> iterator = listaClientes.iterator();
+		        while (iterator.hasNext()) {
+		            Cliente cliente = iterator.next();
+		            String nombreCliente = cliente.getNombre().toLowerCase();
+		            if (!nombreCliente.contains(nombre)) {
+		                iterator.remove();
+		            }
+		            
+		        }
+		    }
+		    
+		    if (!request.getParameter("apellido").isEmpty()) {
+		        String nombre = request.getParameter("apellido").toLowerCase();;
+		        Iterator<Cliente> iterator = listaClientes.iterator();
+		        while (iterator.hasNext()) {
+		            Cliente cliente = iterator.next();
+		            String apellidoCliente = cliente.getApellido().toLowerCase();
+		            if (!apellidoCliente.contains(nombre)) {
+		                iterator.remove();
+		            }
+		            
+		        }
+		    }
+		    
+		    if (!"Seleccione una opcion".equals(request.getParameter("sexo"))) {
+		        Iterator<Cliente> iterator = listaClientes.iterator();
+		        String sexo = request.getParameter("sexo");
+		        while (iterator.hasNext()) {
+		        	Cliente c = iterator.next();
+		            if (!c.getSexo().equals(sexo)) {
+		                iterator.remove();
+		            }
+		        }
+		    }
+		    
+		    if (!"Seleccione una opcion".equals(request.getParameter("nac"))) {
+		        Iterator<Cliente> iterator = listaClientes.iterator();
+		        String nac = request.getParameter("nac");
+		        while (iterator.hasNext()) {
+		        	Cliente c = iterator.next();
+		            if (!c.getNacionalidad().equals(nac)) {
+		                iterator.remove();
+		            }
+		        }
+		    }
+		    
+		    if (!request.getParameter("txtFechaDesde").isEmpty() && !request.getParameter("txtFechaHasta").isEmpty()) {
+		        Iterator<Cliente> iterator = listaClientes.iterator();
+		        
+		        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		        java.util.Date fechaDesde = null;
+		        java.util.Date fechaHasta = null;
+
+		        try {
+		            fechaDesde = dateFormat.parse(request.getParameter("txtFechaDesde"));
+		            fechaHasta = dateFormat.parse(request.getParameter("txtFechaHasta"));
+		        } catch (ParseException e) {
+		            e.printStackTrace();
+		        }
+		        
+
+		        while (iterator.hasNext()) {
+		            Cliente c = iterator.next();
+		            Date fechaNac = c.getFechaDeNacimiento();
+		 
+		            if (fechaNac.after(fechaHasta) || fechaNac.before(fechaDesde)) {
+		                iterator.remove();
+		            }
+		        }
+		    }
+		    
+		    if (!"Seleccione una opcion".equals(request.getParameter("loc"))) {
+		        Iterator<Cliente> iterator = listaClientes.iterator();
+		        String localidad = request.getParameter("loc");
+		        while (iterator.hasNext()) {
+		        	Cliente c = iterator.next();
+		            if (!c.getLocalidad().equals(localidad)) {
+		                iterator.remove();
+		            }
+		        }
+		    }
+		    
+		    if (!"Seleccione una opcion".equals(request.getParameter("prov"))) {
+		        Iterator<Cliente> iterator = listaClientes.iterator();
+		        String provincia = request.getParameter("prov");
+		        while (iterator.hasNext()) {
+		        	Cliente c = iterator.next();
+		            if (!c.getProvincia().equals(provincia)) {
+		                iterator.remove();
+		            }
 		        }
 		    }
 		    

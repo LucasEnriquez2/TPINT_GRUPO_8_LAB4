@@ -58,9 +58,40 @@ if (session.getAttribute("username") != null) {
 <tbody>
 
 <form id="formulario" action="ServletClientes" method="get">
-    <input type="number" name="NdeCliente" placeholder="Numero de Cliente" onkeypress="return /[0-9]/i.test(event.key)" required>
-    <input type="submit" name="Buscar" value="Buscar">
-    
+	<br> <br>
+    <input type="number" name="NdeCliente" placeholder="Numero de Cliente" onkeypress="return /[0-9]/i.test(event.key)">
+	<input type="text" name="nombre" id="nombre" placeholder="Nombre" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '')">
+	<input type="text" name="apellido" id="apellido" placeholder="Apellido" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '')">
+	Sexo: <select name="sexo" id="sexo">
+			<option value="Seleccione una opcion"> Seleccione una opcion</option>
+			<option value="Masculino"> Masculino</option>
+			<option value="Femenino"> Femenino </option>
+			<option value="Otro"> Otro </option>
+			</select> 
+	Nacionalidad: <select name="nac" id="nac">
+		<option value="Seleccione una opcion"> Seleccione una opcion</option>
+		<option value="Argentino"> Argentino</option>
+		<option value="Chileno"> Chilena </option>
+		<option value="Uruguayo"> Uruguayo </option>
+		</select> <br> <br>
+
+   	Fecha de Nacimiento: 
+	Desde <input type="date" name="txtFechaDesde" onkeypress="return //i.test(event.key)" >
+	Hasta <input type="date" name="txtFechaHasta" onkeypress="return //i.test(event.key)" >
+	Localidad: <select name="loc" id="loc">
+		<option value="Seleccione una opcion"> Seleccione una opcion</option>
+		<option value="Olivos"> Olivos</option>
+		<option value="San Isidro"> San Isidro </option>
+		<option value="Pilar"> Pilar </option>
+		<option value="Martinez"> Martinez </option>
+		</select> 
+	Provincia: <select name="prov" id="prov">
+		<option value="Seleccione una opcion"> Seleccione una opcion</option>
+		<option value="Buenos Aires"> Buenos Aires</option>
+		<option value="Mendoza"> Mendoza </option>
+		<option value="Rio Negro"> Rio Negro </option>
+		</select> 
+        <input type="submit" name="Buscar" value="Buscar">
 </form>
 
 <form id="formulario" action="ServletClientes" method="get">
