@@ -47,6 +47,7 @@ public class ServletPrestamos extends HttpServlet {
     	ClienteNegocioImpl neg = new ClienteNegocioImpl();
 		int numcliente = neg.ObtenerNdeCliente((String) usuarioSession.getAttribute("username"));
     	int errorp = 0;
+    	int error = 0;
 		
     	
 		//CUENTAS
@@ -61,7 +62,39 @@ public class ServletPrestamos extends HttpServlet {
 		
 		List<Prestamo> listaPrestamos = neg.ListarPrestamos(numcliente);
 		request.setAttribute("ListaPrestamos", listaPrestamos);
-				
+		
+		
+		if(request.getParameter("Pagar")!=null) {
+			if(request.getParameter("NdeCuenta")!=null && request.getParameter("NdePrestamo")!=null && request.getParameter("Monto")!=null) {
+			// String NroDeCuenta = request.getParameter("NdeCuenta");
+			String NroDeCuenta = request.getParameter("cuentapago");
+			
+			String NdePrestamo = request.getParameter("NdePrestamo");
+			String Monto = request.getParameter("Monto");
+			String CuotasPagas = request.getParameter("CuotasPagas");
+			String Detalle="Pago de Cuota del Prestamo "+NdePrestamo;
+			
+			CuentaNegocioImpl negM = new CuentaNegocioImpl();
+			MovimientoNegocioImpl negMov = new MovimientoNegocioImpl();
+			
+			if(!negM.PuedeTransferir(Float.parseFloat(Monto), NroDeCuenta)){
+    			error = 1;
+    			request.setAttribute("errorpp", error);
+    			RequestDispatcher rd = request.getRequestDispatcher("/Prestamos.jsp");
+                rd.forward(request, response);
+    			return;
+    		}
+    		
+    		error = 2;
+    		request.setAttribute("errorpp", error);		
+    		negMov.PagarPrestamo(NroDeCuenta, NdePrestamo, Monto, Detalle, CuotasPagas);
+    		RequestDispatcher rd = request.getRequestDispatcher("/Prestamos.jsp");
+            rd.forward(request, response);
+            return;
+			}}
+	
+		
+		
 		
 		if(request.getParameter("btnAceptar")!=null) {
 			
@@ -118,34 +151,8 @@ public class ServletPrestamos extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		doGet(request, response);
-		int error = 0;
-		if(request.getParameter("Pagar")!=null) {
-			if(request.getParameter("NdeCuenta")!=null&&request.getParameter("NdePrestamo")!=null&&request.getParameter("Monto")!=null) {
-			String NroDeCuenta = request.getParameter("NdeCuenta");
-			String NdePrestamo = request.getParameter("NdePrestamo");
-			String Monto = request.getParameter("Monto");
-			String CuotasPagas = request.getParameter("CuotasPagas");
-			String Detalle="Pago de Cuota del Prestamo N°"+NdePrestamo;
-			
-			CuentaNegocioImpl negM = new CuentaNegocioImpl();
-			MovimientoNegocioImpl negMov = new MovimientoNegocioImpl();
-			
-			if(!negM.PuedeTransferir(Float.parseFloat(Monto), NroDeCuenta)){
-    			error = 1;
-    			request.setAttribute("error", error);
-    			RequestDispatcher rd = request.getRequestDispatcher("/Prestamos.jsp");
-                rd.forward(request, response);
-    			return;
-    		}
-    		
-    		error = 2;
-    		request.setAttribute("error", error);		
-    		negMov.PagarPrestamo(NroDeCuenta, NdePrestamo, Monto, Detalle, CuotasPagas);
-    		RequestDispatcher rd = request.getRequestDispatcher("/Prestamos.jsp");
-            rd.forward(request, response);
-            return;
-			}}
-	}
+		
+		
 
+	}
 }

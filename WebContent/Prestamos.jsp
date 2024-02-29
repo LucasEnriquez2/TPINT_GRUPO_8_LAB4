@@ -134,7 +134,7 @@ if (request.getAttribute("ListaPrestamos") != null) {
                 <td><%= sol.getPlazo() %> </td>
                 <td><%= sol.getMonto() %> </td>
                 <td><%= sol.getEstado() %> </td>
-                <td><%= sol.getEstado() %> </td>
+                
             </tr>
     <%      
         	}
@@ -174,7 +174,7 @@ if (request.getAttribute("ListaPrestamos") != null) {
     %>
     
             <tr>
-           		<form action="ServletPrestamos" method="post">
+           		<form action="ServletPrestamos" method="get">
                 <td><%= pre.getNdeSolicitud() %><input type="hidden" name="NdePrestamo" value="<%=pre.getNdeSolicitud()%>"></td>
                 <td><%= pre.getNroCuenta() %> <input type="hidden" name="NdeCuenta" value="<%=pre.getNroCuenta()%>"></td>
                 <td><%= pre.getFecha()%> </td>
@@ -184,7 +184,35 @@ if (request.getAttribute("ListaPrestamos") != null) {
                 <td><%= pre.getMonto() %> <input type="hidden" name="Monto" value="<%=pre.getMonto()%>"></td>
                 <td><%= pre.getCuotasPagas() %><input type="hidden" name="CuotasPagas" value="<%=pre.getCuotasPagas()%>"> </td>
                 <td><%= pre.getEstado() %> </td>
+                <%
+                
+                if(!"Pago".equals(String.valueOf(pre.getEstado()))){
+                
+                %>
+                
                 <td><input type="submit" value="Pagar cuota" name="Pagar"> </td>
+                <td> <select name="cuentapago" id="cuentapago"> 
+                
+                
+                
+               <%  if (listaCuentas != null) {
+                        for (Cuenta cta : listaCuentas) {
+                        	if(cta.getEstado()==1){
+                %>
+                        		       	
+                
+				<option value="<%= cta.getNroCuenta()%>"> <%= cta.getNroCuenta()%> - <%= cta.getTipoDeCuenta()%> - $ <%= cta.getSaldo()%> </option>
+                
+                <% 
+                }
+                        	}
+                        
+                        }
+                	
+                	}; %>
+                
+
+                </select> </td>
                 </form>
             </tr>
     <%      
@@ -196,10 +224,14 @@ if (request.getAttribute("ListaPrestamos") != null) {
     
     %>
 </table>
+
+
+
+
 <%
 int errorS=0;
-if(request.getAttribute("error")!=null)
-	errorS = (int)request.getAttribute("error");
+if(request.getAttribute("errorpp")!=null)
+	errorS = (int)request.getAttribute("errorpp");
 
 %>
 
@@ -208,7 +240,7 @@ if(request.getAttribute("error")!=null)
     {
 %>
     <script>
-        alert("No posee el monto actualmente para realizar el pago de la cuota);
+        alert("No posee el monto actualmente para realizar el pago de la cuota");
     </script>
 <%} %>
 
@@ -217,12 +249,13 @@ if(request.getAttribute("error")!=null)
 
 %>
 	<script>
-        alert("Pago Esxitoso");
+        alert("Pago Exitoso");
     </script>
     
     
 <%
-		response.sendRedirect("ServletPrestamos");}
+		response.sendRedirect("ServletPrestamos");
+}
     %>
 
 <%

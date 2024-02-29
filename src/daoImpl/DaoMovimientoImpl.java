@@ -1,5 +1,6 @@
 package daoImpl;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -110,20 +111,25 @@ public class DaoMovimientoImpl implements DaoMovimiento{
 	    }
 	@Override
 	public void PagarPrestamo(String nro, String nroP, String monto, String detalle, String cuotas) {
-	    Conexion conexion = Conexion.getConexion();
+		Connection conexion = Conexion.getConexion().getSQLConexion();
 	    java.sql.CallableStatement callableStatement = null;
+	    int cuotaspagas = 0;
 	    
 	    try {
-	        callableStatement = conexion.getSQLConexion().prepareCall("{ call PagarCuota(?, ?, ?, ?, ?) }");
+	        callableStatement = conexion.prepareCall("{ call PagarCuota(?, ?, ?, ?, ?) }");
 
 	        callableStatement.setInt(1, Integer.parseInt(nro));
 	        callableStatement.setInt(2, Integer.parseInt(nroP));
 	        callableStatement.setFloat(3, Float.parseFloat(monto));
 	        callableStatement.setString(4, detalle);
-	        callableStatement.setInt(5, Integer.parseInt(cuotas)+1);
+	        
+	        cuotaspagas = Integer.parseInt(cuotas);
+	        cuotaspagas++;
+	        callableStatement.setInt(5, cuotaspagas);
 
 	        
 	        callableStatement.execute();
+	        conexion.commit();
 	         
 
 	    } catch (SQLException e) {
@@ -139,12 +145,11 @@ public class DaoMovimientoImpl implements DaoMovimiento{
 	        }
 
 	       
-	        if (conexion != null) {
-	            conexion.cerrarConexion();
-	        }
+	       
+	        
 	    }
 	    
-	    }
+	    };
 	
 }	
         
