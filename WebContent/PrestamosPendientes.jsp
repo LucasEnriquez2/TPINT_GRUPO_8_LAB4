@@ -9,6 +9,8 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="css/Style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
