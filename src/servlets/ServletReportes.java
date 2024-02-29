@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import entidad.Cliente;
 import entidad.Cuenta;
@@ -37,34 +38,34 @@ public class ServletReportes extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
+		MovimientoNegocioImpl movimiento = new MovimientoNegocioImpl();
+		
+		int minimo = 0;
+		int maximo = 0;
+		
+		HttpSession usuarioSession = request.getSession();
+		
+		if(request.getParameter("Buscar")!=null) 
+		{
+			minimo = Integer.parseInt(request.getParameter("min"));
+			maximo = Integer.parseInt(request.getParameter("max"));
+			usuarioSession.setAttribute("minimo", minimo);
+			usuarioSession.setAttribute("maximo", maximo);
+		}
+		
+		minimo = Integer.parseInt(usuarioSession.getAttribute("minimo").toString());
+		maximo = Integer.parseInt(usuarioSession.getAttribute("maximo").toString());
+		
+		ArrayList<Movimiento> listaMovimientos = new ArrayList<Movimiento>();
+	
+		listaMovimientos = (ArrayList<Movimiento>) movimiento.ListarMovimientoParametrizados(minimo,maximo);
+		
+		request.setAttribute("ListaMovimientos", listaMovimientos);
+			
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-		
-		
-		
-		int minimo = Integer.parseInt(request.getParameter("min"));
-	    int maximo = Integer.parseInt(request.getParameter("max"));
-	    
-		if(minimo != maximo && maximo > minimo) {
-			
-			if(request.getParameter("pagina")!=null) {
-				String pagina = request.getParameter("pagina");
-				request.setAttribute("ListaMovimientos", null);
-				MovimientoNegocioImpl movimiento = new MovimientoNegocioImpl();
-				ArrayList<Movimiento> listaMovimientos = (ArrayList<Movimiento>) movimiento.ListarMovimientoParametrizados(minimo, maximo);
-				request.setAttribute("ListaMovimientos", listaMovimientos);
-				request.setAttribute("pagina",pagina);
-			}
-			
-			MovimientoNegocioImpl movimiento = new MovimientoNegocioImpl();
-			ArrayList<Movimiento> listaMovimientos = (ArrayList<Movimiento>) movimiento.ListarMovimientoParametrizados(minimo, maximo);
+			String pagina = request.getParameter("pagina");
+			request.setAttribute("pagina",pagina);
+
 			
 			float totalPositivo = 0;
 			float totalNegativo = 0;
@@ -111,8 +112,24 @@ public class ServletReportes extends HttpServlet {
 			rd.forward(request, response);
 	        
 	        return;
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+		
+		
+		
+		
 			
-		}
+		
+			
+			
+		
+		
 		
 	}
 

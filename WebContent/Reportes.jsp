@@ -42,7 +42,7 @@ if (session.getAttribute("username") != null) {
             return true; // Envía el formulario si la validación es exitosa.
         }
 	</script>
-	<form action="ServletReportes" method="post" onsubmit="return validarFormulario()">
+	<form action="ServletReportes?pagina=1" method="get" onsubmit="return validarFormulario()">
 		<p> Buscar los movimientos que se encuentren entre el monto minimo y maximo ingresado.</p>
 		
 		
@@ -50,7 +50,7 @@ if (session.getAttribute("username") != null) {
         
         <input type="number" name="max" id= "max" required placeholder="Maximo"><br><br>
     
-        <input type="submit" value="Buscar">      
+        <input type="submit" name="Buscar" value="Buscar">      
     </form>
 	
 	<br> <br>
@@ -58,7 +58,7 @@ if (session.getAttribute("username") != null) {
 	<%
 	if(request.getAttribute("ListaMovimientos")!=null) 
 	{
-		ArrayList<Movimiento> listaMovimientos = (ArrayList<Movimiento>) request.getAttribute("ListaMovimientos");
+		ArrayList<Movimiento> listaMovimientos = ((ArrayList<Movimiento>) request.getAttribute("ListaMovimientos"));
 		%>
 	
 	<table border="1" class="table table-striped"> 
