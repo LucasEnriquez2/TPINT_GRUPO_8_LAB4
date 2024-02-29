@@ -53,8 +53,52 @@ public class ServletReportes extends HttpServlet {
 			MovimientoNegocioImpl movimiento = new MovimientoNegocioImpl();
 			ArrayList<Movimiento> listaMovimientos = (ArrayList<Movimiento>) movimiento.ListarMovimientoParametrizados(minimo, maximo);
 			request.setAttribute("ListaMovimientos", listaMovimientos);
+			
+			float totalPositivo = 0;
+			float totalNegativo = 0;
+			int transferencias = 0;
+			int altaDeCuentas = 0;
+			int altaDePrestamos = 0;
+			int pagoDePrestamos = 0;
+			int movimientos = 0;
+			
+			for (Movimiento m: listaMovimientos) {
+				
+				movimientos += 1;
+				if(m.getImporte() > 0) {
+					totalPositivo += m.getImporte();
+				}
+				else {
+					totalNegativo += m.getImporte();
+				}
+				
+				if (m.getTipoDeMovimiento().equals("Transferencia")) {
+					transferencias += 1;
+				}
+				if (m.getTipoDeMovimiento().equals("Alta de Cuenta")) {
+					altaDeCuentas += 1;
+				}
+				if (m.getTipoDeMovimiento().equals("Alta de Prestamo")) {
+					altaDePrestamos += 1;
+				}
+				if (m.getTipoDeMovimiento().equals("Pago de Prestamo")) {
+					pagoDePrestamos += 1;
+				}
+				
+			}
+			
+			request.setAttribute("TotalPositivo", totalPositivo);
+			request.setAttribute("TotalNegativo", totalNegativo);
+			request.setAttribute("Transferencias", transferencias);
+			request.setAttribute("AltaDeCuentas", altaDeCuentas);
+			request.setAttribute("AltaDePrestamos", altaDePrestamos);
+			request.setAttribute("PagoDePrestamos", pagoDePrestamos);
+			request.setAttribute("Movimientos", movimientos);
+			
 			RequestDispatcher rd = request.getRequestDispatcher("/Reportes.jsp");
 			rd.forward(request, response);
+	        
+	        return;
 			
 		}
 		
