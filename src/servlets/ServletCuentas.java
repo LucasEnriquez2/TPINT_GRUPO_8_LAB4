@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -43,6 +45,14 @@ public class ServletCuentas extends HttpServlet {
 		
 		if(sesion.getAttribute("esAdmin")!=null) {
 			if((int)sesion.getAttribute("esAdmin")==1) {
+				
+				if(request.getParameter("btnCrearCuenta")!=null) {
+					ClienteNegocioImpl cliente = new ClienteNegocioImpl();
+					ArrayList<Cliente> ListarClientes = (ArrayList<Cliente>)cliente.ListarClientes();
+					request.setAttribute("ListarClientes", ListarClientes);
+					RequestDispatcher rd = request.getRequestDispatcher("/AgregarCuenta.jsp");
+					rd.forward(request, response);
+					}
 				
 				
 				if(request.getParameter("Listar")!=null) {
@@ -156,7 +166,7 @@ public class ServletCuentas extends HttpServlet {
 		
 			String fechaString = request.getParameter("txtFecha");
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			java.sql.Date sqlFecha = null;
+			Date sqlFecha = null;
 			try {
 			    java.util.Date fecha = sdf.parse(fechaString);
 			    sqlFecha = new java.sql.Date(fecha.getTime());
@@ -196,7 +206,16 @@ public class ServletCuentas extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		
+		
+		if(request.getParameter("btnCrearCuenta")!=null) {
+			ClienteNegocioImpl cliente = new ClienteNegocioImpl();
+			ArrayList<Cliente> ListarClientes = (ArrayList<Cliente>)cliente.ListarClientes();
+			request.setAttribute("ListarClientes", ListarClientes);
+			RequestDispatcher rd = request.getRequestDispatcher("/AgregarCuenta.jsp");
+			rd.forward(request, response);
+			}
+		
 		
 		if(request.getParameter("btnEliminar")!=null)
 		{

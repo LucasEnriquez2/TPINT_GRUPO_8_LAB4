@@ -65,7 +65,10 @@ if (session.getAttribute("username") != null) {
 <%if(request.getAttribute("CuentaModificar")==null&&request.getAttribute("CuentaEliminar")==null) {%>
 <form action="ServletCuentas" method="get">
 <input type="text" name="nroDeCliente" placeholder="Numero de Cliente">
-<input type="submit" name="Buscar" value="Buscar" >
+</form>
+
+<form action="ServletAltaCuenta" method="post">
+<input type="submit" name="btnCrearCuenta" value="Crear Cuenta" >
 </form>
 <%}
 if(request.getAttribute("CuentaModificar")!=null){
@@ -129,21 +132,6 @@ if(request.getAttribute("CuentaEliminar")!=null){
 </table>
 
 
-
-<form action="ServletCuentas" method="get">
-
-<br> <br>
-<h1>Agregar Cuenta</h1>
-
-	Nro. de cliente: <input type="text" name="txtNroCliente"> <br><br>
-	Tipo: <input type="text" name="txtTipo"> <br><br>
-	Fecha de creacion: <input type="text" name="txtFecha"> <br><br>
-	CBU: <input type="text" name="txtCBU"> <br><br>
-	Saldo: <input type="text" name="txtSaldo"> <br><br>
-	<input type="submit" value="Aceptar" name="btnAceptar"><br>
-
-</form>
-
 <%
 	int filas=0;
 	if(request.getAttribute("cantFilas")!=null)
@@ -155,6 +143,28 @@ if(request.getAttribute("CuentaEliminar")!=null){
 %>
 		Cuenta agregada con éxito
 <%} %>
+
+<%
+	int error=0;
+	if(request.getAttribute("error")!=null)
+		error= (int)request.getAttribute("error");	
+%>
+<%if(error==1)
+	{
+%>
+	<script>
+        alert("El cliente seleccionado alcanzo el limite de cuentas permitidas");
+    </script>
+    <%} %>
+    
+<% if(error==2) 
+    {
+%>
+    <script>
+        alert("Cuenta creada y asignada!");
+    </script>
+<%} %>
+
 
 </body>
 
